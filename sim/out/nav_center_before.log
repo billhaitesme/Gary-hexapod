@@ -1,0 +1,19 @@
+Installed 9 packages in 1.47s
+  t=  90.8  goal (12, 6) unresolved / no progress -> banned
+  t= 105.8  map exhausted [290 cells] -> GIMBAL SCAN at (+1.24,+1.27)
+  t= 107.6  CROUCH PEEK: seeing 0.54 m PAST the wall I believed at bearing 165 deg -> carved
+  t= 116.6  map exhausted [290 cells] -> GIMBAL SCAN at (+1.37,+1.28)
+  t= 118.4  CROUCH PEEK: seeing 1.19 m PAST the wall I believed at bearing 75 deg -> carved
+  t= 137.6  lane jam at (+1.56,+1.08) -> push on (1)
+  t= 137.6  STUCK at (+1.56,+1.08) front=2.00 -> bump-marked ahead, back off
+  t= 143.5  goal (11, 5) unresolved / no progress -> banned
+  t= 145.1  lane jam at (+1.56,+1.10) -> push on (2)
+  t= 145.1  STUCK at (+1.56,+1.10) front=0.06 -> bump-marked ahead, back off
+  t= 152.6  lane jam at (+1.58,+1.11) -> push on (3)
+  t= 152.6  STUCK at (+1.58,+1.11) front=2.00 -> bump-marked ahead, back off
+  t= 179.5  lane jam at (+1.64,+0.83) -> push on (1)
+  t= 179.5  STUCK at (+1.64,+0.83) front=2.00 -> bump-marked ahead, back off
+  t= 183.1  goal (12, 3) unresolved / no progress -> banned
+  t= 201.5  map exhausted [304 cells] -> GIMBAL SCAN at (+1.77,+0.72)
+  t= 203.3  CROUCH PEEK: seeing 1.55 m PAST the wall I believed at bearing 30 deg -> carved
+{"done": true, "scouts": 3, "bans": 4, "reason": "finished", "tunnel": {"y": [0.679, 0.712, 0.783], "footN": 0.921, "footS": 0.564}, "time_s": 228.2, "coverage_cells": 360, "knee_sat": 0.609, "sat_by": {"back": [1.0, 0.2], "climb": [0.92, 17.0], "crouch": [0.66, 78.8], "pivot": [0.53, 75.7], "scan": [0.1, 5.4], "steer": [0.77, 21.7], "straight": [0.47, 29.3]}, "pos": [2.42, 0.73]}

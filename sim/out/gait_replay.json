@@ -1,0 +1,182 @@
+[
+ {
+  "gait": "TRIPOD",
+  "stick": 0.3,
+  "v_cmd_cm_s": 1.05,
+  "cadence_ms": 400,
+  "amp_cm": 0.21,
+  "knee_deg": [
+   32.0,
+   58.9
+  ],
+  "femur_deg": [
+   44.2,
+   95.8
+  ],
+  "knee_rate_max": 408.0,
+  "femur_rate_max": 816.0,
+  "servo_rate_limit": 500.0,
+  "touchdown_scoot_cm_s": 1.05,
+  "ik_failures": 0
+ },
+ {
+  "gait": "TRIPOD",
+  "stick": 0.6,
+  "v_cmd_cm_s": 2.1,
+  "cadence_ms": 400,
+  "amp_cm": 0.42,
+  "knee_deg": [
+   31.6,
+   61.1
+  ],
+  "femur_deg": [
+   43.3,
+   96.0
+  ],
+  "knee_rate_max": 424.0,
+  "femur_rate_max": 829.0,
+  "servo_rate_limit": 500.0,
+  "touchdown_scoot_cm_s": 2.1,
+  "ik_failures": 0
+ },
+ {
+  "gait": "TRIPOD",
+  "stick": 1.0,
+  "v_cmd_cm_s": 3.5,
+  "cadence_ms": 400,
+  "amp_cm": 0.7,
+  "knee_deg": [
+   30.7,
+   64.2
+  ],
+  "femur_deg": [
+   42.0,
+   96.4
+  ],
+  "knee_rate_max": 449.0,
+  "femur_rate_max": 852.0,
+  "servo_rate_limit": 500.0,
+  "touchdown_scoot_cm_s": 3.5,
+  "ik_failures": 0
+ },
+ {
+  "gait": "WAVE",
+  "stick": 0.3,
+  "v_cmd_cm_s": 0.16,
+  "cadence_ms": 1200,
+  "amp_cm": 0.09,
+  "knee_deg": [
+   32.1,
+   57.7
+  ],
+  "femur_deg": [
+   44.6,
+   95.7
+  ],
+  "knee_rate_max": 400.0,
+  "femur_rate_max": 811.0,
+  "servo_rate_limit": 500.0,
+  "touchdown_scoot_cm_s": 0.16,
+  "ik_failures": 0
+ },
+ {
+  "gait": "WAVE",
+  "stick": 0.6,
+  "v_cmd_cm_s": 0.32,
+  "cadence_ms": 1200,
+  "amp_cm": 0.19,
+  "knee_deg": [
+   32.0,
+   58.7
+  ],
+  "femur_deg": [
+   44.3,
+   95.8
+  ],
+  "knee_rate_max": 406.0,
+  "femur_rate_max": 815.0,
+  "servo_rate_limit": 500.0,
+  "touchdown_scoot_cm_s": 0.33,
+  "ik_failures": 0
+ },
+ {
+  "gait": "WAVE",
+  "stick": 1.0,
+  "v_cmd_cm_s": 0.53,
+  "cadence_ms": 1200,
+  "amp_cm": 0.32,
+  "knee_deg": [
+   31.8,
+   60.0
+  ],
+  "femur_deg": [
+   43.8,
+   95.9
+  ],
+  "knee_rate_max": 416.0,
+  "femur_rate_max": 822.0,
+  "servo_rate_limit": 500.0,
+  "touchdown_scoot_cm_s": 0.55,
+  "ik_failures": 0
+ },
+ {
+  "gait": "RIPPLE",
+  "stick": 0.3,
+  "v_cmd_cm_s": 0.32,
+  "cadence_ms": 800,
+  "amp_cm": 0.13,
+  "knee_deg": [
+   32.1,
+   58.0
+  ],
+  "femur_deg": [
+   44.5,
+   95.7
+  ],
+  "knee_rate_max": 301.0,
+  "femur_rate_max": 609.0,
+  "servo_rate_limit": 500.0,
+  "touchdown_scoot_cm_s": 0.11,
+  "ik_failures": 0
+ },
+ {
+  "gait": "RIPPLE",
+  "stick": 0.6,
+  "v_cmd_cm_s": 0.63,
+  "cadence_ms": 800,
+  "amp_cm": 0.25,
+  "knee_deg": [
+   31.9,
+   59.3
+  ],
+  "femur_deg": [
+   44.0,
+   95.8
+  ],
+  "knee_rate_max": 308.0,
+  "femur_rate_max": 614.0,
+  "servo_rate_limit": 500.0,
+  "touchdown_scoot_cm_s": 0.22,
+  "ik_failures": 0
+ },
+ {
+  "gait": "RIPPLE",
+  "stick": 1.0,
+  "v_cmd_cm_s": 1.05,
+  "cadence_ms": 800,
+  "amp_cm": 0.42,
+  "knee_deg": [
+   31.6,
+   61.1
+  ],
+  "femur_deg": [
+   43.3,
+   96.0
+  ],
+  "knee_rate_max": 318.0,
+  "femur_rate_max": 622.0,
+  "servo_rate_limit": 500.0,
+  "touchdown_scoot_cm_s": 0.36,
+  "ik_failures": 0
+ }
+]

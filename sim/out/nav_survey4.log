@@ -1,0 +1,35 @@
+  t=  47.9  STUCK at (+0.31,+1.31) front=2.00 -> bump-marked ahead, back off
+  t=  53.7  goal (6, 4) unresolved / no progress -> banned
+  t= 131.2  STUCK at (+1.13,+1.38) front=0.39 -> bump-marked ahead, back off
+  t= 157.4  map exhausted [296 cells] -> GIMBAL SCAN at (+1.68,+0.95)
+  t= 174.4  GIMBAL: LOW OPENING at body-bearing 90 deg -> carved into the map
+  t= 195.2  map exhausted [299 cells] -> GIMBAL SCAN at (+1.83,+0.80)
+  t= 212.2  GIMBAL: LOW OPENING at body-bearing 15 deg -> carved into the map
+  t= 221.9  map exhausted [305 cells] -> GIMBAL SCAN at (+1.78,+0.50)
+  t= 238.9  GIMBAL: nothing low at this wall -> next suspect
+  t= 247.0  map exhausted [312 cells] -> GIMBAL SCAN at (+1.83,+0.16)
+  t= 264.0  GIMBAL: nothing low at this wall -> next suspect
+  t= 272.0  map exhausted [313 cells] -> GIMBAL SCAN at (+2.04,+0.17)
+  t= 289.0  GIMBAL: nothing low at this wall -> next suspect
+  t= 302.6  map exhausted [320 cells] -> GIMBAL SCAN at (+2.10,+0.34)
+  t= 319.6  GIMBAL: LOW OPENING at body-bearing 30 deg -> carved into the map
+  t= 345.7  stuck ON a carved lane at (+2.16,+0.53) -> verdict revoked
+  t= 345.7  STUCK at (+2.16,+0.53) front=0.05 -> bump-marked ahead, back off
+  t= 354.4  map exhausted [333 cells] -> GIMBAL SCAN at (+2.11,+0.61)
+  t= 371.4  GIMBAL: LOW OPENING at body-bearing 60 deg -> carved into the map
+  t= 390.1  stuck ON a carved lane at (+2.21,+0.64) -> verdict revoked
+  t= 390.1  STUCK at (+2.21,+0.64) front=2.00 -> bump-marked ahead, back off
+  t= 392.0  goal (21, 3) unresolved / no progress -> banned
+  t= 399.5  STUCK at (+2.22,+0.68) front=2.00 -> bump-marked ahead, back off
+  t= 417.2  goal (20, 10) unresolved / no progress -> banned
+  t= 425.2  STUCK at (+2.22,+0.77) front=0.00 -> bump-marked ahead, back off
+  t= 425.2  map exhausted [342 cells] -> GIMBAL SCAN at (+2.22,+0.77)
+  t= 442.2  GIMBAL: LOW OPENING at body-bearing 30 deg -> carved into the map
+  t= 451.4  map exhausted [342 cells] -> GIMBAL SCAN at (+2.10,+0.81)
+  t= 468.4  GIMBAL: LOW OPENING at body-bearing 180 deg -> carved into the map
+  t= 496.5  goal (21, 11) unresolved / no progress -> banned
+  t= 511.1  stuck ON a carved lane at (+2.38,+0.83) -> verdict revoked
+  t= 511.1  STUCK at (+2.38,+0.83) front=0.43 -> bump-marked ahead, back off
+  t= 511.1  goal (21, 15) unresolved / no progress -> banned
+  t= 511.1  SURVEY COMPLETE [349 cells]
+{"done": true, "scouts": 9, "bans": 7, "reason": "survey-complete", "time_s": 511.1, "coverage_cells": 349, "pos": [2.38, 0.83]}

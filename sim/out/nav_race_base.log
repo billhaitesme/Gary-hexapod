@@ -1,0 +1,5 @@
+  t=  96.0  lane jam at (+2.36,+0.77) -> push on (1)
+  t=  96.0  STUCK at (+2.36,+0.77) front=2.00 -> bump-marked ahead, back off
+  t= 103.5  lane jam at (+2.37,+0.81) -> push on (2)
+  t= 103.5  STUCK at (+2.37,+0.81) front=2.00 -> bump-marked ahead, back off
+{"done": true, "scouts": 0, "bans": 0, "reason": "finished", "tunnel": {"y": [0.716, 0.746, 0.79], "footN": 0.906, "footS": 0.486, "band_s": 7.5}, "carves": [[2.26, 0.8, 1, 0, -0.077, 0.104, -0.259, 0.065, -0.219, 2, 2, 651]], "time_s": 111.3, "coverage_cells": 362, "knee_sat": 0.559, "sat_by": {"crouch": [0.77, 39.8], "pivot": [0.37, 31.0], "steer": [0.71, 15.7], "straight": [0.36, 24.9]}, "pos": [2.42, 0.74]}

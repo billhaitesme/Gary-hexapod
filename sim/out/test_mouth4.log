@@ -1,0 +1,10 @@
+line y=0.81: PASS  done=True t=26.3  sat=0.687  tunnel={'y': [0.69, 0.694, 0.704], 'footN': 0.82, 'footS': 0.574, 'band_s': 4.5}
+   carves=[[np.float32(2.22), np.float32(0.81), 1, 0, -0.12, np.float32(0.032), np.float32(-0.305), np.float32(-0.007), np.float32(-0.203), 253, 163, 552]]
+   t=   0.8  mouth micro-peek: measuring the opening edges before committing
+line y=0.70: FAIL  done=True t=26.6  sat=0.669  tunnel={'y': [0.674, 0.68, 0.685], 'footN': 0.803, 'footS': 0.555, 'band_s': 4.6}
+   carves=[[np.float32(2.22), np.float32(0.7), 1, 0, np.float32(-0.026), np.float32(0.143), np.float32(-0.195), np.float32(0.103), np.float32(-0.093), 173, 129, 432]]
+   t=   0.8  mouth micro-peek: measuring the opening edges before committing
+line y=0.62: FAIL  done=True t=26.6  sat=0.669  tunnel={'y': [0.674, 0.68, 0.685], 'footN': 0.803, 'footS': 0.555, 'band_s': 4.6}
+   carves=[[np.float32(2.22), np.float32(0.62), 1, 0, np.float32(0.054), np.float32(0.223), np.float32(-0.115), np.float32(0.183), np.float32(-0.013), 173, 129, 432]]
+   t=   0.8  mouth micro-peek: measuring the opening edges before committing
+2 CASE(S) FAILED

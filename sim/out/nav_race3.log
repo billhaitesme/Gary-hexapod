@@ -1,0 +1,36 @@
+  t=  77.6  IMPASSE: map says no way out -> DOUBT (12 walls demoted to unknown)
+  t=  85.8  map exhausted [420 cells] -> GIMBAL SCAN at (+0.40,+0.73)
+  t=  88.8  CROUCH PEEK: seeing 0.71 m PAST the wall I believed at bearing 105 deg -> carved
+  t= 161.2  stuck AT a carved lane at (+0.97,+0.01) -> verdict revoked
+  t= 161.2  STUCK at (+0.97,+0.01) front=0.07 -> bump-marked ahead, back off
+  t= 170.9  map exhausted [420 cells] -> GIMBAL SCAN at (+0.84,+0.05)
+  t= 173.9  peek matches the map -> full gimbal
+  t= 190.9  GIMBAL: nothing low at this wall -> next suspect
+  t= 200.4  map exhausted [420 cells] -> GIMBAL SCAN at (+0.60,+0.32)
+  t= 203.4  CROUCH PEEK: seeing 0.42 m PAST the wall I believed at bearing 75 deg -> carved
+  t= 213.2  map exhausted [420 cells] -> GIMBAL SCAN at (+0.52,+0.45)
+  t= 216.2  peek matches the map -> full gimbal
+  t= 233.2  GIMBAL: nothing low at this wall -> next suspect
+  t= 241.5  map exhausted [420 cells] -> GIMBAL SCAN at (+0.45,+0.77)
+  t= 244.5  peek matches the map -> full gimbal
+  t= 261.5  GIMBAL: nothing low at this wall -> next suspect
+  t= 271.2  map exhausted [422 cells] -> GIMBAL SCAN at (+0.35,+1.21)
+  t= 274.2  peek matches the map -> full gimbal
+  t= 291.2  GIMBAL: nothing low at this wall -> next suspect
+  t= 299.5  map exhausted [424 cells] -> GIMBAL SCAN at (+0.34,+1.33)
+  t= 302.5  CROUCH PEEK: seeing 0.41 m PAST the wall I believed at bearing 345 deg -> carved
+  t= 302.5  stuck AT a carved lane at (+0.35,+1.33) -> verdict revoked
+  t= 302.5  STUCK at (+0.35,+1.33) front=0.06 -> bump-marked ahead, back off
+  t= 311.3  map exhausted [426 cells] -> GIMBAL SCAN at (+0.33,+1.45)
+  t= 314.3  CROUCH PEEK: seeing 0.66 m PAST the wall I believed at bearing 270 deg -> carved
+  t= 324.1  map exhausted [426 cells] -> GIMBAL SCAN at (+0.21,+1.42)
+  t= 327.1  peek matches the map -> full gimbal
+  t= 344.1  GIMBAL: nothing low at this wall -> next suspect
+  t= 358.7  stuck AT a carved lane at (+0.12,+1.33) -> verdict revoked
+  t= 358.7  STUCK at (+0.12,+1.33) front=0.27 -> bump-marked ahead, back off
+  t= 362.6  map exhausted [428 cells] -> GIMBAL SCAN at (+0.10,+1.33)
+  t= 365.6  CROUCH PEEK: seeing 0.49 m PAST the wall I believed at bearing 240 deg -> carved
+  t= 367.8  stuck AT a carved lane at (+0.08,+1.34) -> verdict revoked
+  t= 367.8  STUCK at (+0.08,+1.34) front=0.36 -> bump-marked ahead, back off
+  t= 403.3  STUCK at (+0.31,+1.31) front=2.00 -> bump-marked ahead, back off
+{"done": false, "scouts": 10, "bans": 2, "reason": "timeout", "time_s": 900.0, "coverage_cells": 427, "pos": [0.58, 0.39]}

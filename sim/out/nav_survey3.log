@@ -1,0 +1,113 @@
+  t=  47.9  STUCK at (+0.31,+1.31) front=2.00 -> bump-marked ahead, back off
+  t=  53.7  goal (6, 4) unresolved / no progress -> banned
+  t=  88.0  STUCK at (+0.76,+0.45) front=2.00 -> bump-marked ahead, back off
+  t=  93.4  goal (9, 13) unresolved / no progress -> banned
+  t=  97.6  STUCK at (+0.76,+0.45) front=2.00 -> bump-marked ahead, back off
+  t= 107.5  goal (10, 12) unresolved / no progress -> banned
+  t= 146.4  STUCK at (+1.13,+1.38) front=0.40 -> bump-marked ahead, back off
+  t= 183.5  goal (12, 6) unresolved / no progress -> banned
+  t= 184.5  STUCK at (+1.69,+0.85) front=2.00 -> bump-marked ahead, back off
+  t= 196.9  STUCK at (+1.65,+0.82) front=2.00 -> bump-marked ahead, back off
+  t= 200.8  goal (11, 5) unresolved / no progress -> banned
+  t= 208.1  STUCK at (+1.65,+0.81) front=2.00 -> bump-marked ahead, back off
+  t= 214.2  goal (11, 4) unresolved / no progress -> banned
+  t= 218.1  map exhausted [296 cells] -> GIMBAL SCAN at (+1.68,+0.84)
+  t= 235.1  GIMBAL: nothing low at this wall -> next suspect
+  t= 244.9  map exhausted [302 cells] -> GIMBAL SCAN at (+1.87,+0.70)
+  t= 261.9  GIMBAL: LOW OPENING at body-bearing 0 deg -> carved into the map
+  t= 269.9  map exhausted [322 cells] -> GIMBAL SCAN at (+2.04,+0.69)
+  t= 286.9  GIMBAL: LOW OPENING at body-bearing 345 deg -> carved into the map
+  t= 312.9  stuck ON a carved lane at (+2.16,+0.59) -> verdict revoked
+  t= 312.9  STUCK at (+2.16,+0.59) front=2.00 -> bump-marked ahead, back off
+  t= 312.9  goal (21, 5) unresolved / no progress -> banned
+  t= 340.8  STUCK at (+2.21,+0.67) front=2.00 -> bump-marked ahead, back off
+  t= 344.4  goal (19, 8) unresolved / no progress -> banned
+  t= 355.1  STUCK at (+2.21,+0.76) front=0.00 -> bump-marked ahead, back off
+  t= 364.0  map exhausted [328 cells] -> GIMBAL SCAN at (+2.17,+0.76)
+  t= 381.0  GIMBAL: LOW OPENING at body-bearing 195 deg -> carved into the map
+  t= 420.2  stuck ON a carved lane at (+2.29,+0.73) -> verdict revoked
+  t= 420.2  STUCK at (+2.29,+0.73) front=2.00 -> bump-marked ahead, back off
+  t= 525.9  goal (23, 2) unresolved / no progress -> banned
+  t= 551.3  goal (21, 1) unresolved / no progress -> banned
+  t= 576.6  goal (20, 0) unresolved / no progress -> banned
+  t= 609.5  STUCK at (+2.37,-0.25) front=0.70 -> bump-marked ahead, back off
+  t= 617.3  goal (11, 0) unresolved / no progress -> banned
+  t= 666.6  map exhausted [432 cells] -> GIMBAL SCAN at (+0.25,-0.36)
+  t= 683.6  GIMBAL: nothing low at this wall -> next suspect
+  t= 693.4  map exhausted [432 cells] -> GIMBAL SCAN at (+0.65,-0.36)
+  t= 710.4  GIMBAL: nothing low at this wall -> next suspect
+  t= 720.2  map exhausted [432 cells] -> GIMBAL SCAN at (+1.09,-0.36)
+  t= 737.2  GIMBAL: nothing low at this wall -> next suspect
+  t= 746.9  map exhausted [432 cells] -> GIMBAL SCAN at (+1.54,-0.36)
+  t= 763.9  GIMBAL: nothing low at this wall -> next suspect
+  t= 772.0  map exhausted [432 cells] -> GIMBAL SCAN at (+1.89,-0.37)
+  t= 789.0  GIMBAL: nothing low at this wall -> next suspect
+  t= 797.0  map exhausted [432 cells] -> GIMBAL SCAN at (+2.21,-0.37)
+  t= 814.0  GIMBAL: nothing low at this wall -> next suspect
+  t= 823.8  map exhausted [432 cells] -> GIMBAL SCAN at (+2.45,-0.17)
+  t= 840.8  GIMBAL: nothing low at this wall -> next suspect
+  t= 848.8  map exhausted [432 cells] -> GIMBAL SCAN at (+2.49,+0.12)
+  t= 865.8  GIMBAL: nothing low at this wall -> next suspect
+  t= 875.6  map exhausted [432 cells] -> GIMBAL SCAN at (+2.51,+0.57)
+  t= 892.6  GIMBAL: LOW OPENING at body-bearing 315 deg -> carved into the map
+  t= 902.3  map exhausted [432 cells] -> GIMBAL SCAN at (+2.51,+0.72)
+  t= 919.3  GIMBAL: nothing low at this wall -> next suspect
+  t= 929.1  map exhausted [432 cells] -> GIMBAL SCAN at (+2.50,+1.18)
+  t= 946.1  GIMBAL: nothing low at this wall -> next suspect
+  t= 954.1  map exhausted [432 cells] -> GIMBAL SCAN at (+2.50,+1.48)
+  t= 971.1  GIMBAL: nothing low at this wall -> next suspect
+  t= 979.1  map exhausted [432 cells] -> GIMBAL SCAN at (+2.46,+1.73)
+  t= 996.1  GIMBAL: LOW OPENING at body-bearing 225 deg -> carved into the map
+  t=1005.9  map exhausted [432 cells] -> GIMBAL SCAN at (+2.40,+1.84)
+  t=1022.9  GIMBAL: nothing low at this wall -> next suspect
+  t=1032.7  map exhausted [432 cells] -> GIMBAL SCAN at (+2.08,+2.00)
+  t=1049.7  GIMBAL: nothing low at this wall -> next suspect
+  t=1058.5  map exhausted [432 cells] -> GIMBAL SCAN at (+1.68,+2.03)
+  t=1075.5  GIMBAL: nothing low at this wall -> next suspect
+  t=1085.3  map exhausted [432 cells] -> GIMBAL SCAN at (+1.26,+2.03)
+  t=1102.3  GIMBAL: nothing low at this wall -> next suspect
+  t=1112.0  map exhausted [432 cells] -> GIMBAL SCAN at (+0.84,+2.02)
+  t=1129.0  GIMBAL: nothing low at this wall -> next suspect
+  t=1138.8  map exhausted [432 cells] -> GIMBAL SCAN at (+0.41,+2.02)
+  t=1155.8  GIMBAL: nothing low at this wall -> next suspect
+  t=1164.8  map exhausted [432 cells] -> GIMBAL SCAN at (+0.03,+2.02)
+  t=1181.8  GIMBAL: nothing low at this wall -> next suspect
+  t=1189.8  map exhausted [432 cells] -> GIMBAL SCAN at (-0.27,+1.98)
+  t=1206.8  GIMBAL: nothing low at this wall -> next suspect
+  t=1215.4  map exhausted [432 cells] -> GIMBAL SCAN at (-0.38,+1.76)
+  t=1232.4  GIMBAL: nothing low at this wall -> next suspect
+  t=1241.3  map exhausted [432 cells] -> GIMBAL SCAN at (-0.39,+1.38)
+  t=1258.3  GIMBAL: nothing low at this wall -> next suspect
+  t=1266.9  map exhausted [432 cells] -> GIMBAL SCAN at (-0.39,+1.00)
+  t=1283.9  GIMBAL: nothing low at this wall -> next suspect
+  t=1292.3  map exhausted [432 cells] -> GIMBAL SCAN at (-0.40,+0.63)
+  t=1309.3  GIMBAL: nothing low at this wall -> next suspect
+  t=1317.7  map exhausted [432 cells] -> GIMBAL SCAN at (-0.39,+0.26)
+  t=1334.7  GIMBAL: nothing low at this wall -> next suspect
+  t=1342.8  map exhausted [432 cells] -> GIMBAL SCAN at (-0.40,-0.02)
+  t=1359.8  GIMBAL: nothing low at this wall -> next suspect
+  t=1369.3  map exhausted [432 cells] -> GIMBAL SCAN at (-0.41,-0.09)
+  t=1386.3  GIMBAL: LOW OPENING at body-bearing 75 deg -> carved into the map
+  t=1403.6  map exhausted [432 cells] -> GIMBAL SCAN at (-0.41,-0.02)
+  t=1420.6  GIMBAL: nothing low at this wall -> next suspect
+  t=1428.5  stuck ON a carved lane at (-0.41,-0.06) -> verdict revoked
+  t=1428.5  STUCK at (-0.41,-0.06) front=0.07 -> bump-marked ahead, back off
+  t=1444.1  map exhausted [432 cells] -> GIMBAL SCAN at (-0.40,-0.22)
+  t=1461.1  GIMBAL: nothing low at this wall -> next suspect
+  t=1470.5  STUCK at (-0.35,-0.23) front=2.00 -> bump-marked ahead, back off
+  t=1470.5  map exhausted [432 cells] -> GIMBAL SCAN at (-0.35,-0.23)
+  t=1487.5  GIMBAL: nothing low at this wall -> next suspect
+  t=1496.1  map exhausted [432 cells] -> GIMBAL SCAN at (-0.29,-0.28)
+  t=1513.1  GIMBAL: nothing low at this wall -> next suspect
+  t=1522.7  map exhausted [432 cells] -> GIMBAL SCAN at (-0.21,-0.30)
+  t=1539.7  GIMBAL: nothing low at this wall -> next suspect
+  t=1548.7  map exhausted [432 cells] -> GIMBAL SCAN at (-0.31,-0.31)
+  t=1565.7  GIMBAL: nothing low at this wall -> next suspect
+  t=1574.2  map exhausted [432 cells] -> GIMBAL SCAN at (-0.01,-0.34)
+  t=1591.2  GIMBAL: nothing low at this wall -> next suspect
+  t=1600.9  map exhausted [432 cells] -> GIMBAL SCAN at (+0.43,-0.36)
+  t=1618.0  GIMBAL: nothing low at this wall -> next suspect
+  t=1626.0  map exhausted [432 cells] -> GIMBAL SCAN at (+0.42,-0.35)
+  t=1643.0  GIMBAL: nothing low at this wall -> next suspect
+  t=1643.0  SURVEY COMPLETE [432 cells]
+{"done": true, "scouts": 41, "bans": 13, "reason": "survey-complete", "time_s": 1643.0, "coverage_cells": 432, "pos": [0.44, -0.35]}

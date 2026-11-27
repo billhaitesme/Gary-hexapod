@@ -1,0 +1,19 @@
+  t=  90.8  goal (12, 6) unresolved / no progress -> banned
+  t= 105.8  map exhausted [290 cells] -> GIMBAL SCAN at (+1.24,+1.27)
+  t= 107.6  CROUCH PEEK: seeing 0.54 m PAST the wall I believed at bearing 165 deg -> STAND-UP CHECK
+  t= 108.6  CONFIRM FAILED: still see through STANDING -> a doorway, not a tunnel (1 phantom cells held open, no carve)
+  t= 117.6  map exhausted [292 cells] -> GIMBAL SCAN at (+1.78,+1.32)
+  t= 119.4  CROUCH PEEK: seeing 0.92 m PAST the wall I believed at bearing 150 deg -> STAND-UP CHECK
+  t= 120.4  CONFIRM FAILED: still see through STANDING -> a doorway, not a tunnel (3 phantom cells held open, no carve)
+  t= 153.1  map exhausted [293 cells] -> GIMBAL SCAN at (+1.68,+1.02)
+  t= 154.9  CROUCH PEEK: seeing 1.75 m PAST the wall I believed at bearing 30 deg -> STAND-UP CHECK
+  t= 155.9  CONFIRM FAILED: still see through STANDING -> a doorway, not a tunnel (2 phantom cells held open, no carve)
+  t= 165.4  map exhausted [293 cells] -> GIMBAL SCAN at (+1.97,+0.86)
+  t= 167.2  CROUCH PEEK: seeing 1.90 m PAST the wall I believed at bearing 75 deg -> STAND-UP CHECK
+  t= 168.2  CONFIRMED: blocked raised, open crouched -> LOW lane carved at bearing 82 deg
+  t= 168.2  mouth micro-peek: measuring the opening edges before committing
+  t= 169.8  mouth micro-peek: measuring the opening edges before committing
+  t= 183.2  goal (20, 8) unresolved / no progress -> banned
+  t= 206.2  goal (19, 7) unresolved / no progress -> banned
+  t= 229.8  goal (21, 8) unresolved / no progress -> banned
+{"done": true, "scouts": 4, "bans": 4, "reason": "finished", "tunnel": {"y": [0.729, 0.731, 0.733], "footN": 0.849, "footS": 0.613, "band_s": 4.4}, "low_demoted": 2, "carves": [[2.22, 0.81, 1, 0, -0.076, 0.093, -0.318, 0.035, -0.114, 303, 2, 614]], "time_s": 253.5, "coverage_cells": 357, "knee_sat": 0.552, "sat_by": {"climb": [0.92, 18.2], "crouch": [0.55, 31.8], "pivot": [0.53, 141.6], "scan": [0.21, 11.2], "steer": [0.75, 20.8], "straight": [0.45, 29.9]}, "pos": [2.42, 0.74]}

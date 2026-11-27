@@ -1,0 +1,28 @@
+  t=  61.1  mouth micro-peek: measuring the opening edges before committing
+  t=  63.3  mouth micro-peek: measuring the opening edges before committing
+  t=  74.0  STUCK at (+1.93,+0.91) front=2.00 -> bump-marked ahead, back off
+  t=  93.2  I DON'T FIT at (+2.00,+0.83) -> opening blocked
+  t=  93.2  STUCK at (+2.00,+0.83) front=2.00 -> bump-marked ahead, back off
+  t=  97.3  map exhausted [367 cells] -> GIMBAL SCAN at (+1.95,+0.88)
+  t=  99.1  CROUCH PEEK: seeing 1.65 m PAST the wall I believed at bearing 315 deg -> STAND-UP CHECK
+  t= 100.1  CONFIRMED: blocked raised, open crouched -> LOW lane carved at bearing 307 deg
+  t= 109.7  map exhausted [367 cells] -> GIMBAL SCAN at (+1.90,+0.85)
+  t= 111.5  CROUCH PEEK: seeing 1.65 m PAST the wall I believed at bearing 330 deg -> STAND-UP CHECK
+  t= 112.5  CONFIRMED: blocked raised, open crouched -> LOW lane carved at bearing 338 deg
+  t= 121.5  map exhausted [367 cells] -> GIMBAL SCAN at (+1.92,+0.62)
+  t= 123.3  CROUCH PEEK: seeing 1.65 m PAST the wall I believed at bearing 225 deg -> STAND-UP CHECK
+  t= 124.3  CONFIRMED: blocked raised, open crouched -> LOW lane carved at bearing 225 deg
+  t= 134.9  map exhausted [367 cells] -> GIMBAL SCAN at (+1.81,-0.02)
+  t= 136.7  peek matches the map -> full gimbal
+  t= 153.7  GIMBAL: nothing low at this wall -> next suspect
+  t= 154.1  DEADMAN: no displacement for 20 s at (+1.80,-0.01) -> recover
+  t= 162.4  map exhausted [368 cells] -> GIMBAL SCAN at (+1.68,+0.04)
+  t= 164.2  peek matches the map -> full gimbal
+  t= 181.2  GIMBAL: nothing low at this wall -> next suspect
+  t= 181.2  DEADMAN: no displacement for 20 s at (+1.71,+0.03) -> recover
+  t= 204.1  I DON'T FIT at (+1.99,+0.88) -> opening blocked
+  t= 204.1  STUCK at (+1.99,+0.88) front=2.00 -> bump-marked ahead, back off
+  t= 208.5  map exhausted [368 cells] -> GIMBAL SCAN at (+1.97,+0.79)
+  t= 210.3  CROUCH PEEK: seeing 1.75 m PAST the wall I believed at bearing 60 deg -> STAND-UP CHECK
+  t= 211.3  CONFIRMED: blocked raised, open crouched -> LOW lane carved at bearing 67 deg
+{"done": true, "scouts": 6, "bans": 0, "reason": "finished", "tunnel": {"y": [0.691, 0.719, 0.762], "footN": 0.867, "footS": 0.575, "band_s": 8.6}, "carves": [[2.23, 0.79, 1, 0, -0.078, 0.097, -0.285, 0.086, -0.097, 713, 2, 1145]], "time_s": 249.0, "coverage_cells": 373, "knee_sat": 0.609, "sat_by": {"back": [0.14, 7.4], "crouch": [0.66, 38.9], "pivot": [0.59, 103.0], "scan": [0.76, 48.9], "steer": [0.71, 23.4], "straight": [0.39, 27.4]}, "pos": [2.42, 0.74]}

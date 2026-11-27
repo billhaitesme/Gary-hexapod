@@ -1,0 +1,52 @@
+drag strip: 48 dashes over 2.5 m
+  stride 1.0  cad 350  lift 0.010  ->   48.0s   5.20 cm/s  sat=0.00  veer=0.00
+  stride 1.0  cad 350  lift 0.017  ->   46.5s   5.38 cm/s  sat=0.05  veer=0.01
+  stride 1.0  cad 420  lift 0.010  ->   48.6s   5.14 cm/s  sat=0.00  veer=0.00
+  stride 1.0  cad 420  lift 0.017  ->   47.0s   5.32 cm/s  sat=0.00  veer=0.00
+  stride 1.0  cad 490  lift 0.010  ->   49.0s   5.10 cm/s  sat=0.00  veer=0.00
+  stride 1.0  cad 490  lift 0.017  ->   47.2s   5.30 cm/s  sat=0.00  veer=0.00
+  stride 1.0  cad 560  lift 0.010  ->   49.2s   5.09 cm/s  sat=0.00  veer=0.00
+  stride 1.0  cad 560  lift 0.017  ->   47.2s   5.29 cm/s  sat=0.00  veer=0.00
+  stride 1.5  cad 350  lift 0.010  ->   32.2s   7.78 cm/s  sat=0.03  veer=0.00
+  stride 1.5  cad 350  lift 0.017  ->   30.8s   8.12 cm/s  sat=0.12  veer=0.01
+  stride 1.5  cad 420  lift 0.010  ->   32.4s   7.72 cm/s  sat=0.00  veer=0.00
+  stride 1.5  cad 420  lift 0.017  ->   31.5s   7.94 cm/s  sat=0.03  veer=0.00
+  stride 1.5  cad 490  lift 0.010  ->   32.8s   7.63 cm/s  sat=0.00  veer=0.00
+  stride 1.5  cad 490  lift 0.017  ->   31.7s   7.89 cm/s  sat=0.01  veer=0.00
+  stride 1.5  cad 560  lift 0.010  ->   32.8s   7.62 cm/s  sat=0.00  veer=0.00
+  stride 1.5  cad 560  lift 0.017  ->   31.6s   7.90 cm/s  sat=0.00  veer=0.00
+  stride 2.0  cad 350  lift 0.010  ->   24.2s  10.34 cm/s  sat=0.04  veer=0.00
+  stride 2.0  cad 350  lift 0.017  ->   23.0s  10.87 cm/s  sat=0.34  veer=0.01
+  stride 2.0  cad 420  lift 0.010  ->   24.6s  10.18 cm/s  sat=0.09  veer=0.00
+  stride 2.0  cad 420  lift 0.017  ->   23.7s  10.53 cm/s  sat=0.12  veer=0.00
+  stride 2.0  cad 490  lift 0.010  ->   24.7s  10.13 cm/s  sat=0.17  veer=0.00
+  stride 2.0  cad 490  lift 0.017  ->   23.8s  10.50 cm/s  sat=0.14  veer=0.00
+  stride 2.0  cad 560  lift 0.010  ->   24.4s  10.25 cm/s  sat=0.21  veer=0.00
+  stride 2.0  cad 560  lift 0.017  ->   23.5s  10.62 cm/s  sat=0.16  veer=0.00
+  stride 2.5  cad 350  lift 0.010  ->   19.4s  12.88 cm/s  sat=0.40  veer=0.00
+  stride 2.5  cad 350  lift 0.017  ->   18.3s  13.66 cm/s  sat=0.80  veer=0.01
+  stride 2.5  cad 420  lift 0.010  ->   19.6s  12.72 cm/s  sat=0.41  veer=0.00
+  stride 2.5  cad 420  lift 0.017  ->   19.1s  13.11 cm/s  sat=0.62  veer=0.01
+  stride 2.5  cad 490  lift 0.010  ->   19.5s  12.82 cm/s  sat=0.41  veer=0.01
+  stride 2.5  cad 490  lift 0.017  ->   18.9s  13.25 cm/s  sat=0.50  veer=0.01
+  stride 2.5  cad 560  lift 0.010  ->   19.5s  12.82 cm/s  sat=0.59  veer=0.00
+  stride 2.5  cad 560  lift 0.017  ->   18.7s  13.39 cm/s  sat=0.58  veer=0.00
+  stride 3.0  cad 350  lift 0.010  ->   16.3s  15.34 cm/s  sat=0.76  veer=0.00
+  stride 3.0  cad 350  lift 0.017  ->   15.7s  15.88 cm/s  sat=0.95  veer=0.01
+  stride 3.0  cad 420  lift 0.010  ->   16.3s  15.34 cm/s  sat=0.70  veer=0.01
+  stride 3.0  cad 420  lift 0.017  ->   15.9s  15.76 cm/s  sat=0.89  veer=0.01
+  stride 3.0  cad 490  lift 0.010  ->   16.6s  15.10 cm/s  sat=0.68  veer=0.02
+  stride 3.0  cad 490  lift 0.017  ->   15.7s  15.94 cm/s  sat=0.88  veer=0.01
+  stride 3.0  cad 560  lift 0.010  ->   16.4s  15.22 cm/s  sat=0.81  veer=0.02
+  stride 3.0  cad 560  lift 0.017  ->   15.7s  15.92 cm/s  sat=0.86  veer=0.01
+  stride 3.5  cad 350  lift 0.010  ->   14.4s  17.40 cm/s  sat=0.98  veer=0.04
+  stride 3.5  cad 350  lift 0.017  ->   13.6s  18.38 cm/s  sat=1.00  veer=0.01
+  stride 3.5  cad 420  lift 0.010  ->   14.2s  17.58 cm/s  sat=0.90  veer=0.04
+  stride 3.5  cad 420  lift 0.017  ->   13.8s  18.07 cm/s  sat=1.00  veer=0.01
+  stride 3.5  cad 490  lift 0.010  ->   14.2s  17.58 cm/s  sat=0.96  veer=0.01
+  stride 3.5  cad 490  lift 0.017  ->   14.0s  17.91 cm/s  sat=0.99  veer=0.02
+  stride 3.5  cad 560  lift 0.010  ->   14.3s  17.54 cm/s  sat=0.96  veer=0.01
+  stride 3.5  cad 560  lift 0.017  ->   14.0s  17.87 cm/s  sat=0.99  veer=0.01
+
+BEST ANY:        {"stride": 3.5, "cadence": 350, "lift": 0.017, "outcome": "ok", "t": 13.6, "speed_cms": 18.38, "knee_sat": 1.0, "veer_m": 0.01}
+BEST KNEE-LEGAL: {"stride": 2.0, "cadence": 420, "lift": 0.017, "outcome": "ok", "t": 23.7, "speed_cms": 10.53, "knee_sat": 0.118, "veer_m": 0.0}

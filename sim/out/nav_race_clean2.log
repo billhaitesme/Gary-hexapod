@@ -1,0 +1,25 @@
+  t=  61.1  mouth micro-peek: measuring the opening edges before committing
+  t=  63.3  mouth micro-peek: measuring the opening edges before committing
+  t=  74.0  STUCK at (+1.93,+0.91) front=2.00 -> bump-marked ahead, back off
+  t=  93.2  I DON'T FIT at (+2.00,+0.83) -> opening blocked
+  t=  93.2  STUCK at (+2.00,+0.83) front=2.00 -> bump-marked ahead, back off
+  t=  97.3  map exhausted [367 cells] -> GIMBAL SCAN at (+1.95,+0.88)
+  t=  99.1  CROUCH PEEK: seeing 1.65 m PAST the wall I believed at bearing 315 deg -> STAND-UP CHECK
+  t= 100.1  CONFIRMED: blocked raised, open crouched -> LOW lane carved at bearing 307 deg
+  t= 109.7  map exhausted [367 cells] -> GIMBAL SCAN at (+1.90,+0.85)
+  t= 111.5  CROUCH PEEK: seeing 1.65 m PAST the wall I believed at bearing 330 deg -> STAND-UP CHECK
+  t= 112.5  CONFIRMED: blocked raised, open crouched -> LOW lane carved at bearing 338 deg
+  t= 121.5  map exhausted [367 cells] -> GIMBAL SCAN at (+1.92,+0.62)
+  t= 123.3  CROUCH PEEK: seeing 1.65 m PAST the wall I believed at bearing 225 deg -> STAND-UP CHECK
+  t= 124.3  CONFIRMED: blocked raised, open crouched -> LOW lane carved at bearing 225 deg
+  t= 134.4  map exhausted [367 cells] -> GIMBAL SCAN at (+1.81,-0.01)
+  t= 136.2  CROUCH PEEK: seeing 0.36 m PAST the wall I believed at bearing 180 deg -> STAND-UP CHECK
+  t= 137.2  CONFIRM FAILED: still see through STANDING -> a doorway, not a tunnel (4 phantom cells held open, no carve)
+  t= 166.3  STUCK at (+2.16,+0.01) front=0.08 -> bump-marked ahead, back off
+  t= 166.3  map exhausted [368 cells] -> GIMBAL SCAN at (+2.16,+0.01)
+  t= 168.1  CROUCH PEEK: seeing 0.54 m PAST the wall I believed at bearing 120 deg -> STAND-UP CHECK
+  t= 169.1  CONFIRM FAILED: still see through STANDING -> a doorway, not a tunnel (3 phantom cells held open, no carve)
+  t= 179.3  map exhausted [368 cells] -> GIMBAL SCAN at (+2.16,+0.13)
+  t= 181.1  CROUCH PEEK: seeing 1.70 m PAST the wall I believed at bearing 45 deg -> STAND-UP CHECK
+  t= 182.1  CONFIRM FAILED: still see through STANDING -> a doorway, not a tunnel (3 phantom cells held open, no carve)
+{"done": true, "scouts": 6, "bans": 1, "reason": "finished", "tunnel": {"y": [0.678, 0.687, 0.699], "footN": 0.816, "footS": 0.56, "band_s": 5.3}, "carves": [[2.23, 0.79, 1, 0, -0.094, 0.097, -0.285, 0.086, -0.122, 741, 19, 1149]], "time_s": 215.1, "coverage_cells": 373, "knee_sat": 0.603, "sat_by": {"back": [0.15, 2.8], "climb": [0.95, 32.7], "crouch": [0.67, 27.6], "pivot": [0.58, 89.6], "scan": [0.19, 16.9], "steer": [0.73, 19.7], "straight": [0.39, 25.8]}, "pos": [2.42, 0.7]}

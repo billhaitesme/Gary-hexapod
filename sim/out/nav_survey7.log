@@ -1,0 +1,22 @@
+  t=  75.1  STUCK at (+0.64,+0.38) front=0.38 -> bump-marked ahead, back off
+  t=  85.6  STUCK at (+0.66,+0.35) front=0.38 -> bump-marked ahead, back off
+  t= 120.6  STUCK at (+1.14,+0.42) front=2.00 -> bump-marked ahead, back off
+  t= 120.6  goal (10, 12) unresolved / no progress -> banned
+  t= 134.7  STUCK at (+1.18,+0.45) front=2.00 -> bump-marked ahead, back off
+  t= 138.7  goal (9, 13) unresolved / no progress -> banned
+  t= 164.0  goal (10, 13) unresolved / no progress -> banned
+  t= 164.2  STUCK at (+0.99,+0.50) front=2.00 -> bump-marked ahead, back off
+  t= 199.4  STUCK at (+0.96,+1.34) front=2.00 -> bump-marked ahead, back off
+  t= 206.9  goal (15, 10) unresolved / no progress -> banned
+  t= 206.9  STUCK at (+0.96,+1.35) front=2.00 -> bump-marked ahead, back off
+  t= 239.6  map exhausted [297 cells] -> GIMBAL SCAN at (+1.70,+0.91)
+  t= 242.6  CROUCH PEEK: seeing 1.45 m PAST the wall I believed at bearing 285 deg -> carved
+  t= 267.9  goal (20, 8) unresolved / no progress -> banned
+  t= 269.0  stuck ON a carved lane at (+2.00,+0.83) -> verdict revoked
+  t= 269.0  STUCK at (+2.00,+0.83) front=0.15 -> bump-marked ahead, back off
+  t= 276.7  map exhausted [321 cells] -> GIMBAL SCAN at (+2.00,+0.75)
+  t= 279.7  CROUCH PEEK: seeing 1.80 m PAST the wall I believed at bearing 300 deg -> carved
+  t= 328.5  stuck ON a carved lane at (+2.29,+0.73) -> verdict revoked
+  t= 328.5  STUCK at (+2.29,+0.73) front=2.00 -> bump-marked ahead, back off
+  t= 328.5  SURVEY COMPLETE [354 cells]
+{"done": true, "scouts": 2, "bans": 6, "reason": "survey-complete", "time_s": 328.5, "coverage_cells": 354, "pos": [2.29, 0.73]}

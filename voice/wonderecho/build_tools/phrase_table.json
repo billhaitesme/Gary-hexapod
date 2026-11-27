@@ -1,0 +1,996 @@
+[
+ {
+  "id": 1,
+  "word": "GREETING",
+  "type": "欢迎语",
+  "phrase": "Welcome",
+  "proto": "AA 55 01 00 FB"
+ },
+ {
+  "id": 2,
+  "word": "HAVE-A-REST",
+  "type": "休息语",
+  "phrase": "I’m going to take a break",
+  "proto": "AA 55 02 00 FB"
+ },
+ {
+  "id": 3,
+  "word": "HELLO-HI-WONDER",
+  "type": "唤醒词",
+  "phrase": "I'm here",
+  "proto": "AA 55 03 00 FB"
+ },
+ {
+  "id": 4,
+  "word": "TURN-UP-VOLUME",
+  "type": "增大音量",
+  "phrase": "Volume increase ",
+  "proto": "AA 55 04 00 FB"
+ },
+ {
+  "id": 5,
+  "word": "TURN-DOWN-VOLUME",
+  "type": "减小音量",
+  "phrase": "Volume decrease ",
+  "proto": "AA 55 05 00 FB"
+ },
+ {
+  "id": 6,
+  "word": "MAXIMUM-VOLUME",
+  "type": "最大音量",
+  "phrase": "Maximum volume",
+  "proto": "AA 55 06 00 FB"
+ },
+ {
+  "id": 7,
+  "word": "MEDIUM-VOLUME",
+  "type": "中等音量",
+  "phrase": "Medium volume",
+  "proto": "AA 55 07 00 FB"
+ },
+ {
+  "id": 8,
+  "word": "MINIMUM-VOLUME",
+  "type": "最小音量",
+  "phrase": "Minimum volume",
+  "proto": "AA 55 08 00 FB"
+ },
+ {
+  "id": 9,
+  "word": "START-BROADCASTING",
+  "type": "开播报",
+  "phrase": "Start Broadcasting",
+  "proto": "AA 55 09 00 FB"
+ },
+ {
+  "id": 10,
+  "word": "STOP-BROADCASTING",
+  "type": "关播报",
+  "phrase": "Stop broadcasting",
+  "proto": "AA 55 0A 00 FB"
+ },
+ {
+  "id": 11,
+  "word": "GO-STRAIGHT",
+  "type": "命令词",
+  "phrase": "Going straight",
+  "proto": "AA 55 00 01 FB"
+ },
+ {
+  "id": 12,
+  "word": "GO-BACKWARD",
+  "type": "命令词",
+  "phrase": "Going backward",
+  "proto": "AA 55 00 02 FB"
+ },
+ {
+  "id": 13,
+  "word": "TURN-LEFT",
+  "type": "命令词",
+  "phrase": "Turning left",
+  "proto": "AA 55 00 03 FB"
+ },
+ {
+  "id": 14,
+  "word": "TURN-RIGHT",
+  "type": "命令词",
+  "phrase": "Turning right",
+  "proto": "AA 55 00 04 FB"
+ },
+ {
+  "id": 15,
+  "word": "LEAN-FORWARD",
+  "type": "命令词",
+  "phrase": "Lean forward",
+  "proto": "AA 55 00 05 FB"
+ },
+ {
+  "id": 16,
+  "word": "LEAN-BACK",
+  "type": "命令词",
+  "phrase": "Lean back",
+  "proto": "AA 55 00 06 FB"
+ },
+ {
+  "id": 17,
+  "word": "LEAN-LEFT",
+  "type": "命令词",
+  "phrase": "Lean left",
+  "proto": "AA 55 00 07 FB"
+ },
+ {
+  "id": 18,
+  "word": "LEAN-RIGHT",
+  "type": "命令词",
+  "phrase": "Lean right",
+  "proto": "AA 55 00 08 FB"
+ },
+ {
+  "id": 19,
+  "word": "STOP",
+  "type": "命令词",
+  "phrase": "Copy that ",
+  "proto": "AA 55 00 09 FB"
+ },
+ {
+  "id": 20,
+  "word": "ATTENTION",
+  "type": "命令词",
+  "phrase": "Copy that ",
+  "proto": "AA 55 00 0A FB"
+ },
+ {
+  "id": 21,
+  "word": "GET-DOWN",
+  "type": "命令词",
+  "phrase": "Copy that ",
+  "proto": "AA 55 00 0B FB"
+ },
+ {
+  "id": 22,
+  "word": "SIT-DOWN",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 0C FB"
+ },
+ {
+  "id": 23,
+  "word": "SPEED-UP",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 0D FB"
+ },
+ {
+  "id": 24,
+  "word": "SLOW-DOWN",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 0E FB"
+ },
+ {
+  "id": 25,
+  "word": "RAISE-THE-BODY",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 0F FB"
+ },
+ {
+  "id": 26,
+  "word": "LOWER-THE-BODY",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 10 FB"
+ },
+ {
+  "id": 27,
+  "word": "MAKE-A-SOUND",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 11 FB"
+ },
+ {
+  "id": 28,
+  "word": "TURN-ON-THE-LIGHT",
+  "type": "命令词",
+  "phrase": "Turn on the light",
+  "proto": "AA 55 00 12 FB"
+ },
+ {
+  "id": 29,
+  "word": "TURN-OFF-THE-LIGHT",
+  "type": "命令词",
+  "phrase": "Turn off the light",
+  "proto": "AA 55 00 13 FB"
+ },
+ {
+  "id": 30,
+  "word": "OPEN-THE-DOOR",
+  "type": "命令词",
+  "phrase": "The door is open",
+  "proto": "AA 55 00 14 FB"
+ },
+ {
+  "id": 31,
+  "word": "CLOSE-THE-DOOR",
+  "type": "命令词",
+  "phrase": "The door is closed ",
+  "proto": "AA 55 00 15 FB"
+ },
+ {
+  "id": 32,
+  "word": "TURN-ON-THE-WATER-PUMP",
+  "type": "命令词",
+  "phrase": "Turn on the water pump",
+  "proto": "AA 55 00 16 FB"
+ },
+ {
+  "id": 33,
+  "word": "TURN-OFF-THE-WATER-PUMP",
+  "type": "命令词",
+  "phrase": "Turn off the water pump",
+  "proto": "AA 55 00 17 FB"
+ },
+ {
+  "id": 34,
+  "word": "UNFOLD-THE-AIRING-RACK",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 18 FB"
+ },
+ {
+  "id": 35,
+  "word": "FOLD-THE-ARING-RACK",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 19 FB"
+ },
+ {
+  "id": 36,
+  "word": "HELLO",
+  "type": "命令词",
+  "phrase": "Hi",
+  "proto": "AA 55 00 1A FB"
+ },
+ {
+  "id": 37,
+  "word": "INTRODUCE-YOURSELF",
+  "type": "命令词",
+  "phrase": "Hello, i'm Hiwonder, and i can talk and dance.",
+  "proto": "AA 55 00 1B FB"
+ },
+ {
+  "id": 38,
+  "word": "SHOW-A-SKIII",
+  "type": "命令词",
+  "phrase": "Watch closely",
+  "proto": "AA 55 00 1C FB"
+ },
+ {
+  "id": 39,
+  "word": "MARCH",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 1D FB"
+ },
+ {
+  "id": 40,
+  "word": "SHAKE-HEAD",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 1E FB"
+ },
+ {
+  "id": 41,
+  "word": "DIVE-FORWARD",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 1F FB"
+ },
+ {
+  "id": 42,
+  "word": "DIVE-BACKWARD",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 20 FB"
+ },
+ {
+  "id": 43,
+  "word": "COMBAT MODE",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 21 FB"
+ },
+ {
+  "id": 44,
+  "word": "SQUAT-DOWN",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 22 FB"
+ },
+ {
+  "id": 45,
+  "word": "SHAKE-IT-OFF",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 23 FB"
+ },
+ {
+  "id": 46,
+  "word": "TURN-ON-THE-FAN",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 24 FB"
+ },
+ {
+  "id": 47,
+  "word": "TURN-OFF-THE-FAN",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 25 FB"
+ },
+ {
+  "id": 48,
+  "word": "ROTATING-STEERING-GEAR",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 26 FB"
+ },
+ {
+  "id": 49,
+  "word": "GIVE-A-RED-LIGHT",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 27 FB"
+ },
+ {
+  "id": 50,
+  "word": "GIVE-A-GREEN-LIGHT",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 28 FB"
+ },
+ {
+  "id": 51,
+  "word": "GIVE-A-BLUE-LIGHT",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 29 FB"
+ },
+ {
+  "id": 52,
+  "word": "SHOW-SMILEY-FACE",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 2A FB"
+ },
+ {
+  "id": 53,
+  "word": "SHOW-CRYING-FACE",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 2B FB"
+ },
+ {
+  "id": 54,
+  "word": "START-FACE-RECOGNITION",
+  "type": "命令词",
+  "phrase": "Start face recognition",
+  "proto": "AA 55 00 62 FB"
+ },
+ {
+  "id": 55,
+  "word": "START-LABEL-RECOGNITION",
+  "type": "命令词",
+  "phrase": "Start label recognition",
+  "proto": "AA 55 00 63 FB"
+ },
+ {
+  "id": 56,
+  "word": "START-WASTE-SORTING",
+  "type": "命令词",
+  "phrase": "Start waste soriting",
+  "proto": "AA 55 00 64 FB"
+ },
+ {
+  "id": 57,
+  "word": "START-COLOR-RECOGNITION",
+  "type": "命令词",
+  "phrase": "Start color recognition",
+  "proto": "AA 55 00 65 FB"
+ },
+ {
+  "id": 58,
+  "word": "START-LINE-FOLLOWING",
+  "type": "命令词",
+  "phrase": "Start line following",
+  "proto": "AA 55 00 66 FB"
+ },
+ {
+  "id": 59,
+  "word": "START-COLOR-TRACKING",
+  "type": "命令词",
+  "phrase": "Start color tracking",
+  "proto": "AA 55 00 67 FB"
+ },
+ {
+  "id": 60,
+  "word": "START-OBSTACLE-AVOIDANCE",
+  "type": "命令词",
+  "phrase": "Start obstacle avoidance",
+  "proto": "AA 55 00 68 FB"
+ },
+ {
+  "id": 61,
+  "word": "SORT-RED",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 69 FB"
+ },
+ {
+  "id": 62,
+  "word": "SORT-GREEN",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 6A FB"
+ },
+ {
+  "id": 63,
+  "word": "SORT-BLUE",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 6B FB"
+ },
+ {
+  "id": 64,
+  "word": "DANCE",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 6C FB"
+ },
+ {
+  "id": 65,
+  "word": "PUSH-UP",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 6D FB"
+ },
+ {
+  "id": 66,
+  "word": "LEFT-FOOT-SHOOT",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 6E FB"
+ },
+ {
+  "id": 67,
+  "word": "RIGHT-FOOT-SHOOT",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 6F FB"
+ },
+ {
+  "id": 68,
+  "word": "TWIST",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 71 FB"
+ },
+ {
+  "id": 69,
+  "word": "SIT-UP",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 72 FB"
+ },
+ {
+  "id": 70,
+  "word": "BOW",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 73 FB"
+ },
+ {
+  "id": 71,
+  "word": "SPREAD-THE-HANDS",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 74 FB"
+ },
+ {
+  "id": 72,
+  "word": "WAVE-HAND",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 75 FB"
+ },
+ {
+  "id": 73,
+  "word": "MARCH-IN-PLACE",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 76 FB"
+ },
+ {
+  "id": 74,
+  "word": "FALL-AND-STAND-UP",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 77 FB"
+ },
+ {
+  "id": 75,
+  "word": "STRUT",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 78 FB"
+ },
+ {
+  "id": 76,
+  "word": "LEFT-HOOK",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 79 FB"
+ },
+ {
+  "id": 77,
+  "word": "RIGHT-HOOK",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 7A FB"
+ },
+ {
+  "id": 78,
+  "word": "DETECTED-CLOSE-PLAY",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 7B FB"
+ },
+ {
+  "id": 79,
+  "word": "SORT-YELLOW",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 7C FB"
+ },
+ {
+  "id": 91,
+  "word": "EXECUTE-ACTION-ONE",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 80 FB"
+ },
+ {
+  "id": 92,
+  "word": "EXECUTE-ACTION-TWO",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 81 FB"
+ },
+ {
+  "id": 93,
+  "word": "EXECUTE-ACTION-THREE",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 82 FB"
+ },
+ {
+  "id": 94,
+  "word": "EXECUTE-ACTION-FOUR",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 83 FB"
+ },
+ {
+  "id": 95,
+  "word": "EXECUTE-ACTION-FIVE",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 84 FB"
+ },
+ {
+  "id": 96,
+  "word": "EXECUTE-ACTION-SIX",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 85 FB"
+ },
+ {
+  "id": 97,
+  "word": "EXECUTE-ACTION-SEVEN",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 86 FB"
+ },
+ {
+  "id": 98,
+  "word": "EXECUTE-ACTION-EIGHT",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 87 FB"
+ },
+ {
+  "id": 99,
+  "word": "EXECUTE-ACTION-NINE",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 88 FB"
+ },
+ {
+  "id": 100,
+  "word": "EXECUTE-ACTION-TEN",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 89 FB"
+ },
+ {
+  "id": 101,
+  "word": "EXECUTE-ACTION-ELEVEN",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 A1 FB"
+ },
+ {
+  "id": 102,
+  "word": "EXECUTE-ACTION-TWELVE",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 A2 FB"
+ },
+ {
+  "id": 103,
+  "word": "EXECUTE-ACTION-THIRTEEN",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 A3 FB"
+ },
+ {
+  "id": 104,
+  "word": "EXECUTE-ACTION-FOURTEEN",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 A4 FB"
+ },
+ {
+  "id": 105,
+  "word": "EXECUTE-ACTION-FIFTEEN",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 A5 FB"
+ },
+ {
+  "id": 106,
+  "word": "EXECUTE-ACTION-SIXTEEN",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 A6 FB"
+ },
+ {
+  "id": 107,
+  "word": "EXECUTE-ACTION-SEVENTEEN",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 A7 FB"
+ },
+ {
+  "id": 108,
+  "word": "EXECUTE-ACTION-EIGHTEEN",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 A8 FB"
+ },
+ {
+  "id": 109,
+  "word": "EXECUTE-ACTION-NINETEEN",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 A9 FB"
+ },
+ {
+  "id": 110,
+  "word": "EXECUTE-ACTION-TWENTY",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 AA FB"
+ },
+ {
+  "id": 111,
+  "word": "EXECUTE-ACTION-TWENTY-ONE",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 AB FB"
+ },
+ {
+  "id": 112,
+  "word": "EXECUTE-ACTION-TWENTY-TWO",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 AC FB"
+ },
+ {
+  "id": 113,
+  "word": "EXECUTE-ACTION-TWENTY-THREE",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 AD FB"
+ },
+ {
+  "id": 114,
+  "word": "EXECUTE-ACTION-TWENTY-FOUR",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 AE FB"
+ },
+ {
+  "id": 115,
+  "word": "EXECUTE-ACTION-TWENTY-FIVE",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 AF FB"
+ },
+ {
+  "id": 116,
+  "word": "EXECUTE-ACTION-TWENTY-SIX",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 B0 FB"
+ },
+ {
+  "id": 117,
+  "word": "EXECUTE-ACTION-TWENTY-SEVEN",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 B1 FB"
+ },
+ {
+  "id": 118,
+  "word": "EXECUTE-ACTION-TWENTY-EIGHT",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 B2 FB"
+ },
+ {
+  "id": 119,
+  "word": "EXECUTE-ACTION-TWENTY-NINE",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 B3 FB"
+ },
+ {
+  "id": 120,
+  "word": "EXECUTE-ACTION-THIRTY",
+  "type": "命令词",
+  "phrase": "Copy that",
+  "proto": "AA 55 00 B4 FB"
+ },
+ {
+  "id": 150,
+  "word": "RECYCLABLE-WASTE",
+  "type": "播报语",
+  "phrase": "Recyclable waste",
+  "proto": "AA 55 FF 01 FB"
+ },
+ {
+  "id": 151,
+  "word": "KITCHEN-WASTE",
+  "type": "播报语",
+  "phrase": "Kitchen waster",
+  "proto": "AA 55 FF 02 FB"
+ },
+ {
+  "id": 152,
+  "word": "HAZARDOUS-WASTE",
+  "type": "播报语",
+  "phrase": "Hazardous Waste",
+  "proto": "AA 55 FF 03 FB"
+ },
+ {
+  "id": 153,
+  "word": "OTHER-WASTE",
+  "type": "播报语",
+  "phrase": "Other waster",
+  "proto": "AA 55 FF 04 FB"
+ },
+ {
+  "id": 154,
+  "word": "OBSTACLE-AHEAD",
+  "type": "播报语",
+  "phrase": "Obstacle ahead",
+  "proto": "AA 55 FF 05 FB"
+ },
+ {
+  "id": 155,
+  "word": "PARKING",
+  "type": "播报语",
+  "phrase": "Parking completed",
+  "proto": "AA 55 FF 06 FB"
+ },
+ {
+  "id": 156,
+  "word": "RESTART-DEPARTURE",
+  "type": "播报语",
+  "phrase": "Restart departure",
+  "proto": "AA 55 FF 07 FB"
+ },
+ {
+  "id": 157,
+  "word": "DETECT-LEFT-TURN",
+  "type": "播报语",
+  "phrase": "Left turn detected",
+  "proto": "AA 55 FF 08 FB"
+ },
+ {
+  "id": 158,
+  "word": "DETECT-RIGHT-TURN",
+  "type": "播报语",
+  "phrase": "Right turn detected",
+  "proto": "AA 55 FF 09 FB"
+ },
+ {
+  "id": 159,
+  "word": "DETECT-PARKING",
+  "type": "播报语",
+  "phrase": "Parking detected",
+  "proto": "AA 55 FF 0A FB"
+ },
+ {
+  "id": 160,
+  "word": "DETECT-RED-LIGHT",
+  "type": "播报语",
+  "phrase": "Red light detected",
+  "proto": "AA 55 FF 0B FB"
+ },
+ {
+  "id": 161,
+  "word": "DETECT-GREEN-LIGHT",
+  "type": "播报语",
+  "phrase": "Green light detected",
+  "proto": "AA 55 FF 0C FB"
+ },
+ {
+  "id": 162,
+  "word": "DETECT-U-TURN",
+  "type": "播报语",
+  "phrase": "U-turn detected",
+  "proto": "AA 55 FF 0D FB"
+ },
+ {
+  "id": 163,
+  "word": "DETECT-TURN",
+  "type": "播报语",
+  "phrase": "Turn detected",
+  "proto": "AA 55 FF 0E FB"
+ },
+ {
+  "id": 164,
+  "word": "WELCOME-YOU",
+  "type": "播报语",
+  "phrase": "Hello welcome",
+  "proto": "AA 55 FF 0F FB"
+ },
+ {
+  "id": 165,
+  "word": "DETECT-OBJECT-AHEAD-GRABBING",
+  "type": "播报语",
+  "phrase": "Object detected ahead, grabbing",
+  "proto": "AA 55 FF 10 FB"
+ },
+ {
+  "id": 166,
+  "word": "DETECT-OBJECT-AHEAD-OUT-OF-REACH-CANNOT-GRAB",
+  "type": "播报语",
+  "phrase": "Object detected ahead, out of reach, cannot grab",
+  "proto": "AA 55 FF 11 FB"
+ },
+ {
+  "id": 167,
+  "word": "GRABBING-END",
+  "type": "播报语",
+  "phrase": "Grabbing ended",
+  "proto": "AA 55 FF 12 FB"
+ },
+ {
+  "id": 181,
+  "word": "DETECTED-ZERO",
+  "type": "播报语",
+  "phrase": "Detected zero",
+  "proto": "AA 55 FF 20 FB"
+ },
+ {
+  "id": 182,
+  "word": "DETECTED-ONE",
+  "type": "播报语",
+  "phrase": "Detected one",
+  "proto": "AA 55 FF 21 FB"
+ },
+ {
+  "id": 183,
+  "word": "DETECTED-TWO",
+  "type": "播报语",
+  "phrase": "Detected two",
+  "proto": "AA 55 FF 22 FB"
+ },
+ {
+  "id": 184,
+  "word": "DETECTED-THREE",
+  "type": "播报语",
+  "phrase": "Detected three",
+  "proto": "AA 55 FF 23 FB"
+ },
+ {
+  "id": 185,
+  "word": "DETECTED-FOUR",
+  "type": "播报语",
+  "phrase": "Detected four",
+  "proto": "AA 55 FF 24 FB"
+ },
+ {
+  "id": 186,
+  "word": "DETECTED-FIVE",
+  "type": "播报语",
+  "phrase": "Detected five",
+  "proto": "AA 55 FF 25 FB"
+ },
+ {
+  "id": 187,
+  "word": "DETECTED-SIX",
+  "type": "播报语",
+  "phrase": "Detected six",
+  "proto": "AA 55 FF 26 FB"
+ },
+ {
+  "id": 188,
+  "word": "DETECTED-SEVEN",
+  "type": "播报语",
+  "phrase": "Detected seven",
+  "proto": "AA 55 FF 27 FB"
+ },
+ {
+  "id": 189,
+  "word": "DETECTED-EIGHT",
+  "type": "播报语",
+  "phrase": "Detected eight",
+  "proto": "AA 55 FF 28 FB"
+ },
+ {
+  "id": 190,
+  "word": "DETECTED-NINE",
+  "type": "播报语",
+  "phrase": "Detected nine",
+  "proto": "AA 55 FF 29 FB"
+ },
+ {
+  "id": 191,
+  "word": "DETECTED-RED",
+  "type": "播报语",
+  "phrase": "Detected red",
+  "proto": "AA 55 FF 2A FB"
+ },
+ {
+  "id": 192,
+  "word": "DETECTED-GREEN",
+  "type": "播报语",
+  "phrase": "Detected green",
+  "proto": "AA 55 FF 2B FB"
+ },
+ {
+  "id": 193,
+  "word": "DETECTED-BLUE",
+  "type": "播报语",
+  "phrase": "Detected blue",
+  "proto": "AA 55 FF 2C FB"
+ },
+ {
+  "id": 194,
+  "word": "DETECTED-YELLOW",
+  "type": "播报语",
+  "phrase": "Detected yellow",
+  "proto": "AA 55 FF 2D FB"
+ },
+ {
+  "id": 195,
+  "word": "DETECTED-PURPLE",
+  "type": "播报语",
+  "phrase": "Detected purple",
+  "proto": "AA 55 FF 2E FB"
+ }
+]

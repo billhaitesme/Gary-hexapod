@@ -1,0 +1,91 @@
+seed score 8.0  {'creep_t': 2.4, 'climb_v': 0.014, 'dy': 0.026, 'height': 0.0, 'pitch_rate': 0.12, 'pitch_delay': 0.8}
+  g1     6.9 foot=8.3 pitch=4.1 base=2.7
+  g1     5.1 foot=6.1 pitch=0.9 base=3.6
+  g1     6.4 foot=6.6 pitch=1.9 base=3.2
+  g1     5.4 foot=6.1 pitch=1.1 base=3.5
+  g1     5.1 foot=6.5 pitch=1.5 base=3.6
+  g1     5.1 foot=6.2 pitch=1.2 base=3.7
+  g1     8.0 foot=8.2 pitch=2.8 base=2.7
+  g1     6.2 foot=6.6 pitch=1.2 base=3.4
+g1 BEST 5.1  {'creep_t': 2.3222851284672945, 'climb_v': 0.007567465869581694, 'dy': 0.042, 'height': 0.024764556071897037, 'pitch_rate': 0.0889521903745325, 'pitch_delay': 1.190677079459897}
+  g2     6.8 foot=7.4 pitch=1.5 base=3.1
+  g2     8.2 foot=8.3 pitch=3.0 base=2.6
+  g2     4.2 foot=3.7 pitch=1.3 base=5.0
+  g2     3.5 foot=5.3 pitch=0.7 base=4.3
+  g2     6.6 foot=7.6 pitch=1.6 base=3.0
+  g2     4.5 foot=6.2 pitch=0.9 base=3.8
+  g2     5.7 foot=6.9 pitch=2.8 base=3.3
+  g2     4.3 foot=3.4 pitch=0.4 base=4.9
+g2 BEST 3.5  {'creep_t': 2.0792906831752775, 'climb_v': 0.014157953538940712, 'dy': 0.009742410688827925, 'height': 0.023099287927647177, 'pitch_rate': 0.017752447408404263, 'pitch_delay': 0.06617860061288638}
+  g3     3.2 foot=4.4 pitch=0.7 base=4.7
+  g3     3.8 foot=3.9 pitch=0.4 base=4.8
+  g3     3.8 foot=3.7 pitch=0.8 base=5.1
+  g3     4.0 foot=6.1 pitch=0.5 base=3.9
+  g3     6.1 foot=6.1 pitch=0.8 base=3.5
+  g3     4.5 foot=6.2 pitch=1.2 base=3.7
+  g3     3.9 foot=3.8 pitch=1.0 base=5.0
+  g3     5.7 foot=6.1 pitch=1.2 base=3.5
+g3 BEST 3.2  {'creep_t': 2.077865980768072, 'climb_v': 0.019543555625348295, 'dy': 0.01615638826112231, 'height': 0.02483933097116542, 'pitch_rate': 0.0036775873759444695, 'pitch_delay': 0.2436319039633503}
+  g4     3.0 foot=5.6 pitch=0.4 base=4.3
+  g4     3.5 foot=5.8 pitch=1.0 base=4.2
+  g4     5.0 foot=6.3 pitch=1.4 base=3.6
+  g4     4.4 foot=3.3 pitch=0.4 base=4.9
+  g4     5.1 foot=6.1 pitch=0.7 base=3.7
+  g4     2.6 foot=4.4 pitch=0.7 base=4.8
+  g4     2.1 foot=5.0 pitch=0.4 base=4.6
+  g4     4.0 foot=3.1 pitch=0.4 base=5.0
+g4 BEST 2.1  {'creep_t': 2.6265001132059798, 'climb_v': 0.02216891207010016, 'dy': 0.005717594894252038, 'height': 0.025465326786634285, 'pitch_rate': 0.020652878957045907, 'pitch_delay': 1.6850135719394361}
+  g5     2.0 foot=5.9 pitch=1.1 base=4.4
+  g5     3.1 foot=6.1 pitch=0.7 base=4.2
+  g5     2.3 foot=5.3 pitch=0.9 base=4.5
+  g5     2.5 foot=6.0 pitch=1.5 base=4.3
+  g5     1.9 foot=5.1 pitch=1.3 base=4.7
+  g5     4.0 foot=6.3 pitch=2.4 base=4.0
+  g5     3.1 foot=6.0 pitch=2.5 base=4.2
+  g5     2.8 foot=4.5 pitch=0.7 base=4.8
+g5 BEST 1.9  {'creep_t': 2.457570080868324, 'climb_v': 0.018738989492983475, 'dy': 0.0, 'height': 0.017981881675561466, 'pitch_rate': 0.0, 'pitch_delay': 2.040623536049367}
+  g6     2.8 foot=4.9 pitch=1.1 base=4.6
+  g6     2.0 foot=5.4 pitch=1.3 base=4.5
+  g6     2.2 foot=5.5 pitch=0.7 base=4.5
+  g6     2.6 foot=5.3 pitch=0.9 base=4.5
+  g6     2.7 foot=4.6 pitch=0.5 base=4.7
+  g6     2.6 foot=4.5 pitch=0.4 base=4.8
+  g6     2.1 foot=5.0 pitch=1.2 base=4.6
+  g6     3.8 foot=6.9 pitch=1.5 base=3.9
+g6 BEST 1.9  {'creep_t': 2.457570080868324, 'climb_v': 0.018738989492983475, 'dy': 0.0, 'height': 0.017981881675561466, 'pitch_rate': 0.0, 'pitch_delay': 2.040623536049367}
+  g7     2.9 foot=6.8 pitch=1.5 base=4.0
+  g7     2.4 foot=4.9 pitch=0.7 base=4.6
+  g7     2.1 foot=5.0 pitch=1.1 base=4.7
+  g7     2.5 foot=5.9 pitch=0.9 base=4.3
+  g7     2.5 foot=4.7 pitch=0.9 base=4.7
+  g7     2.3 foot=5.0 pitch=1.5 base=4.6
+  g7     2.5 foot=4.6 pitch=1.1 base=4.7
+  g7     2.5 foot=4.8 pitch=0.6 base=4.7
+g7 BEST 1.9  {'creep_t': 2.457570080868324, 'climb_v': 0.018738989492983475, 'dy': 0.0, 'height': 0.017981881675561466, 'pitch_rate': 0.0, 'pitch_delay': 2.040623536049367}
+  g8     2.7 foot=6.2 pitch=1.4 base=4.2
+  g8     2.7 foot=5.9 pitch=1.1 base=4.3
+  g8     2.4 foot=5.6 pitch=1.6 base=4.4
+  g8     2.4 foot=4.6 pitch=0.5 base=4.8
+  g8     2.0 foot=5.0 pitch=1.3 base=4.6
+  g8     2.1 foot=5.7 pitch=1.3 base=4.4
+  g8     2.8 foot=4.7 pitch=0.9 base=4.7
+  g8     1.8 foot=5.6 pitch=1.4 base=4.5
+g8 BEST 1.8  {'creep_t': 2.506613619595912, 'climb_v': 0.01854667302857413, 'dy': 0.0, 'height': 0.017249498796851715, 'pitch_rate': 0.014129568183963912, 'pitch_delay': 1.9802789964832683}
+  g9     2.4 foot=5.3 pitch=0.6 base=4.5
+  g9     1.9 foot=5.2 pitch=1.1 base=4.6
+  g9     2.6 foot=5.1 pitch=1.5 base=4.5
+  g9     1.7 foot=6.1 pitch=0.6 base=4.4
+  g9     1.7 foot=5.3 pitch=0.5 base=4.6
+  g9     2.2 foot=6.5 pitch=0.4 base=4.2
+  g9     2.4 foot=6.1 pitch=0.5 base=4.3
+  g9     1.9 foot=6.7 pitch=0.6 base=4.2
+g9 BEST 1.7  {'creep_t': 2.6481628050420296, 'climb_v': 0.019169866749793745, 'dy': 0.0, 'height': 0.020756005663401488, 'pitch_rate': 0.03340206954367293, 'pitch_delay': 2.160715014513879}
+  g10     1.9 foot=6.2 pitch=1.0 base=4.3
+  g10     1.9 foot=5.1 pitch=0.6 base=4.6
+  g10     2.3 foot=6.4 pitch=0.4 base=4.2
+  g10     1.9 foot=5.9 pitch=0.6 base=4.4
+  g10     2.2 foot=6.5 pitch=0.4 base=4.2
+  g10     1.9 foot=6.0 pitch=0.4 base=4.4
+  g10     2.5 foot=6.7 pitch=0.9 base=4.1
+  g10     1.9 foot=6.2 pitch=0.8 base=4.3
+g10 BEST 1.7  {'creep_t': 2.6481628050420296, 'climb_v': 0.019169866749793745, 'dy': 0.0, 'height': 0.020756005663401488, 'pitch_rate': 0.03340206954367293, 'pitch_delay': 2.160715014513879}

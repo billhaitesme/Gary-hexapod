@@ -1,0 +1,43 @@
+{
+ "gait": "WAVE",
+ "baseline": {
+  "params": {
+   "cadence_ms": 1200,
+   "lift_cm": 2.5,
+   "speed_cap": 0.15
+  },
+  "metrics": {
+   "gait": "WAVE",
+   "stick": 1.0,
+   "lift_cm": 2.5,
+   "touchdown": "match",
+   "cadence_ms": 1200,
+   "commanded_v_cm_s": 0.53,
+   "achieved_v_cm_s": 0.49,
+   "knee_torque_peak": 0.176,
+   "knee_sat_pct": 3.1,
+   "body_height_end": 0.054
+  },
+  "score": 0.33
+ },
+ "best": {
+  "params": {
+   "cadence_ms": 911,
+   "lift_cm": 1.0920644808726765,
+   "speed_cap": 0.9971165369304785
+  },
+  "metrics": {
+   "gait": "WAVE",
+   "stick": 1.0,
+   "lift_cm": 1.0920644808726765,
+   "touchdown": "match",
+   "cadence_ms": 911,
+   "commanded_v_cm_s": 3.49,
+   "achieved_v_cm_s": 3.12,
+   "knee_torque_peak": 0.176,
+   "knee_sat_pct": 5.4,
+   "body_height_end": 0.054
+  },
+  "score": 2.85
+ }
+}

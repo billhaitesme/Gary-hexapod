@@ -1,0 +1,9 @@
+  t=  61.1  mouth micro-peek: measuring the opening edges before committing
+  t=  62.7  mouth micro-peek: measuring the opening edges before committing
+  t=  81.8  lane jam at (+2.16,+0.80) -> push on (1)
+  t=  81.8  STUCK at (+2.16,+0.80) front=2.00 -> bump-marked ahead, back off
+  t=  98.7  lane jam at (+2.32,+0.78) -> push on (1)
+  t=  98.7  STUCK at (+2.32,+0.78) front=2.00 -> bump-marked ahead, back off
+  t= 106.3  lane jam at (+2.36,+0.77) -> push on (2)
+  t= 106.3  STUCK at (+2.36,+0.77) front=2.00 -> bump-marked ahead, back off
+{"done": true, "scouts": 0, "bans": 0, "reason": "finished", "tunnel": {"y": [0.752, 0.773, 0.784], "footN": 0.902, "footS": 0.628, "band_s": 14.0}, "carves": [[2.23, 0.79, 1, 0, 0.0, 0.097, -0.285, 0.079, -0.091, 888, 2, 918]], "time_s": 112.8, "coverage_cells": 367, "knee_sat": 0.552, "sat_by": {"crouch": [0.68, 47.1], "pivot": [0.39, 26.0], "steer": [0.73, 15.4], "straight": [0.37, 24.3]}, "pos": [2.42, 0.78]}

@@ -1,0 +1,26 @@
+  t=  32.9  lane jam at (+0.05,-0.01) -> push on (1)
+  t=  32.9  STUCK at (+0.05,-0.01) front=0.04 -> bump-marked ahead, back off
+  t=  40.4  lane jam at (+0.03,-0.01) -> push on (2)
+  t=  40.4  STUCK at (+0.03,-0.01) front=0.04 -> bump-marked ahead, back off
+  t=  47.9  lane jam at (+0.04,-0.01) -> push on (3)
+  t=  47.9  STUCK at (+0.04,-0.01) front=0.04 -> bump-marked ahead, back off
+  t=  55.4  lane jam at (+0.05,-0.01) -> push on (4)
+  t=  55.4  STUCK at (+0.05,-0.01) front=0.04 -> bump-marked ahead, back off
+  t=  62.9  lane jam at (+0.03,-0.01) -> push on (5)
+  t=  62.9  STUCK at (+0.03,-0.01) front=0.04 -> bump-marked ahead, back off
+  t=  70.4  lane jam at (+0.05,-0.01) -> push on (6)
+  t=  70.4  STUCK at (+0.05,-0.01) front=0.04 -> bump-marked ahead, back off
+  t=  78.0  lane jam at (+0.04,-0.01) -> push on (7)
+  t=  78.0  STUCK at (+0.04,-0.01) front=0.05 -> bump-marked ahead, back off
+  t=  85.5  lane never admits me at (+0.04,-0.01) -> verdict revoked
+  t=  85.5  STUCK at (+0.04,-0.01) front=0.05 -> bump-marked ahead, back off
+  t= 129.8  STUCK at (+0.29,+1.33) front=2.00 -> bump-marked ahead, back off
+  t= 137.6  I DON'T FIT at (+0.29,+1.35) -> opening blocked
+  t= 137.6  STUCK at (+0.29,+1.35) front=2.00 -> bump-marked ahead, back off
+  t= 202.4  STUCK at (+0.75,+0.42) front=2.00 -> bump-marked ahead, back off
+  t= 244.9  STUCK at (+1.13,+1.39) front=2.00 -> bump-marked ahead, back off
+  t= 277.9  WORLD SHIFTED: chamber door slides east (his map now lies) (he doesn't know yet)
+  t= 318.2  lane jam at (+2.32,+0.77) -> push on (1)
+  t= 318.2  STUCK at (+2.32,+0.77) front=2.00 -> bump-marked ahead, back off
+{"done": true, "scouts": 0, "bans": 8, "reason": "finished", "time_s": 330.7, "coverage_cells": 431, "knee_sat": 0.518, "sat_by": {"back": [0.19, 7.0], "climb": [0.63, 26.4], "crouch": [0.64, 152.2], "pivot": [0.47, 98.8], "steer": [0.3, 19.2], "straight": [0.1, 27.1]}, "pos": [2.42, 0.67]}
+EXAM PASSED {"done": true, "scouts": 0, "bans": 8, "reason": "finished", "time_s": 330.7, "coverage_cells": 431, "knee_sat": 0.518, "sat_by": {"back": [0.19, 7.0], "climb": [0.63, 26.4], "crouch": [0.64, 152.2], "pivot": [0.47, 98.8], "steer": [0.3, 19.2], "straight": [0.1, 27.1]}, "pos": [2.42, 0.67]}

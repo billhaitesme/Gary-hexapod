@@ -1,0 +1,11 @@
+  t=  71.4  map exhausted [296 cells] -> GIMBAL SCAN at (+1.89,+0.50)
+  t=  74.4  CROUCH PEEK: seeing 1.65 m PAST the wall I believed at bearing 270 deg -> carved
+  t=  97.7  lane jam at (+2.16,+0.58) -> push on (1)
+  t=  97.7  STUCK at (+2.16,+0.58) front=2.00 -> bump-marked ahead, back off
+  t= 105.2  lane jam at (+2.16,+0.59) -> push on (2)
+  t= 105.2  STUCK at (+2.16,+0.59) front=2.00 -> bump-marked ahead, back off
+  t= 112.7  lane jam at (+2.18,+0.59) -> push on (3)
+  t= 112.7  STUCK at (+2.18,+0.59) front=0.05 -> bump-marked ahead, back off
+  t= 120.2  lane jam at (+2.17,+0.60) -> push on (4)
+  t= 120.2  STUCK at (+2.17,+0.60) front=2.00 -> bump-marked ahead, back off
+{"done": true, "scouts": 1, "bans": 1, "reason": "finished", "time_s": 146.2, "coverage_cells": 361, "knee_sat": 0.611, "sat_by": {"climb": [0.78, 5.4], "crouch": [0.74, 71.3], "pivot": [0.63, 27.4], "scan": [0.16, 3.0], "steer": [0.5, 15.9], "straight": [0.28, 23.2]}, "pos": [2.42, 0.7]}

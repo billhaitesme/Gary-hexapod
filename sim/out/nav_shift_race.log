@@ -1,0 +1,29 @@
+  t=  29.0  lane jam at (+0.07,+0.01) -> push on (1)
+  t=  29.0  STUCK at (+0.07,+0.01) front=0.07 -> bump-marked ahead, back off
+  t=  36.5  lane jam at (+0.07,+0.01) -> push on (2)
+  t=  36.5  STUCK at (+0.07,+0.01) front=0.06 -> bump-marked ahead, back off
+  t=  44.0  lane jam at (+0.06,+0.00) -> push on (3)
+  t=  44.0  STUCK at (+0.06,+0.00) front=0.06 -> bump-marked ahead, back off
+  t=  51.5  lane jam at (+0.06,+0.01) -> push on (4)
+  t=  51.5  STUCK at (+0.06,+0.01) front=0.06 -> bump-marked ahead, back off
+  t=  59.1  lane never admits me at (+0.07,+0.01) -> verdict revoked
+  t=  59.1  STUCK at (+0.07,+0.01) front=0.07 -> bump-marked ahead, back off
+  t= 201.9  STUCK at (+0.74,+0.44) front=2.00 -> bump-marked ahead, back off
+  t= 212.1  STUCK at (+0.76,+0.44) front=0.22 -> bump-marked ahead, back off
+  t= 222.5  STUCK at (+0.76,+0.39) front=2.00 -> bump-marked ahead, back off
+  t= 263.0  STUCK at (+0.99,+1.28) front=2.00 -> bump-marked ahead, back off
+  t= 271.2  STUCK at (+0.95,+1.32) front=2.00 -> bump-marked ahead, back off
+  t= 326.0  WORLD SHIFTED: chamber door slides east (his map now lies) (he doesn't know yet)
+  t= 361.1  lane jam at (+2.28,+0.81) -> push on (1)
+  t= 361.1  STUCK at (+2.28,+0.81) front=2.00 -> bump-marked ahead, back off
+  t= 368.6  lane jam at (+2.29,+0.81) -> push on (2)
+  t= 368.6  STUCK at (+2.29,+0.81) front=2.00 -> bump-marked ahead, back off
+  t= 376.1  lane jam at (+2.29,+0.81) -> push on (3)
+  t= 376.1  STUCK at (+2.29,+0.81) front=2.00 -> bump-marked ahead, back off
+  t= 383.6  lane jam at (+2.29,+0.81) -> push on (4)
+  t= 383.6  STUCK at (+2.29,+0.81) front=2.00 -> bump-marked ahead, back off
+  t= 391.1  lane never admits me at (+2.28,+0.81) -> verdict revoked
+  t= 391.1  STUCK at (+2.28,+0.81) front=2.00 -> bump-marked ahead, back off
+  t= 400.6  STUCK at (+2.29,+0.80) front=2.00 -> bump-marked ahead, back off
+{"done": false, "scouts": 0, "bans": 6, "reason": "timeout", "time_s": 900.0, "coverage_cells": 431, "pos": [2.28, 0.77]}
+EXAM FAILED {"done": false, "scouts": 0, "bans": 6, "reason": "timeout", "time_s": 900.0, "coverage_cells": 431, "pos": [2.28, 0.77]}

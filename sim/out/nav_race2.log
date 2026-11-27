@@ -1,0 +1,92 @@
+  t=   0.8  map exhausted [349 cells] -> GIMBAL SCAN at (-0.00,+0.05)
+  t=   3.8  CROUCH PEEK: seeing 1.10 m PAST the wall I believed at bearing 0 deg -> carved
+  t=  11.8  map exhausted [349 cells] -> GIMBAL SCAN at (+0.00,+0.12)
+  t=  14.8  peek matches the map -> full gimbal
+  t=  31.8  GIMBAL: nothing low at this wall -> next suspect
+  t=  39.8  map exhausted [349 cells] -> GIMBAL SCAN at (-0.03,+0.12)
+  t=  42.8  peek matches the map -> full gimbal
+  t=  59.8  GIMBAL: nothing low at this wall -> next suspect
+  t=  68.0  map exhausted [349 cells] -> GIMBAL SCAN at (+0.01,+0.13)
+  t=  71.0  peek matches the map -> full gimbal
+  t=  88.0  GIMBAL: nothing low at this wall -> next suspect
+  t=  96.0  map exhausted [349 cells] -> GIMBAL SCAN at (+0.01,+0.13)
+  t=  99.1  peek matches the map -> full gimbal
+  t= 116.1  GIMBAL: nothing low at this wall -> next suspect
+  t= 124.1  map exhausted [349 cells] -> GIMBAL SCAN at (-0.00,+0.14)
+  t= 127.1  peek matches the map -> full gimbal
+  t= 144.1  GIMBAL: nothing low at this wall -> next suspect
+  t= 152.1  map exhausted [349 cells] -> GIMBAL SCAN at (-0.01,+0.13)
+  t= 155.1  peek matches the map -> full gimbal
+  t= 172.1  GIMBAL: nothing low at this wall -> next suspect
+  t= 180.1  map exhausted [349 cells] -> GIMBAL SCAN at (-0.03,+0.15)
+  t= 183.1  peek matches the map -> full gimbal
+  t= 200.1  GIMBAL: nothing low at this wall -> next suspect
+  t= 208.1  map exhausted [349 cells] -> GIMBAL SCAN at (-0.06,+0.15)
+  t= 211.1  peek matches the map -> full gimbal
+  t= 228.1  GIMBAL: nothing low at this wall -> next suspect
+  t= 228.1  IMPASSE: map says no way out -> DOUBT (3 walls demoted to unknown)
+  t= 243.6  map exhausted [347 cells] -> GIMBAL SCAN at (-0.08,+0.32)
+  t= 246.6  peek matches the map -> full gimbal
+  t= 263.6  GIMBAL: nothing low at this wall -> next suspect
+  t= 271.6  map exhausted [347 cells] -> GIMBAL SCAN at (-0.04,+0.12)
+  t= 274.6  peek matches the map -> full gimbal
+  t= 291.6  GIMBAL: nothing low at this wall -> next suspect
+  t= 299.6  map exhausted [347 cells] -> GIMBAL SCAN at (-0.04,+0.09)
+  t= 302.6  peek matches the map -> full gimbal
+  t= 319.6  GIMBAL: nothing low at this wall -> next suspect
+  t= 327.6  map exhausted [347 cells] -> GIMBAL SCAN at (-0.02,+0.07)
+  t= 330.6  peek matches the map -> full gimbal
+  t= 347.6  GIMBAL: nothing low at this wall -> next suspect
+  t= 357.3  map exhausted [347 cells] -> GIMBAL SCAN at (+0.02,+0.23)
+  t= 360.3  peek matches the map -> full gimbal
+  t= 377.3  GIMBAL: nothing low at this wall -> next suspect
+  t= 387.0  map exhausted [347 cells] -> GIMBAL SCAN at (+0.01,+0.38)
+  t= 390.0  peek matches the map -> full gimbal
+  t= 407.0  GIMBAL: nothing low at this wall -> next suspect
+  t= 416.8  map exhausted [347 cells] -> GIMBAL SCAN at (+0.01,+0.54)
+  t= 419.8  peek matches the map -> full gimbal
+  t= 436.8  GIMBAL: nothing low at this wall -> next suspect
+  t= 446.6  map exhausted [347 cells] -> GIMBAL SCAN at (+0.01,+0.69)
+  t= 449.6  peek matches the map -> full gimbal
+  t= 466.6  GIMBAL: nothing low at this wall -> next suspect
+  t= 476.3  map exhausted [347 cells] -> GIMBAL SCAN at (+0.01,+0.84)
+  t= 479.3  CROUCH PEEK: seeing 0.53 m PAST the wall I believed at bearing 30 deg -> carved
+  t= 489.1  map exhausted [347 cells] -> GIMBAL SCAN at (+0.03,+1.00)
+  t= 492.1  peek matches the map -> full gimbal
+  t= 509.1  GIMBAL: nothing low at this wall -> next suspect
+  t= 518.8  map exhausted [353 cells] -> GIMBAL SCAN at (+0.06,+1.15)
+  t= 521.8  CROUCH PEEK: seeing 0.44 m PAST the wall I believed at bearing 150 deg -> carved
+  t= 531.6  map exhausted [353 cells] -> GIMBAL SCAN at (+0.00,+1.38)
+  t= 534.6  CROUCH PEEK: seeing 0.33 m PAST the wall I believed at bearing 135 deg -> carved
+  t= 553.6  stuck ON a carved lane at (+0.10,+1.39) -> verdict revoked
+  t= 553.6  STUCK at (+0.10,+1.39) front=0.05 -> bump-marked ahead, back off
+  t= 568.5  STUCK at (+0.12,+1.36) front=2.00 -> bump-marked ahead, back off
+  t= 576.1  STUCK at (+0.10,+1.36) front=0.03 -> bump-marked ahead, back off
+  t= 583.6  STUCK at (+0.09,+1.38) front=0.06 -> bump-marked ahead, back off
+  t= 636.3  stuck ON a carved lane at (+0.51,+1.13) -> verdict revoked
+  t= 636.3  STUCK at (+0.51,+1.13) front=0.05 -> bump-marked ahead, back off
+  t= 661.0  map exhausted [348 cells] -> GIMBAL SCAN at (+0.58,+0.40)
+  t= 664.0  CROUCH PEEK: seeing 0.51 m PAST the wall I believed at bearing 15 deg -> carved
+  t= 693.9  stuck ON a carved lane at (+0.75,+0.44) -> verdict revoked
+  t= 693.9  STUCK at (+0.75,+0.44) front=0.14 -> bump-marked ahead, back off
+  t= 704.3  STUCK at (+0.76,+0.44) front=2.00 -> bump-marked ahead, back off
+  t= 750.8  STUCK at (+1.13,+1.38) front=0.40 -> bump-marked ahead, back off
+  t= 768.1  map exhausted [358 cells] -> GIMBAL SCAN at (+1.48,+1.24)
+  t= 771.1  CROUCH PEEK: seeing 1.50 m PAST the wall I believed at bearing 60 deg -> carved
+  t= 780.9  map exhausted [358 cells] -> GIMBAL SCAN at (+1.55,+1.34)
+  t= 783.9  CROUCH PEEK: seeing 1.14 m PAST the wall I believed at bearing 120 deg -> carved
+  t= 795.0  map exhausted [358 cells] -> GIMBAL SCAN at (+1.75,+1.47)
+  t= 798.0  peek matches the map -> full gimbal
+  t= 815.0  GIMBAL: nothing low at this wall -> next suspect
+  t= 824.8  map exhausted [358 cells] -> GIMBAL SCAN at (+1.30,+1.54)
+  t= 827.8  CROUCH PEEK: seeing 0.52 m PAST the wall I believed at bearing 315 deg -> carved
+  t= 836.9  map exhausted [358 cells] -> GIMBAL SCAN at (+0.93,+1.52)
+  t= 839.9  CROUCH PEEK: seeing 0.53 m PAST the wall I believed at bearing 225 deg -> carved
+  t= 847.9  map exhausted [358 cells] -> GIMBAL SCAN at (+0.87,+1.51)
+  t= 850.9  CROUCH PEEK: seeing 0.37 m PAST the wall I believed at bearing 195 deg -> carved
+  t= 860.5  map exhausted [358 cells] -> GIMBAL SCAN at (+0.88,+1.50)
+  t= 863.6  peek matches the map -> full gimbal
+  t= 880.6  GIMBAL: nothing low at this wall -> next suspect
+  t= 890.3  map exhausted [358 cells] -> GIMBAL SCAN at (+1.02,+1.46)
+  t= 893.3  CROUCH PEEK: seeing 1.27 m PAST the wall I believed at bearing 90 deg -> carved
+{"done": false, "scouts": 30, "bans": 5, "reason": "timeout", "time_s": 900.0, "coverage_cells": 358, "pos": [1.13, 1.44]}

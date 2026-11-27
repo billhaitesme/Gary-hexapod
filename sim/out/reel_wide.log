@@ -1,0 +1,9 @@
+  t=  40.3  STUCK at (+0.18,+1.38) front=2.00 -> bump-marked ahead, back off
+  t=  50.4  goal (6, 5) unresolved / no progress -> banned
+  t= 117.9  STUCK at (+1.09,+1.39) front=0.94 -> bump-marked ahead, back off
+  t= 127.9  goal (14, 8) unresolved / no progress -> banned
+  t= 155.3  STUCK at (+1.66,+0.79) front=2.00 -> bump-marked ahead, back off
+  t= 183.8  STUCK at (+1.65,+0.79) front=0.01 -> bump-marked ahead, back off
+  t= 191.8  map exhausted [294 cells] -> GIMBAL SCAN at (+1.70,+0.71)
+  t= 194.8  CROUCH PEEK: seeing 1.50 m PAST the wall I believed at bearing 300 deg -> carved
+{"done": true, "scouts": 1, "bans": 3, "reason": "finished", "time_s": 243.3, "coverage_cells": 356, "pos": [2.42, 0.6]}

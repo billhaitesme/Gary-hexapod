@@ -1,0 +1,92 @@
+{
+ "none": {
+  "score": -87.64,
+  "params": [
+   0.8994469655402763,
+   0.715586997837005,
+   0.5747029878110727,
+   0.40333120190149235,
+   0.744463510195231,
+   0.2325546288760964,
+   0.7152350600001627
+  ],
+  "metrics": {
+   "variant": "none",
+   "done": false,
+   "progress_y": 0.976,
+   "time_s": 27.8,
+   "knee_sat_pct": 62.5,
+   "stumble_s": 0.0,
+   "score": -87.64
+  },
+  "policy": {
+   "smooth_speed": 1.0994,
+   "smooth_lift": 0.0237,
+   "rough_speed": 0.5598,
+   "rough_lift": 0.0201,
+   "rough_height": 0.0322,
+   "trig": 0.7744,
+   "hold": 1.4874
+  }
+ },
+ "imu": {
+  "score": -87.74,
+  "params": [
+   0.5154069875815659,
+   0.6881572075587897,
+   0.9978570317138532,
+   0.7431333045450863,
+   0.3160618142250171,
+   0.22669359320475757,
+   0.12378648903205824
+  ],
+  "metrics": {
+   "variant": "imu",
+   "done": false,
+   "progress_y": 0.976,
+   "time_s": 32.2,
+   "knee_sat_pct": 55.6,
+   "stumble_s": 0.0,
+   "score": -87.74
+  },
+  "policy": {
+   "smooth_speed": 0.7154,
+   "smooth_lift": 0.0231,
+   "rough_speed": 0.8983,
+   "rough_lift": 0.0269,
+   "rough_height": 0.0108,
+   "trig": 0.7574,
+   "hold": 0.4228
+  }
+ },
+ "perleg": {
+  "score": -87.94,
+  "params": [
+   0.8872996957019358,
+   0.5770132246179299,
+   0.9520619494791602,
+   0.728755387346938,
+   0.45053881960936804,
+   0.061972599008437185,
+   0.18367355071014416
+  ],
+  "metrics": {
+   "variant": "perleg",
+   "done": false,
+   "progress_y": 0.975,
+   "time_s": 33.1,
+   "knee_sat_pct": 51.4,
+   "stumble_s": 0.0,
+   "score": -87.94
+  },
+  "policy": {
+   "smooth_speed": 1.0873,
+   "smooth_lift": 0.0207,
+   "rough_speed": 0.8616,
+   "rough_lift": 0.0266,
+   "rough_height": 0.0175,
+   "trig": 0.2797,
+   "hold": 0.5306
+  }
+ }
+}

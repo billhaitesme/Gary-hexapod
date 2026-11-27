@@ -1,0 +1,40 @@
+line y=0.81: FAIL  done=False t=150.0  sat=0.741  tunnel={'y': [0.52, 0.77, 0.826], 'footN': 0.927, 'footS': 0.4, 'band_s': 0.0}
+   carves=None
+   t=   0.8  mouth micro-peek: measuring the opening edges before committing
+   t=  22.6  lane jam at (+2.19,+0.81) -> push on (1)
+   t=  22.6  STUCK at (+2.19,+0.81) front=2.00 -> bump-marked ahead, back off
+   t=  30.1  lane jam at (+2.19,+0.81) -> push on (2)
+   t=  30.1  STUCK at (+2.19,+0.81) front=0.04 -> bump-marked ahead, back off
+   t=  36.3  DEADMAN: no displacement for 20 s at (+2.19,+0.81) -> recover
+   t=  43.8  lane jam at (+2.19,+0.81) -> push on (3)
+   t=  43.8  STUCK at (+2.19,+0.81) front=0.04 -> bump-marked ahead, back off
+   t=  51.3  lane jam at (+2.20,+0.81) -> push on (4)
+   t=  51.3  STUCK at (+2.20,+0.81) front=0.03 -> bump-marked ahead, back off
+   t=  56.3  DEADMAN: no displacement for 20 s at (+2.19,+0.81) -> recover
+   t=  63.8  lane jam at (+2.19,+0.81) -> push on (5)
+   t=  63.8  STUCK at (+2.19,+0.81) front=0.04 -> bump-marked ahead, back off
+   t=  71.3  lane jam at (+2.20,+0.81) -> push on (6)
+   t=  71.3  STUCK at (+2.20,+0.81) front=0.03 -> bump-marked ahead, back off
+   t=  76.3  DEADMAN: no displacement for 20 s at (+2.20,+0.81) -> recover
+   t=  83.8  lane jam at (+2.19,+0.81) -> push on (7)
+   t=  83.8  STUCK at (+2.19,+0.81) front=0.04 -> bump-marked ahead, back off
+   t=  91.4  lane never admits me at (+2.20,+0.81) -> verdict revoked
+   t=  91.4  STUCK at (+2.20,+0.81) front=0.03 -> bump-marked ahead, back off
+   t=  96.3  DEADMAN: no displacement for 20 s at (+2.19,+0.82) -> recover
+   t= 103.9  I DON'T FIT at (+2.16,+0.81) -> opening blocked
+   t= 103.9  STUCK at (+2.16,+0.81) front=2.00 -> bump-marked ahead, back off
+   t= 143.8  IMPASSE: map says no way out -> DOUBT (2 walls demoted to unknown)
+   t= 147.0  every wall scanned, nothing -> rescanning
+line y=0.70: PASS  done=True t=29.2  sat=0.681  tunnel={'y': [0.697, 0.702, 0.707], 'footN': 0.823, 'footS': 0.585, 'band_s': 5.8}
+   carves=[[np.float32(2.22), np.float32(0.7), 1, 0, 0.0, None, None, None, None, 0, 0, 0]]
+   t=   0.8  mouth micro-peek: measuring the opening edges before committing
+line y=0.62: FAIL  done=True t=61.1  sat=0.736  tunnel={'y': [0.622, 0.638, 0.676], 'footN': 0.804, 'footS': 0.509, 'band_s': 19.5}
+   carves=[[np.float32(2.22), np.float32(0.62), 1, 0, 0.0, None, None, None, None, 0, 0, 0]]
+   t=   0.8  mouth micro-peek: measuring the opening edges before committing
+   t=  36.9  lane jam at (+2.32,+0.63) -> push on (1)
+   t=  36.9  STUCK at (+2.32,+0.63) front=2.00 -> bump-marked ahead, back off
+   t=  44.4  lane jam at (+2.36,+0.63) -> push on (2)
+   t=  44.4  STUCK at (+2.36,+0.63) front=2.00 -> bump-marked ahead, back off
+   t=  51.9  lane jam at (+2.35,+0.67) -> push on (3)
+   t=  51.9  STUCK at (+2.35,+0.67) front=2.00 -> bump-marked ahead, back off
+2 CASE(S) FAILED

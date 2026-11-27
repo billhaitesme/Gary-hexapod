@@ -1,0 +1,70 @@
+  t=  37.5  goal (7, 5) unresolved / no progress -> banned
+  t=  52.3  goal (6, 4) unresolved / no progress -> banned
+  t=  54.7  map exhausted [119 cells] -> GIMBAL SCAN at (+0.28,+1.40)
+  t=  57.7  peek matches the map -> full gimbal
+  t=  74.7  GIMBAL: nothing low at this wall -> next suspect
+  t= 120.8  STUCK at (+1.12,+1.39) front=2.00 -> bump-marked ahead, back off
+  t= 129.1  goal (17, 11) unresolved / no progress -> banned
+  t= 160.3  map exhausted [292 cells] -> GIMBAL SCAN at (+1.67,+1.10)
+  t= 163.3  CROUCH PEEK: seeing 1.65 m PAST the wall I believed at bearing 135 deg -> carved
+  t= 248.6  lane jam at (+2.30,+0.61) -> push on (1)
+  t= 248.6  STUCK at (+2.30,+0.61) front=0.00 -> bump-marked ahead, back off
+  t= 256.3  lane jam at (+2.27,+0.61) -> push on (2)
+  t= 256.3  STUCK at (+2.27,+0.61) front=0.01 -> bump-marked ahead, back off
+  t= 264.0  lane jam at (+2.28,+0.61) -> push on (3)
+  t= 264.0  STUCK at (+2.28,+0.61) front=0.01 -> bump-marked ahead, back off
+  t= 271.7  lane jam at (+2.27,+0.61) -> push on (4)
+  t= 271.7  STUCK at (+2.27,+0.61) front=0.01 -> bump-marked ahead, back off
+  t= 279.5  lane jam at (+2.28,+0.61) -> push on (5)
+  t= 279.5  STUCK at (+2.28,+0.61) front=0.00 -> bump-marked ahead, back off
+  t= 287.4  lane jam at (+2.28,+0.61) -> push on (6)
+  t= 287.4  STUCK at (+2.28,+0.61) front=0.01 -> bump-marked ahead, back off
+  t= 295.1  lane jam at (+2.27,+0.61) -> push on (7)
+  t= 295.1  STUCK at (+2.27,+0.61) front=0.01 -> bump-marked ahead, back off
+  t= 302.8  lane never admits me at (+2.28,+0.61) -> verdict revoked
+  t= 302.8  STUCK at (+2.28,+0.61) front=0.01 -> bump-marked ahead, back off
+  t= 326.0  map exhausted [363 cells] -> GIMBAL SCAN at (+1.91,+1.16)
+  t= 329.0  CROUCH PEEK: seeing 1.15 m PAST the wall I believed at bearing 150 deg -> carved
+  t= 337.0  map exhausted [363 cells] -> GIMBAL SCAN at (+2.01,+1.47)
+  t= 340.0  CROUCH PEEK: seeing 0.36 m PAST the wall I believed at bearing 285 deg -> carved
+  t= 350.1  map exhausted [363 cells] -> GIMBAL SCAN at (+1.86,+1.51)
+  t= 353.1  peek matches the map -> full gimbal
+  t= 370.1  GIMBAL: nothing low at this wall -> next suspect
+  t= 379.9  map exhausted [363 cells] -> GIMBAL SCAN at (+1.72,+1.54)
+  t= 382.9  peek matches the map -> full gimbal
+  t= 399.9  GIMBAL: nothing low at this wall -> next suspect
+  t= 409.7  map exhausted [363 cells] -> GIMBAL SCAN at (+1.44,+1.54)
+  t= 412.7  peek matches the map -> full gimbal
+  t= 429.7  GIMBAL: nothing low at this wall -> next suspect
+  t= 437.7  map exhausted [363 cells] -> GIMBAL SCAN at (+0.87,+1.49)
+  t= 440.7  peek matches the map -> full gimbal
+  t= 457.7  GIMBAL: nothing low at this wall -> next suspect
+  t= 466.1  map exhausted [363 cells] -> GIMBAL SCAN at (+1.02,+1.45)
+  t= 469.1  CROUCH PEEK: seeing 1.43 m PAST the wall I believed at bearing 105 deg -> carved
+  t= 478.9  map exhausted [363 cells] -> GIMBAL SCAN at (+1.15,+1.40)
+  t= 481.9  peek matches the map -> full gimbal
+  t= 498.9  GIMBAL: nothing low at this wall -> next suspect
+  t= 513.6  map exhausted [363 cells] -> GIMBAL SCAN at (+1.73,+1.41)
+  t= 516.6  peek matches the map -> full gimbal
+  t= 533.7  GIMBAL: nothing low at this wall -> next suspect
+  t= 543.5  map exhausted [363 cells] -> GIMBAL SCAN at (+1.79,+0.70)
+  t= 546.5  CROUCH PEEK: seeing 1.55 m PAST the wall I believed at bearing 255 deg -> carved
+  t= 562.4  goal (23, 1) unresolved / no progress -> banned
+  t= 590.8  lane jam at (+2.31,+0.62) -> push on (1)
+  t= 590.8  STUCK at (+2.31,+0.62) front=2.00 -> bump-marked ahead, back off
+  t= 598.3  lane jam at (+2.35,+0.60) -> push on (2)
+  t= 598.3  STUCK at (+2.35,+0.60) front=2.00 -> bump-marked ahead, back off
+  t= 605.9  lane jam at (+2.35,+0.61) -> push on (3)
+  t= 605.9  STUCK at (+2.35,+0.61) front=2.00 -> bump-marked ahead, back off
+  t= 608.3  goal (22, 0) unresolved / no progress -> banned
+  t= 623.0  goal (18, 0) unresolved / no progress -> banned
+  t= 623.6  lane jam at (+2.34,+0.61) -> push on (4)
+  t= 623.6  STUCK at (+2.34,+0.61) front=2.00 -> bump-marked ahead, back off
+  t= 635.9  goal (23, 1) unresolved / no progress -> banned
+  t= 640.9  lane jam at (+2.34,+0.61) -> push on (5)
+  t= 640.9  STUCK at (+2.34,+0.61) front=2.00 -> bump-marked ahead, back off
+  t= 650.7  goal (22, 0) unresolved / no progress -> banned
+  t= 659.1  lane jam at (+2.34,+0.60) -> push on (6)
+  t= 659.1  STUCK at (+2.34,+0.60) front=2.00 -> bump-marked ahead, back off
+  t= 666.4  goal (18, 0) unresolved / no progress -> banned
+{"done": true, "scouts": 12, "bans": 17, "reason": "finished", "time_s": 673.9, "coverage_cells": 366, "knee_sat": 0.597, "sat_by": {"back": [0.5, 2.8], "climb": [0.66, 14.3], "crouch": [0.66, 305.6], "pivot": [0.44, 120.1], "scan": [0.78, 155.0], "steer": [0.37, 27.9], "straight": [0.13, 48.1]}, "pos": [2.42, 0.59]}

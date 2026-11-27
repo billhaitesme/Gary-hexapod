@@ -1,0 +1,43 @@
+{
+ "gait": "TRIPOD",
+ "baseline": {
+  "params": {
+   "cadence_ms": 400,
+   "lift_cm": 2.5,
+   "speed_cap": 1.0
+  },
+  "metrics": {
+   "gait": "TRIPOD",
+   "stick": 1.0,
+   "lift_cm": 2.5,
+   "touchdown": "match",
+   "cadence_ms": 400,
+   "commanded_v_cm_s": 3.5,
+   "achieved_v_cm_s": 5.13,
+   "knee_torque_peak": 0.176,
+   "knee_sat_pct": 19.7,
+   "body_height_end": 0.053
+  },
+  "score": 4.14
+ },
+ "best": {
+  "params": {
+   "cadence_ms": 493,
+   "lift_cm": 2.1485809146011237,
+   "speed_cap": 0.9960292720437119
+  },
+  "metrics": {
+   "gait": "TRIPOD",
+   "stick": 1.0,
+   "lift_cm": 2.1485809146011237,
+   "touchdown": "match",
+   "cadence_ms": 493,
+   "commanded_v_cm_s": 3.49,
+   "achieved_v_cm_s": 5.3,
+   "knee_torque_peak": 0.176,
+   "knee_sat_pct": 2.3,
+   "body_height_end": 0.053
+  },
+  "score": 5.18
+ }
+}

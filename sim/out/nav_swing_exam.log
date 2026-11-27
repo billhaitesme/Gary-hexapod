@@ -1,0 +1,31 @@
+  t=  25.1  STUCK at (+0.05,+0.31) front=0.19 -> bump-marked ahead, back off
+  t=  58.9  lane jam at (-0.10,-0.00) -> push on (1)
+  t=  58.9  STUCK at (-0.10,-0.00) front=0.05 -> bump-marked ahead, back off
+  t=  66.4  lane jam at (-0.09,-0.00) -> push on (2)
+  t=  66.4  STUCK at (-0.09,-0.00) front=2.00 -> bump-marked ahead, back off
+  t=  73.9  lane jam at (-0.10,-0.00) -> push on (3)
+  t=  73.9  STUCK at (-0.10,-0.00) front=2.00 -> bump-marked ahead, back off
+  t=  81.4  lane jam at (-0.10,-0.00) -> push on (4)
+  t=  81.4  STUCK at (-0.10,-0.00) front=0.05 -> bump-marked ahead, back off
+  t=  88.9  lane jam at (-0.09,+0.02) -> push on (5)
+  t=  88.9  STUCK at (-0.09,+0.02) front=2.00 -> bump-marked ahead, back off
+  t=  96.5  lane jam at (-0.10,-0.01) -> push on (6)
+  t=  96.5  STUCK at (-0.10,-0.01) front=0.04 -> bump-marked ahead, back off
+  t= 104.0  lane jam at (-0.11,-0.01) -> push on (7)
+  t= 104.0  STUCK at (-0.11,-0.01) front=0.04 -> bump-marked ahead, back off
+  t= 111.5  lane never admits me at (-0.11,-0.01) -> verdict revoked
+  t= 111.5  STUCK at (-0.11,-0.01) front=0.04 -> bump-marked ahead, back off
+  t= 197.6  WORLD SHIFTED: chamber door slides east (his map now lies) (he doesn't know yet)
+  t= 264.9  STUCK at (+2.17,+0.54) front=2.00 -> bump-marked ahead, back off
+  t= 293.8  I DON'T FIT at (+2.21,+0.55) -> opening blocked
+  t= 293.8  STUCK at (+2.21,+0.55) front=2.00 -> bump-marked ahead, back off
+  t= 309.6  I DON'T FIT at (+2.18,+0.46) -> opening blocked
+  t= 309.6  STUCK at (+2.18,+0.46) front=2.00 -> bump-marked ahead, back off
+  t= 366.3  lane jam at (+2.16,+0.83) -> push on (1)
+  t= 366.3  STUCK at (+2.16,+0.83) front=0.08 -> bump-marked ahead, back off
+  t= 373.8  lane jam at (+2.16,+0.80) -> push on (2)
+  t= 373.8  STUCK at (+2.16,+0.80) front=2.00 -> bump-marked ahead, back off
+  t= 381.3  lane jam at (+2.16,+0.80) -> push on (3)
+  t= 381.3  STUCK at (+2.16,+0.80) front=2.00 -> bump-marked ahead, back off
+{"done": true, "scouts": 0, "bans": 7, "reason": "finished", "time_s": 410.5, "coverage_cells": 430, "knee_sat": 0.811, "sat_by": {"back": [0.48, 2.0], "climb": [0.96, 8.8], "crouch": [0.87, 304.8], "pivot": [0.62, 57.9], "steer": [0.74, 19.9], "straight": [0.49, 17.1]}, "pos": [2.42, 0.82]}
+EXAM PASSED {"done": true, "scouts": 0, "bans": 7, "reason": "finished", "time_s": 410.5, "coverage_cells": 430, "knee_sat": 0.811, "sat_by": {"back": [0.48, 2.0], "climb": [0.96, 8.8], "crouch": [0.87, 304.8], "pivot": [0.62, 57.9], "steer": [0.74, 19.9], "straight": [0.49, 17.1]}, "pos": [2.42, 0.82]}

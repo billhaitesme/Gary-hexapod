@@ -1,0 +1,276 @@
+DBG t=   0.0 pos=(+0.00,+0.00) cov=432 goal=None plen= 0 yaw=+0.00 err=+0.00 v=+0.000 om=+0.00 front=2.00 mode=NAV
+MAP                         
+MAP                         
+MAP     #####               
+MAP ###################     
+MAP ##     #          #     
+MAP ##     #          #     
+MAP ##  #  #  #       #     
+MAP ##  #  #  #       #     
+MAP ##  #  #  ####  ###     
+MAP ##  #  #  #  # ~~~~~~~  
+MAP ##  #  #  #  #          
+MAP ##  #  #  #  #          
+MAP ##  #        #          
+MAP ##  #     #  #          
+MAP ## G#     #  #          
+MAP  #~~########~~~####     
+MAP ~~~~~~~~~~~~~#          
+MAP          ~              
+DBG t=   5.0 pos=(-0.00,+0.05) cov=432 goal=(19, 0) plen=19 yaw=-0.33 err=+2.39 v=+0.000 om=-0.20 front=0.20 mode=NAV
+DBG t=  10.0 pos=(-0.00,+0.05) cov=432 goal=(19, 0) plen=19 yaw=-0.75 err=+1.96 v=+0.000 om=-0.20 front=0.13 mode=NAV
+DBG t=  15.0 pos=(-0.01,+0.05) cov=432 goal=(19, 0) plen=19 yaw=-1.23 err=+1.48 v=+0.000 om=-0.42 front=2.00 mode=NAV
+DBG t=  20.0 pos=(+0.02,+0.05) cov=432 goal=(19, 0) plen=19 yaw=-2.24 err=+0.51 v=+0.007 om=-0.42 front=2.00 mode=NAV
+DBG t=  25.0 pos=(+0.07,+0.01) cov=432 goal=(19, 0) plen=18 yaw=-2.77 err=+0.06 v=+0.016 om=-0.08 front=0.07 mode=NAV
+DBG t=  30.0 pos=(+0.06,+0.03) cov=432 goal=(19, 0) plen=18 yaw=-2.78 err=+0.04 v=-0.018 om=+0.00 front=0.09 mode=NAV
+DBG t=  35.0 pos=(+0.07,+0.01) cov=432 goal=(19, 0) plen=18 yaw=-2.81 err=+0.02 v=+0.016 om=-0.01 front=0.06 mode=NAV
+DBG t=  40.0 pos=(+0.07,+0.00) cov=432 goal=(19, 0) plen=18 yaw=-2.81 err=+0.01 v=+0.016 om=+0.00 front=0.06 mode=NAV
+DBG t=  45.0 pos=(+0.06,+0.02) cov=432 goal=(19, 0) plen=18 yaw=-2.81 err=+0.01 v=-0.018 om=+0.00 front=0.08 mode=NAV
+DBG t=  50.0 pos=(+0.06,+0.01) cov=432 goal=(19, 0) plen=18 yaw=-2.79 err=+0.03 v=+0.016 om=-0.04 front=0.06 mode=NAV
+DBG t=  55.0 pos=(+0.07,+0.01) cov=432 goal=(19, 0) plen=18 yaw=-2.79 err=+0.03 v=+0.016 om=-0.03 front=0.07 mode=NAV
+DBG t=  60.0 pos=(+0.06,+0.03) cov=416 goal=(19, 7) plen=30 yaw=-2.79 err=-2.81 v=-0.018 om=+0.00 front=0.09 mode=NAV
+MAP                         
+MAP                         
+MAP     #####               
+MAP ###################     
+MAP ##     #          #     
+MAP ##     #          #     
+MAP ##  #  #  #       #     
+MAP ##  #  #  #       #     
+MAP ##  #  #  ####  ###     
+MAP ##  #  #  #  # ~~~~~~~  
+MAP ##  #  #  #  #          
+MAP ##  #  #  #  #          
+MAP ##           #          
+MAP ##  #     #  #          
+MAP ## G#     #  #          
+MAP  ## ########...####     
+MAP .#...........#          
+MAP          .              
+DBG t=  65.0 pos=(+0.03,+0.04) cov=417 goal=(19, 7) plen=30 yaw=-1.26 err=-1.21 v=+0.000 om=+0.42 front=2.00 mode=NAV
+DBG t=  70.1 pos=(+0.05,+0.19) cov=420 goal=(19, 7) plen=43 yaw=+0.09 err=-0.00 v=+0.031 om=+0.06 front=0.30 mode=NAV
+DBG t=  75.1 pos=(+0.03,+0.44) cov=420 goal=(19, 7) plen=37 yaw=+0.05 err=+0.00 v=+0.031 om=+0.09 front=0.32 mode=NAV
+DBG t=  80.1 pos=(+0.01,+0.66) cov=420 goal=(19, 7) plen=38 yaw=+0.04 err=+0.10 v=+0.030 om=-0.04 front=0.34 mode=NAV
+DBG t=  85.1 pos=(+0.01,+0.89) cov=420 goal=(19, 7) plen=38 yaw=+0.05 err=+0.13 v=+0.030 om=-0.07 front=0.36 mode=NAV
+DBG t=  90.1 pos=(+0.01,+1.11) cov=420 goal=(19, 7) plen=37 yaw=-0.09 err=+0.41 v=+0.013 om=-0.20 front=0.55 mode=NAV
+DBG t=  95.1 pos=(+0.06,+1.28) cov=420 goal=(19, 7) plen=34 yaw=-0.78 err=+2.47 v=+0.000 om=-0.42 front=2.00 mode=NAV
+DBG t= 100.1 pos=(+0.06,+1.36) cov=420 goal=(19, 7) plen=34 yaw=-1.81 err=+1.42 v=+0.000 om=-0.42 front=2.00 mode=NAV
+DBG t= 105.1 pos=(+0.08,+1.39) cov=420 goal=(19, 7) plen=34 yaw=-2.76 err=+0.50 v=+0.014 om=-0.42 front=2.00 mode=NAV
+DBG t= 110.1 pos=(+0.07,+1.29) cov=420 goal=(19, 7) plen=34 yaw=-3.08 err=+0.18 v=+0.031 om=-0.28 front=0.17 mode=NAV
+DBG t= 115.1 pos=(+0.05,+1.19) cov=420 goal=(19, 7) plen=34 yaw=-2.52 err=-1.61 v=+0.000 om=+0.42 front=2.00 mode=NAV
+DBG t= 120.1 pos=(+0.04,+1.19) cov=420 goal=(19, 7) plen=36 yaw=-1.04 err=-0.50 v=+0.014 om=+0.42 front=2.00 mode=NAV
+MAP                         
+MAP                         
+MAP     #####               
+MAP ###################     
+MAP ##     #          #     
+MAP ##     #          #     
+MAP ## G#  #  #       #     
+MAP ##  #  #  #       #     
+MAP ##  #  #  ####  ###     
+MAP ##  #  #  #  # ~~~~~~~  
+MAP ##  #  #  #  #          
+MAP ##  #  #  #  #          
+MAP ##  #        #          
+MAP ##  #     #  #          
+MAP ##  #     #  #          
+MAP  ###########...####     
+MAP #####........#          
+MAP          .              
+DBG t= 125.2 pos=(+0.04,+1.23) cov=420 goal=(19, 7) plen=33 yaw=-1.40 err=+1.72 v=+0.000 om=-0.42 front=2.00 mode=NAV
+DBG t= 130.2 pos=(+0.06,+1.15) cov=420 goal=(19, 7) plen=33 yaw=-3.08 err=+0.08 v=+0.031 om=-0.14 front=0.19 mode=NAV
+DBG t= 135.2 pos=(+0.03,+1.04) cov=420 goal=(19, 7) plen=37 yaw=+2.02 err=+2.07 v=+0.000 om=-0.42 front=2.00 mode=NAV
+DBG t= 140.2 pos=(+0.01,+1.08) cov=420 goal=(19, 7) plen=37 yaw=+0.28 err=+0.41 v=+0.014 om=-0.42 front=2.00 mode=NAV
+DBG t= 145.2 pos=(+0.02,+1.17) cov=420 goal=(19, 7) plen=33 yaw=-1.24 err=+1.94 v=+0.000 om=-0.42 front=2.00 mode=NAV
+DBG t= 150.2 pos=(+0.05,+1.12) cov=420 goal=(19, 7) plen=33 yaw=-2.99 err=+0.25 v=+0.031 om=-0.42 front=2.00 mode=NAV
+DBG t= 155.2 pos=(+0.04,+0.87) cov=420 goal=(19, 7) plen=31 yaw=+3.06 err=+0.01 v=+0.030 om=-0.09 front=0.31 mode=NAV
+DBG t= 160.2 pos=(+0.03,+0.84) cov=420 goal=(19, 7) plen=38 yaw=+1.60 err=+1.63 v=+0.000 om=-0.42 front=2.00 mode=NAV
+DBG t= 165.2 pos=(+0.00,+0.93) cov=420 goal=(19, 7) plen=38 yaw=+0.02 err=+0.12 v=+0.031 om=-0.04 front=0.43 mode=NAV
+DBG t= 170.2 pos=(+0.01,+1.15) cov=420 goal=(19, 7) plen=36 yaw=-0.25 err=+0.29 v=+0.031 om=-0.20 front=0.51 mode=NAV
+DBG t= 175.2 pos=(+0.04,+1.23) cov=420 goal=(19, 7) plen=33 yaw=-1.10 err=+2.02 v=+0.000 om=-0.42 front=2.00 mode=NAV
+DBG t= 180.2 pos=(+0.06,+1.20) cov=420 goal=(19, 7) plen=33 yaw=-2.85 err=+0.31 v=+0.031 om=-0.42 front=2.00 mode=NAV
+MAP                         
+MAP                         
+MAP     #####               
+MAP ###################     
+MAP ##     #          #     
+MAP ##     #          #     
+MAP ## G#  #  #       #     
+MAP ##  #  #  #       #     
+MAP ##  #  #  ####  ###     
+MAP ##     #  #  # ~~~~~~~  
+MAP ##  #  #  #  #          
+MAP ##     #  #  #          
+MAP ##  #        #          
+MAP ##  #     #  #          
+MAP ##  #     #  #          
+MAP  ###########...####     
+MAP #####........#          
+MAP          .              
+DBG t= 185.2 pos=(+0.04,+1.15) cov=420 goal=(19, 7) plen=36 yaw=+1.81 err=+2.29 v=+0.000 om=-0.42 front=2.00 mode=NAV
+DBG t= 190.2 pos=(+0.03,+1.17) cov=420 goal=(19, 7) plen=36 yaw=+0.06 err=+0.61 v=+0.014 om=-0.42 front=2.00 mode=NAV
+DBG t= 195.2 pos=(+0.11,+1.33) cov=420 goal=(19, 7) plen=34 yaw=-1.14 err=+2.16 v=+0.000 om=-0.42 front=2.00 mode=NAV
+DBG t= 200.2 pos=(+0.17,+1.41) cov=420 goal=(19, 7) plen=34 yaw=-2.08 err=+1.58 v=+0.000 om=-0.42 front=2.00 mode=NAV
+DBG t= 205.2 pos=(+0.27,+1.42) cov=420 goal=(19, 7) plen=33 yaw=-2.96 err=-0.04 v=+0.000 om=+0.38 front=2.00 mode=NAV
+DBG t= 210.2 pos=(+0.31,+1.30) cov=420 goal=(19, 7) plen=32 yaw=+3.12 err=-0.17 v=+0.030 om=+0.30 front=2.00 mode=NAV
+DBG t= 215.2 pos=(+0.34,+1.25) cov=420 goal=(19, 7) plen=32 yaw=-3.08 err=-0.05 v=+0.030 om=+0.11 front=0.26 mode=NAV
+DBG t= 220.2 pos=(+0.37,+1.02) cov=423 goal=(19, 7) plen=28 yaw=-2.92 err=+0.08 v=+0.030 om=-0.01 front=0.35 mode=NAV
+DBG t= 225.2 pos=(+0.41,+0.80) cov=425 goal=(19, 7) plen=29 yaw=-2.96 err=-0.02 v=+0.030 om=+0.02 front=0.31 mode=NAV
+DBG t= 230.2 pos=(+0.46,+0.60) cov=427 goal=(19, 7) plen=23 yaw=-2.57 err=-2.60 v=+0.000 om=+0.42 front=2.00 mode=NAV
+DBG t= 235.2 pos=(+0.46,+0.60) cov=427 goal=(19, 7) plen=23 yaw=-0.84 err=-0.86 v=+0.014 om=+0.42 front=2.00 mode=NAV
+DBG t= 240.2 pos=(+0.49,+0.74) cov=427 goal=(19, 7) plen=27 yaw=+0.45 err=-2.71 v=+0.000 om=+0.42 front=2.00 mode=NAV
+MAP                         
+MAP                         
+MAP     #####               
+MAP ###################     
+MAP ##     #          #     
+MAP ##     #          #     
+MAP ##  #  #  #       #     
+MAP ##  #  #  #       #     
+MAP ##  #  #  ####  ###     
+MAP ##  # G#  #  # ~~~~~~~  
+MAP ##  #  #  #  #          
+MAP ##  #  #  #  #          
+MAP ##  #        #          
+MAP ##  #     #  #          
+MAP ##  #     #  #          
+MAP  ###########...####     
+MAP ############.#          
+MAP          .              
+DBG t= 245.2 pos=(+0.49,+0.74) cov=427 goal=(19, 7) plen=27 yaw=+2.18 err=-1.00 v=+0.000 om=+0.42 front=2.00 mode=NAV
+DBG t= 250.2 pos=(+0.47,+0.59) cov=427 goal=(19, 7) plen=26 yaw=-2.87 err=-0.28 v=+0.031 om=+0.20 front=0.65 mode=NAV
+DBG t= 255.2 pos=(+0.50,+0.51) cov=429 goal=(19, 7) plen=24 yaw=-1.76 err=-0.17 v=+0.031 om=+0.29 front=2.00 mode=NAV
+DBG t= 260.2 pos=(+0.53,+0.48) cov=429 goal=(19, 7) plen=23 yaw=-1.41 err=+0.10 v=+0.031 om=-0.18 front=0.03 mode=NAV
+DBG t= 265.2 pos=(+0.55,+0.45) cov=429 goal=(19, 7) plen=23 yaw=-1.10 err=-0.11 v=+0.031 om=+0.18 front=2.00 mode=NAV
+DBG t= 270.2 pos=(+0.51,+0.44) cov=429 goal=(19, 7) plen=25 yaw=-1.53 err=-0.51 v=+0.014 om=+0.42 front=2.00 mode=NAV
+DBG t= 275.2 pos=(+0.56,+0.41) cov=429 goal=(19, 7) plen=23 yaw=-0.75 err=-0.25 v=+0.031 om=+0.42 front=2.00 mode=NAV
+DBG t= 280.2 pos=(+0.53,+0.41) cov=429 goal=(19, 7) plen=24 yaw=-1.31 err=+0.49 v=+0.014 om=-0.42 front=2.00 mode=NAV
+DBG t= 285.2 pos=(+0.51,+0.44) cov=429 goal=(19, 7) plen=25 yaw=-1.55 err=+0.33 v=+0.031 om=-0.42 front=2.00 mode=NAV
+DBG t= 290.2 pos=(+0.50,+0.45) cov=429 goal=(19, 7) plen=25 yaw=-1.78 err=+0.10 v=+0.031 om=-0.17 front=2.00 mode=NAV
+DBG t= 295.2 pos=(+0.51,+0.40) cov=429 goal=(19, 7) plen=25 yaw=-1.62 err=+0.11 v=+0.031 om=-0.20 front=2.00 mode=NAV
+DBG t= 300.2 pos=(+0.53,+0.38) cov=429 goal=(19, 7) plen=24 yaw=-0.53 err=-0.57 v=+0.014 om=+0.42 front=2.00 mode=NAV
+MAP                         
+MAP                         
+MAP     #####               
+MAP ###################     
+MAP ##     #          #     
+MAP ##     #          #     
+MAP ##  #     #       #     
+MAP ##  #     #       #     
+MAP ##  #     ####  ###     
+MAP ##  #  #  #  # ~~~~~~~  
+MAP ##  #  #  #  #          
+MAP ##  #  #  #  #          
+MAP ##  # G      #          
+MAP ##  #        #          
+MAP ##  #     #  #          
+MAP  ###########.######     
+MAP ############.#          
+MAP          .              
+DBG t= 305.2 pos=(+0.57,+0.35) cov=429 goal=(19, 7) plen=25 yaw=-0.20 err=-0.31 v=+0.031 om=+0.42 front=2.00 mode=NAV
+DBG t= 310.2 pos=(+0.59,+0.38) cov=429 goal=(19, 7) plen=24 yaw=-0.83 err=+0.89 v=+0.014 om=-0.42 front=2.00 mode=NAV
+DBG t= 315.2 pos=(+0.58,+0.39) cov=429 goal=(19, 7) plen=24 yaw=-0.90 err=+0.84 v=+0.014 om=-0.42 front=2.00 mode=NAV
+DBG t= 320.2 pos=(+0.58,+0.39) cov=429 goal=(19, 7) plen=24 yaw=-0.46 err=-0.61 v=+0.014 om=+0.42 front=2.00 mode=NAV
+DBG t= 325.2 pos=(+0.57,+0.40) cov=429 goal=(19, 7) plen=24 yaw=-0.92 err=-1.01 v=+0.000 om=+0.42 front=2.00 mode=NAV
+DBG t= 330.2 pos=(+0.60,+0.38) cov=429 goal=(19, 7) plen=24 yaw=-0.75 err=+0.96 v=+0.000 om=-0.42 front=2.00 mode=NAV
+DBG t= 335.2 pos=(+0.58,+0.39) cov=429 goal=(19, 7) plen=24 yaw=-0.65 err=+1.09 v=+0.000 om=-0.42 front=2.00 mode=NAV
+DBG t= 340.2 pos=(+0.58,+0.39) cov=429 goal=(19, 7) plen=24 yaw=-0.89 err=+0.86 v=+0.013 om=-0.42 front=2.00 mode=NAV
+DBG t= 345.2 pos=(+0.58,+0.40) cov=429 goal=(19, 7) plen=24 yaw=-0.70 err=-0.81 v=+0.013 om=+0.42 front=2.00 mode=NAV
+DBG t= 350.2 pos=(+0.58,+0.39) cov=429 goal=(19, 7) plen=24 yaw=-0.47 err=-0.59 v=+0.013 om=+0.42 front=2.00 mode=NAV
+DBG t= 355.2 pos=(+0.58,+0.39) cov=429 goal=(19, 7) plen=24 yaw=-0.81 err=+0.93 v=+0.013 om=-0.42 front=2.00 mode=NAV
+DBG t= 360.2 pos=(+0.57,+0.40) cov=429 goal=(19, 7) plen=24 yaw=-0.90 err=-1.01 v=+0.000 om=+0.42 front=2.00 mode=NAV
+MAP                         
+MAP                         
+MAP     #####               
+MAP ###################     
+MAP ##     #          #     
+MAP ##     #          #     
+MAP ##  #     #       #     
+MAP ##  #     #       #     
+MAP ##  #     ####  ###     
+MAP ##  #  #  #  # ~~~~~~~  
+MAP ##  #  #  #  #          
+MAP ##  #  #  #  #          
+MAP ##  # G      #          
+MAP ##  #        #          
+MAP ##  #     #  #          
+MAP  ###########.######     
+MAP ############.#          
+MAP          .              
+DBG t= 365.2 pos=(+0.60,+0.38) cov=429 goal=(19, 7) plen=24 yaw=-0.64 err=+0.48 v=+0.013 om=-0.42 front=2.00 mode=NAV
+DBG t= 370.2 pos=(+0.58,+0.39) cov=429 goal=(19, 7) plen=24 yaw=-0.55 err=+1.21 v=+0.000 om=-0.42 front=2.00 mode=NAV
+DBG t= 375.2 pos=(+0.58,+0.39) cov=429 goal=(19, 7) plen=24 yaw=-0.87 err=+0.89 v=+0.013 om=-0.42 front=2.00 mode=NAV
+DBG t= 380.2 pos=(+0.56,+0.40) cov=429 goal=(19, 7) plen=24 yaw=-1.00 err=+0.77 v=+0.013 om=-0.42 front=2.00 mode=NAV
+DBG t= 385.2 pos=(+0.58,+0.38) cov=429 goal=(19, 7) plen=24 yaw=-0.43 err=-0.53 v=+0.013 om=+0.42 front=2.00 mode=NAV
+DBG t= 390.2 pos=(+0.56,+0.39) cov=429 goal=(19, 7) plen=24 yaw=-0.91 err=-0.98 v=+0.000 om=+0.42 front=2.00 mode=NAV
+DBG t= 395.2 pos=(+0.58,+0.38) cov=429 goal=(19, 7) plen=24 yaw=-0.93 err=+0.76 v=+0.013 om=-0.42 front=2.00 mode=NAV
+DBG t= 400.2 pos=(+0.57,+0.38) cov=429 goal=(19, 7) plen=24 yaw=-0.46 err=-0.57 v=+0.013 om=+0.42 front=2.00 mode=NAV
+DBG t= 405.2 pos=(+0.55,+0.39) cov=429 goal=(19, 7) plen=24 yaw=-1.01 err=-1.08 v=+0.000 om=+0.42 front=2.00 mode=NAV
+DBG t= 410.2 pos=(+0.58,+0.38) cov=429 goal=(19, 7) plen=24 yaw=-0.76 err=+0.94 v=+0.000 om=-0.42 front=2.00 mode=NAV
+DBG t= 415.2 pos=(+0.57,+0.39) cov=429 goal=(19, 7) plen=24 yaw=-0.48 err=-0.57 v=+0.013 om=+0.42 front=2.00 mode=NAV
+DBG t= 420.2 pos=(+0.56,+0.38) cov=429 goal=(19, 7) plen=24 yaw=-1.01 err=+0.70 v=+0.013 om=-0.42 front=2.00 mode=NAV
+MAP                         
+MAP                         
+MAP     #####               
+MAP ###################     
+MAP ##     #          #     
+MAP ##     #          #     
+MAP ##  #     #       #     
+MAP ##  #     #       #     
+MAP ##  #     ####  ###     
+MAP ##  #  #  #  # ~~~~~~~  
+MAP ##  #  #  #  #          
+MAP ##  #  #  #  #          
+MAP ##  # G      #          
+MAP ##  #        #          
+MAP ##  #     #  #          
+MAP  ###########.######     
+MAP ############.#          
+MAP          .              
+DBG t= 425.2 pos=(+0.59,+0.37) cov=429 goal=(19, 7) plen=24 yaw=-0.55 err=+0.57 v=+0.013 om=-0.42 front=2.00 mode=NAV
+DBG t= 430.2 pos=(+0.58,+0.39) cov=429 goal=(19, 7) plen=24 yaw=-0.54 err=-0.65 v=+0.013 om=+0.42 front=2.00 mode=NAV
+DBG t= 435.2 pos=(+0.57,+0.39) cov=429 goal=(19, 7) plen=24 yaw=-0.84 err=+0.91 v=+0.013 om=-0.42 front=2.00 mode=NAV
+DBG t= 440.2 pos=(+0.57,+0.40) cov=429 goal=(19, 7) plen=24 yaw=-1.00 err=-1.10 v=+0.000 om=+0.42 front=2.00 mode=NAV
+DBG t= 445.2 pos=(+0.57,+0.40) cov=429 goal=(19, 7) plen=24 yaw=-0.64 err=-0.74 v=+0.013 om=+0.42 front=2.00 mode=NAV
+DBG t= 450.2 pos=(+0.58,+0.38) cov=429 goal=(19, 7) plen=24 yaw=-0.86 err=+0.86 v=+0.013 om=-0.42 front=2.00 mode=NAV
+DBG t= 455.2 pos=(+0.59,+0.38) cov=429 goal=(19, 7) plen=25 yaw=-0.33 err=-0.66 v=+0.013 om=+0.42 front=2.00 mode=NAV
+DBG t= 460.2 pos=(+0.56,+0.39) cov=429 goal=(19, 7) plen=24 yaw=-0.83 err=-0.92 v=+0.013 om=+0.42 front=2.00 mode=NAV
+DBG t= 465.2 pos=(+0.59,+0.37) cov=429 goal=(19, 7) plen=24 yaw=-0.73 err=+0.39 v=+0.013 om=-0.42 front=2.00 mode=NAV
+DBG t= 470.2 pos=(+0.58,+0.39) cov=429 goal=(19, 7) plen=24 yaw=-0.68 err=+1.05 v=+0.000 om=-0.42 front=2.00 mode=NAV
+DBG t= 475.2 pos=(+0.58,+0.39) cov=429 goal=(19, 7) plen=24 yaw=-0.95 err=+0.81 v=+0.013 om=-0.42 front=2.00 mode=NAV
+DBG t= 480.2 pos=(+0.57,+0.38) cov=429 goal=(19, 7) plen=24 yaw=-0.49 err=-0.58 v=+0.013 om=+0.42 front=2.00 mode=NAV
+MAP                         
+MAP                         
+MAP     #####               
+MAP ###################     
+MAP ##     #          #     
+MAP ##     #          #     
+MAP ##  #     #       #     
+MAP ##  #     #       #     
+MAP ##  #     ####  ###     
+MAP ##  #  #  #  # ~~~~~~~  
+MAP ##  #  #  #  #          
+MAP ##  #  #  #  #          
+MAP ##  # G      #          
+MAP ##  #        #          
+MAP ##  #     #  #          
+MAP  ###########.######     
+MAP ############.#          
+MAP          .              
+DBG t= 485.2 pos=(+0.55,+0.39) cov=429 goal=(19, 7) plen=24 yaw=-1.12 err=-1.19 v=+0.000 om=+0.42 front=2.00 mode=NAV
+DBG t= 490.2 pos=(+0.58,+0.37) cov=429 goal=(19, 7) plen=24 yaw=-0.78 err=+0.89 v=+0.013 om=-0.42 front=2.00 mode=NAV
+DBG t= 495.2 pos=(+0.57,+0.39) cov=429 goal=(19, 7) plen=24 yaw=-0.52 err=-0.62 v=+0.013 om=+0.42 front=2.00 mode=NAV
+  t=  29.0  lane jam at (+0.07,+0.01) -> push on (1)
+  t=  29.0  STUCK at (+0.07,+0.01) front=0.07 -> bump-marked ahead, back off
+  t=  36.5  lane jam at (+0.07,+0.01) -> push on (2)
+  t=  36.5  STUCK at (+0.07,+0.01) front=0.06 -> bump-marked ahead, back off
+  t=  44.0  lane jam at (+0.06,+0.00) -> push on (3)
+  t=  44.0  STUCK at (+0.06,+0.00) front=0.06 -> bump-marked ahead, back off
+  t=  51.5  lane jam at (+0.06,+0.01) -> push on (4)
+  t=  51.5  STUCK at (+0.06,+0.01) front=0.06 -> bump-marked ahead, back off
+  t=  59.1  lane never admits me at (+0.07,+0.01) -> verdict revoked
+  t=  59.1  STUCK at (+0.07,+0.01) front=0.07 -> bump-marked ahead, back off
+  t= 266.0  STUCK at (+0.55,+0.44) front=2.00 -> bump-marked ahead, back off
+  t= 275.3  STUCK at (+0.56,+0.41) front=2.00 -> bump-marked ahead, back off
+  t= 287.6  STUCK at (+0.51,+0.46) front=2.00 -> bump-marked ahead, back off
+{"done": false, "scouts": 0, "bans": 5, "reason": "timeout", "time_s": 500.0, "coverage_cells": 429, "pos": [0.56, 0.39]}

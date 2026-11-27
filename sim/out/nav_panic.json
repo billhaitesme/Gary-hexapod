@@ -1,0 +1,1421 @@
+{
+ "best": {
+  "cruise": 2.617,
+  "duck": 2.022,
+  "replan": 1.054,
+  "carrot": 4,
+  "kyaw": 2.232,
+  "fwd_full": 0.6,
+  "yaw_lead": 0.0,
+  "fwd_stop": 0.92,
+  "cadence": 460,
+  "lift": 0.027,
+  "crab": 0.0,
+  "zoom": 2.149,
+  "brake_at": 0.136,
+  "brake_slope": 0.986
+ },
+ "score": 76.8,
+ "history": [
+  {
+   "gen": 0,
+   "score": 228.2,
+   "genes": {
+    "cruise": 2.111,
+    "duck": 0.716,
+    "replan": 2.966,
+    "carrot": 5,
+    "kyaw": 2.5,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.211,
+    "cadence": 470,
+    "lift": 0.017,
+    "zoom": 2.0,
+    "brake_at": 0.2,
+    "brake_slope": 2.2
+   }
+  },
+  {
+   "gen": 1,
+   "score": 126.7,
+   "genes": {
+    "cruise": 2.502,
+    "duck": 1.338,
+    "replan": 2.814,
+    "carrot": 5,
+    "kyaw": 2.385,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.253,
+    "cadence": 442,
+    "lift": 0.017,
+    "zoom": 2.0,
+    "brake_at": 0.12,
+    "brake_slope": 3.0
+   }
+  },
+  {
+   "gen": 2,
+   "score": 113.0,
+   "genes": {
+    "cruise": 2.059,
+    "duck": 1.338,
+    "replan": 2.814,
+    "carrot": 4,
+    "kyaw": 2.444,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.253,
+    "cadence": 420,
+    "lift": 0.023,
+    "zoom": 1.8,
+    "brake_at": 0.207,
+    "brake_slope": 3.0
+   }
+  },
+  {
+   "gen": 3,
+   "score": 96.5,
+   "genes": {
+    "cruise": 2.412,
+    "duck": 1.338,
+    "replan": 2.533,
+    "carrot": 4,
+    "kyaw": 2.228,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.253,
+    "cadence": 420,
+    "lift": 0.024,
+    "zoom": 1.8,
+    "brake_at": 0.191,
+    "brake_slope": 2.041
+   }
+  },
+  {
+   "gen": 4,
+   "score": 93.2,
+   "genes": {
+    "cruise": 2.399,
+    "duck": 1.338,
+    "replan": 2.533,
+    "carrot": 4,
+    "kyaw": 2.323,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 420,
+    "lift": 0.024,
+    "zoom": 1.8,
+    "brake_at": 0.14,
+    "brake_slope": 2.219
+   }
+  },
+  {
+   "gen": 5,
+   "score": 93.2,
+   "genes": {
+    "cruise": 2.399,
+    "duck": 1.338,
+    "replan": 2.533,
+    "carrot": 4,
+    "kyaw": 2.323,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 420,
+    "lift": 0.024,
+    "zoom": 1.8,
+    "brake_at": 0.14,
+    "brake_slope": 2.219
+   }
+  },
+  {
+   "gen": 6,
+   "score": 93.2,
+   "genes": {
+    "cruise": 2.399,
+    "duck": 1.338,
+    "replan": 2.533,
+    "carrot": 4,
+    "kyaw": 2.323,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 420,
+    "lift": 0.024,
+    "zoom": 1.8,
+    "brake_at": 0.14,
+    "brake_slope": 2.219
+   }
+  },
+  {
+   "gen": 7,
+   "score": 93.2,
+   "genes": {
+    "cruise": 2.399,
+    "duck": 1.338,
+    "replan": 2.533,
+    "carrot": 4,
+    "kyaw": 2.323,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 420,
+    "lift": 0.024,
+    "zoom": 1.8,
+    "brake_at": 0.14,
+    "brake_slope": 2.219
+   }
+  },
+  {
+   "gen": 8,
+   "score": 91.1,
+   "genes": {
+    "cruise": 2.492,
+    "duck": 1.338,
+    "replan": 2.247,
+    "carrot": 4,
+    "kyaw": 2.323,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 431,
+    "lift": 0.023,
+    "zoom": 1.8,
+    "brake_at": 0.14,
+    "brake_slope": 2.031
+   }
+  },
+  {
+   "gen": 9,
+   "score": 91.1,
+   "genes": {
+    "cruise": 2.492,
+    "duck": 1.338,
+    "replan": 2.247,
+    "carrot": 4,
+    "kyaw": 2.323,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 431,
+    "lift": 0.023,
+    "zoom": 1.8,
+    "brake_at": 0.14,
+    "brake_slope": 2.031
+   }
+  },
+  {
+   "gen": 10,
+   "score": 91.1,
+   "genes": {
+    "cruise": 2.492,
+    "duck": 1.338,
+    "replan": 2.247,
+    "carrot": 4,
+    "kyaw": 2.323,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 431,
+    "lift": 0.023,
+    "zoom": 1.8,
+    "brake_at": 0.14,
+    "brake_slope": 2.031
+   }
+  },
+  {
+   "gen": 1,
+   "score": 91.1,
+   "genes": {
+    "cruise": 2.492,
+    "duck": 1.338,
+    "replan": 2.247,
+    "carrot": 4,
+    "kyaw": 2.323,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 431,
+    "lift": 0.023,
+    "zoom": 1.8,
+    "brake_at": 0.14,
+    "brake_slope": 2.031
+   }
+  },
+  {
+   "gen": 2,
+   "score": 91.1,
+   "genes": {
+    "cruise": 2.492,
+    "duck": 1.338,
+    "replan": 2.247,
+    "carrot": 4,
+    "kyaw": 2.323,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 431,
+    "lift": 0.023,
+    "zoom": 1.8,
+    "brake_at": 0.14,
+    "brake_slope": 2.031
+   }
+  },
+  {
+   "gen": 3,
+   "score": 85.7,
+   "genes": {
+    "cruise": 2.845,
+    "duck": 1.338,
+    "replan": 1.966,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 431,
+    "lift": 0.024,
+    "zoom": 1.8,
+    "brake_at": 0.124,
+    "brake_slope": 1.072
+   }
+  },
+  {
+   "gen": 4,
+   "score": 85.7,
+   "genes": {
+    "cruise": 2.845,
+    "duck": 1.338,
+    "replan": 1.966,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 431,
+    "lift": 0.024,
+    "zoom": 1.8,
+    "brake_at": 0.124,
+    "brake_slope": 1.072
+   }
+  },
+  {
+   "gen": 5,
+   "score": 85.7,
+   "genes": {
+    "cruise": 2.845,
+    "duck": 1.338,
+    "replan": 1.966,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 431,
+    "lift": 0.024,
+    "zoom": 1.8,
+    "brake_at": 0.124,
+    "brake_slope": 1.072
+   }
+  },
+  {
+   "gen": 6,
+   "score": 85.7,
+   "genes": {
+    "cruise": 2.845,
+    "duck": 1.338,
+    "replan": 1.966,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 431,
+    "lift": 0.024,
+    "zoom": 1.8,
+    "brake_at": 0.124,
+    "brake_slope": 1.072
+   }
+  },
+  {
+   "gen": 7,
+   "score": 85.7,
+   "genes": {
+    "cruise": 2.845,
+    "duck": 1.338,
+    "replan": 1.966,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 431,
+    "lift": 0.024,
+    "zoom": 1.8,
+    "brake_at": 0.124,
+    "brake_slope": 1.072
+   }
+  },
+  {
+   "gen": 8,
+   "score": 85.7,
+   "genes": {
+    "cruise": 2.845,
+    "duck": 1.338,
+    "replan": 1.966,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 431,
+    "lift": 0.024,
+    "zoom": 1.8,
+    "brake_at": 0.124,
+    "brake_slope": 1.072
+   }
+  },
+  {
+   "gen": 1,
+   "score": 85.7,
+   "genes": {
+    "cruise": 2.845,
+    "duck": 1.338,
+    "replan": 1.966,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 431,
+    "lift": 0.024,
+    "zoom": 1.8,
+    "brake_at": 0.124,
+    "brake_slope": 1.072
+   }
+  },
+  {
+   "gen": 2,
+   "score": 85.7,
+   "genes": {
+    "cruise": 2.845,
+    "duck": 1.338,
+    "replan": 1.966,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 431,
+    "lift": 0.024,
+    "zoom": 1.8,
+    "brake_at": 0.124,
+    "brake_slope": 1.072
+   }
+  },
+  {
+   "gen": 3,
+   "score": 85.7,
+   "genes": {
+    "cruise": 2.845,
+    "duck": 1.338,
+    "replan": 1.966,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 431,
+    "lift": 0.024,
+    "zoom": 1.8,
+    "brake_at": 0.124,
+    "brake_slope": 1.072
+   }
+  },
+  {
+   "gen": 4,
+   "score": 85.7,
+   "genes": {
+    "cruise": 2.845,
+    "duck": 1.338,
+    "replan": 1.966,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 431,
+    "lift": 0.024,
+    "zoom": 1.8,
+    "brake_at": 0.124,
+    "brake_slope": 1.072
+   }
+  },
+  {
+   "gen": 1,
+   "score": 86.1,
+   "genes": {
+    "cruise": 2.845,
+    "duck": 1.338,
+    "replan": 1.966,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 431,
+    "lift": 0.024,
+    "zoom": 1.8,
+    "brake_at": 0.124,
+    "brake_slope": 1.072
+   }
+  },
+  {
+   "gen": 2,
+   "score": 86.1,
+   "genes": {
+    "cruise": 2.845,
+    "duck": 1.338,
+    "replan": 1.966,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 431,
+    "lift": 0.024,
+    "zoom": 1.8,
+    "brake_at": 0.124,
+    "brake_slope": 1.072
+   }
+  },
+  {
+   "gen": 3,
+   "score": 86.1,
+   "genes": {
+    "cruise": 2.845,
+    "duck": 1.338,
+    "replan": 1.966,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 431,
+    "lift": 0.024,
+    "zoom": 1.8,
+    "brake_at": 0.124,
+    "brake_slope": 1.072
+   }
+  },
+  {
+   "gen": 4,
+   "score": 86.1,
+   "genes": {
+    "cruise": 2.845,
+    "duck": 1.338,
+    "replan": 1.966,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 431,
+    "lift": 0.024,
+    "zoom": 1.8,
+    "brake_at": 0.124,
+    "brake_slope": 1.072
+   }
+  },
+  {
+   "gen": 5,
+   "score": 85.9,
+   "genes": {
+    "cruise": 2.845,
+    "duck": 1.338,
+    "replan": 2.171,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.317,
+    "cadence": 431,
+    "lift": 0.026,
+    "zoom": 2.154,
+    "brake_at": 0.14,
+    "brake_slope": 1.072
+   }
+  },
+  {
+   "gen": 6,
+   "score": 85.5,
+   "genes": {
+    "cruise": 2.843,
+    "duck": 1.338,
+    "replan": 2.171,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.155,
+    "cadence": 431,
+    "lift": 0.027,
+    "zoom": 1.973,
+    "brake_at": 0.14,
+    "brake_slope": 1.194
+   }
+  },
+  {
+   "gen": 1,
+   "score": 77.0,
+   "genes": {
+    "cruise": 2.843,
+    "duck": 1.338,
+    "replan": 2.171,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.155,
+    "cadence": 431,
+    "lift": 0.027,
+    "zoom": 1.973,
+    "brake_at": 0.14,
+    "brake_slope": 1.194
+   }
+  },
+  {
+   "gen": 2,
+   "score": 77.0,
+   "genes": {
+    "cruise": 2.843,
+    "duck": 1.338,
+    "replan": 2.171,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.155,
+    "cadence": 431,
+    "lift": 0.027,
+    "zoom": 1.973,
+    "brake_at": 0.14,
+    "brake_slope": 1.194
+   }
+  },
+  {
+   "gen": 3,
+   "score": 77.0,
+   "genes": {
+    "cruise": 2.843,
+    "duck": 1.338,
+    "replan": 2.171,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.155,
+    "cadence": 431,
+    "lift": 0.027,
+    "zoom": 1.973,
+    "brake_at": 0.14,
+    "brake_slope": 1.194
+   }
+  },
+  {
+   "gen": 4,
+   "score": 77.0,
+   "genes": {
+    "cruise": 2.843,
+    "duck": 1.338,
+    "replan": 2.171,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.155,
+    "cadence": 431,
+    "lift": 0.027,
+    "zoom": 1.973,
+    "brake_at": 0.14,
+    "brake_slope": 1.194
+   }
+  },
+  {
+   "gen": 5,
+   "score": 77.0,
+   "genes": {
+    "cruise": 2.843,
+    "duck": 1.338,
+    "replan": 2.171,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.155,
+    "cadence": 431,
+    "lift": 0.027,
+    "zoom": 1.973,
+    "brake_at": 0.14,
+    "brake_slope": 1.194
+   }
+  },
+  {
+   "gen": 6,
+   "score": 75.1,
+   "genes": {
+    "cruise": 2.981,
+    "duck": 1.338,
+    "replan": 1.746,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.155,
+    "cadence": 448,
+    "lift": 0.026,
+    "zoom": 1.973,
+    "brake_at": 0.14,
+    "brake_slope": 0.914
+   }
+  },
+  {
+   "gen": 1,
+   "score": 75.1,
+   "genes": {
+    "cruise": 2.981,
+    "duck": 1.338,
+    "replan": 1.746,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.155,
+    "cadence": 448,
+    "lift": 0.026,
+    "zoom": 1.973,
+    "brake_at": 0.14,
+    "brake_slope": 0.914
+   }
+  },
+  {
+   "gen": 2,
+   "score": 75.1,
+   "genes": {
+    "cruise": 2.981,
+    "duck": 1.338,
+    "replan": 1.746,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.155,
+    "cadence": 448,
+    "lift": 0.026,
+    "zoom": 1.973,
+    "brake_at": 0.14,
+    "brake_slope": 0.914
+   }
+  },
+  {
+   "gen": 3,
+   "score": 75.1,
+   "genes": {
+    "cruise": 2.981,
+    "duck": 1.338,
+    "replan": 1.746,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.155,
+    "cadence": 448,
+    "lift": 0.026,
+    "zoom": 1.973,
+    "brake_at": 0.14,
+    "brake_slope": 0.914
+   }
+  },
+  {
+   "gen": 4,
+   "score": 75.1,
+   "genes": {
+    "cruise": 2.981,
+    "duck": 1.338,
+    "replan": 1.746,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.155,
+    "cadence": 448,
+    "lift": 0.026,
+    "zoom": 1.973,
+    "brake_at": 0.14,
+    "brake_slope": 0.914
+   }
+  },
+  {
+   "gen": 5,
+   "score": 75.1,
+   "genes": {
+    "cruise": 2.981,
+    "duck": 1.338,
+    "replan": 1.746,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.155,
+    "cadence": 448,
+    "lift": 0.026,
+    "zoom": 1.973,
+    "brake_at": 0.14,
+    "brake_slope": 0.914
+   }
+  },
+  {
+   "gen": 6,
+   "score": 74.5,
+   "genes": {
+    "cruise": 3.119,
+    "duck": 1.338,
+    "replan": 1.321,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.155,
+    "cadence": 465,
+    "lift": 0.025,
+    "zoom": 1.973,
+    "brake_at": 0.14,
+    "brake_slope": 0.634
+   }
+  },
+  {
+   "gen": 7,
+   "score": 74.5,
+   "genes": {
+    "cruise": 3.119,
+    "duck": 1.338,
+    "replan": 1.321,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.155,
+    "cadence": 465,
+    "lift": 0.025,
+    "zoom": 1.973,
+    "brake_at": 0.14,
+    "brake_slope": 0.634
+   }
+  },
+  {
+   "gen": 8,
+   "score": 74.5,
+   "genes": {
+    "cruise": 3.119,
+    "duck": 1.338,
+    "replan": 1.321,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.155,
+    "cadence": 465,
+    "lift": 0.025,
+    "zoom": 1.973,
+    "brake_at": 0.14,
+    "brake_slope": 0.634
+   }
+  },
+  {
+   "gen": 9,
+   "score": 74.5,
+   "genes": {
+    "cruise": 3.119,
+    "duck": 1.338,
+    "replan": 1.321,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.155,
+    "cadence": 465,
+    "lift": 0.025,
+    "zoom": 1.973,
+    "brake_at": 0.14,
+    "brake_slope": 0.634
+   }
+  },
+  {
+   "gen": 10,
+   "score": 74.5,
+   "genes": {
+    "cruise": 3.119,
+    "duck": 1.338,
+    "replan": 1.321,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.155,
+    "cadence": 465,
+    "lift": 0.025,
+    "zoom": 1.973,
+    "brake_at": 0.14,
+    "brake_slope": 0.634
+   }
+  },
+  {
+   "gen": 1,
+   "score": 156.5,
+   "genes": {
+    "cruise": 3.119,
+    "duck": 1.338,
+    "replan": 1.321,
+    "carrot": 4,
+    "kyaw": 2.107,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.155,
+    "cadence": 465,
+    "lift": 0.025,
+    "crab": 0.0,
+    "zoom": 1.973,
+    "brake_at": 0.14,
+    "brake_slope": 0.634
+   }
+  },
+  {
+   "gen": 2,
+   "score": 148.8,
+   "genes": {
+    "cruise": 2.225,
+    "duck": 1.338,
+    "replan": 1.321,
+    "carrot": 4,
+    "kyaw": 2.196,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.059,
+    "cadence": 447,
+    "lift": 0.026,
+    "crab": 0.0,
+    "zoom": 1.973,
+    "brake_at": 0.12,
+    "brake_slope": 0.634
+   }
+  },
+  {
+   "gen": 3,
+   "score": 87.9,
+   "genes": {
+    "cruise": 2.466,
+    "duck": 1.338,
+    "replan": 1.0,
+    "carrot": 4,
+    "kyaw": 2.235,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.085,
+    "cadence": 447,
+    "lift": 0.026,
+    "crab": 0.0,
+    "zoom": 2.085,
+    "brake_at": 0.12,
+    "brake_slope": 1.108
+   }
+  },
+  {
+   "gen": 4,
+   "score": 87.9,
+   "genes": {
+    "cruise": 2.466,
+    "duck": 1.338,
+    "replan": 1.0,
+    "carrot": 4,
+    "kyaw": 2.235,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.085,
+    "cadence": 447,
+    "lift": 0.026,
+    "crab": 0.0,
+    "zoom": 2.085,
+    "brake_at": 0.12,
+    "brake_slope": 1.108
+   }
+  },
+  {
+   "gen": 5,
+   "score": 87.9,
+   "genes": {
+    "cruise": 2.466,
+    "duck": 1.338,
+    "replan": 1.0,
+    "carrot": 4,
+    "kyaw": 2.235,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.085,
+    "cadence": 447,
+    "lift": 0.026,
+    "crab": 0.0,
+    "zoom": 2.085,
+    "brake_at": 0.12,
+    "brake_slope": 1.108
+   }
+  },
+  {
+   "gen": 6,
+   "score": 87.9,
+   "genes": {
+    "cruise": 2.466,
+    "duck": 1.338,
+    "replan": 1.0,
+    "carrot": 4,
+    "kyaw": 2.235,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.085,
+    "cadence": 447,
+    "lift": 0.026,
+    "crab": 0.0,
+    "zoom": 2.085,
+    "brake_at": 0.12,
+    "brake_slope": 1.108
+   }
+  },
+  {
+   "gen": 7,
+   "score": 87.9,
+   "genes": {
+    "cruise": 2.466,
+    "duck": 1.338,
+    "replan": 1.0,
+    "carrot": 4,
+    "kyaw": 2.235,
+    "fwd_full": 0.6,
+    "fwd_stop": 1.085,
+    "cadence": 447,
+    "lift": 0.026,
+    "crab": 0.0,
+    "zoom": 2.085,
+    "brake_at": 0.12,
+    "brake_slope": 1.108
+   }
+  },
+  {
+   "gen": 8,
+   "score": 83.2,
+   "genes": {
+    "cruise": 2.435,
+    "duck": 1.338,
+    "replan": 1.0,
+    "carrot": 4,
+    "kyaw": 2.235,
+    "fwd_full": 0.593,
+    "fwd_stop": 1.012,
+    "cadence": 467,
+    "lift": 0.026,
+    "crab": 0.014,
+    "zoom": 2.085,
+    "brake_at": 0.136,
+    "brake_slope": 1.198
+   }
+  },
+  {
+   "gen": 9,
+   "score": 83.2,
+   "genes": {
+    "cruise": 2.435,
+    "duck": 1.338,
+    "replan": 1.0,
+    "carrot": 4,
+    "kyaw": 2.235,
+    "fwd_full": 0.593,
+    "fwd_stop": 1.012,
+    "cadence": 467,
+    "lift": 0.026,
+    "crab": 0.014,
+    "zoom": 2.085,
+    "brake_at": 0.136,
+    "brake_slope": 1.198
+   }
+  },
+  {
+   "gen": 10,
+   "score": 83.2,
+   "genes": {
+    "cruise": 2.435,
+    "duck": 1.338,
+    "replan": 1.0,
+    "carrot": 4,
+    "kyaw": 2.235,
+    "fwd_full": 0.593,
+    "fwd_stop": 1.012,
+    "cadence": 467,
+    "lift": 0.026,
+    "crab": 0.014,
+    "zoom": 2.085,
+    "brake_at": 0.136,
+    "brake_slope": 1.198
+   }
+  },
+  {
+   "gen": 1,
+   "score": 89.6,
+   "genes": {
+    "cruise": 2.617,
+    "duck": 1.338,
+    "replan": 1.0,
+    "carrot": 3,
+    "kyaw": 2.342,
+    "fwd_full": 0.6,
+    "yaw_lead": 0.0,
+    "fwd_stop": 0.92,
+    "cadence": 542,
+    "lift": 0.028,
+    "crab": 0.0,
+    "zoom": 1.5,
+    "brake_at": 0.136,
+    "brake_slope": 0.986
+   }
+  },
+  {
+   "gen": 2,
+   "score": 89.6,
+   "genes": {
+    "cruise": 2.617,
+    "duck": 1.338,
+    "replan": 1.0,
+    "carrot": 3,
+    "kyaw": 2.342,
+    "fwd_full": 0.6,
+    "yaw_lead": 0.0,
+    "fwd_stop": 0.92,
+    "cadence": 542,
+    "lift": 0.028,
+    "crab": 0.0,
+    "zoom": 1.5,
+    "brake_at": 0.136,
+    "brake_slope": 0.986
+   }
+  },
+  {
+   "gen": 3,
+   "score": 89.6,
+   "genes": {
+    "cruise": 2.617,
+    "duck": 1.338,
+    "replan": 1.0,
+    "carrot": 3,
+    "kyaw": 2.342,
+    "fwd_full": 0.6,
+    "yaw_lead": 0.0,
+    "fwd_stop": 0.92,
+    "cadence": 542,
+    "lift": 0.028,
+    "crab": 0.0,
+    "zoom": 1.5,
+    "brake_at": 0.136,
+    "brake_slope": 0.986
+   }
+  },
+  {
+   "gen": 4,
+   "score": 89.6,
+   "genes": {
+    "cruise": 2.617,
+    "duck": 1.338,
+    "replan": 1.0,
+    "carrot": 3,
+    "kyaw": 2.342,
+    "fwd_full": 0.6,
+    "yaw_lead": 0.0,
+    "fwd_stop": 0.92,
+    "cadence": 542,
+    "lift": 0.028,
+    "crab": 0.0,
+    "zoom": 1.5,
+    "brake_at": 0.136,
+    "brake_slope": 0.986
+   }
+  },
+  {
+   "gen": 5,
+   "score": 81.8,
+   "genes": {
+    "cruise": 2.617,
+    "duck": 1.172,
+    "replan": 1.0,
+    "carrot": 3,
+    "kyaw": 2.234,
+    "fwd_full": 0.6,
+    "yaw_lead": 0.027,
+    "fwd_stop": 0.92,
+    "cadence": 522,
+    "lift": 0.027,
+    "crab": 0.0,
+    "zoom": 1.5,
+    "brake_at": 0.136,
+    "brake_slope": 0.986
+   }
+  },
+  {
+   "gen": 6,
+   "score": 81.8,
+   "genes": {
+    "cruise": 2.617,
+    "duck": 1.172,
+    "replan": 1.0,
+    "carrot": 3,
+    "kyaw": 2.234,
+    "fwd_full": 0.6,
+    "yaw_lead": 0.027,
+    "fwd_stop": 0.92,
+    "cadence": 522,
+    "lift": 0.027,
+    "crab": 0.0,
+    "zoom": 1.5,
+    "brake_at": 0.136,
+    "brake_slope": 0.986
+   }
+  },
+  {
+   "gen": 7,
+   "score": 81.8,
+   "genes": {
+    "cruise": 2.617,
+    "duck": 1.172,
+    "replan": 1.0,
+    "carrot": 3,
+    "kyaw": 2.234,
+    "fwd_full": 0.6,
+    "yaw_lead": 0.027,
+    "fwd_stop": 0.92,
+    "cadence": 522,
+    "lift": 0.027,
+    "crab": 0.0,
+    "zoom": 1.5,
+    "brake_at": 0.136,
+    "brake_slope": 0.986
+   }
+  },
+  {
+   "gen": 8,
+   "score": 81.8,
+   "genes": {
+    "cruise": 2.617,
+    "duck": 1.172,
+    "replan": 1.0,
+    "carrot": 3,
+    "kyaw": 2.234,
+    "fwd_full": 0.6,
+    "yaw_lead": 0.027,
+    "fwd_stop": 0.92,
+    "cadence": 522,
+    "lift": 0.027,
+    "crab": 0.0,
+    "zoom": 1.5,
+    "brake_at": 0.136,
+    "brake_slope": 0.986
+   }
+  },
+  {
+   "gen": 9,
+   "score": 81.8,
+   "genes": {
+    "cruise": 2.617,
+    "duck": 1.172,
+    "replan": 1.0,
+    "carrot": 3,
+    "kyaw": 2.234,
+    "fwd_full": 0.6,
+    "yaw_lead": 0.027,
+    "fwd_stop": 0.92,
+    "cadence": 522,
+    "lift": 0.027,
+    "crab": 0.0,
+    "zoom": 1.5,
+    "brake_at": 0.136,
+    "brake_slope": 0.986
+   }
+  },
+  {
+   "gen": 10,
+   "score": 81.8,
+   "genes": {
+    "cruise": 2.617,
+    "duck": 1.172,
+    "replan": 1.0,
+    "carrot": 3,
+    "kyaw": 2.234,
+    "fwd_full": 0.6,
+    "yaw_lead": 0.027,
+    "fwd_stop": 0.92,
+    "cadence": 522,
+    "lift": 0.027,
+    "crab": 0.0,
+    "zoom": 1.5,
+    "brake_at": 0.136,
+    "brake_slope": 0.986
+   }
+  },
+  {
+   "gen": 1,
+   "score": 76.8,
+   "genes": {
+    "cruise": 2.617,
+    "duck": 2.022,
+    "replan": 1.054,
+    "carrot": 4,
+    "kyaw": 2.232,
+    "fwd_full": 0.6,
+    "yaw_lead": 0.0,
+    "fwd_stop": 0.92,
+    "cadence": 460,
+    "lift": 0.027,
+    "crab": 0.0,
+    "zoom": 2.149,
+    "brake_at": 0.136,
+    "brake_slope": 0.986
+   }
+  },
+  {
+   "gen": 2,
+   "score": 76.8,
+   "genes": {
+    "cruise": 2.617,
+    "duck": 2.022,
+    "replan": 1.054,
+    "carrot": 4,
+    "kyaw": 2.232,
+    "fwd_full": 0.6,
+    "yaw_lead": 0.0,
+    "fwd_stop": 0.92,
+    "cadence": 460,
+    "lift": 0.027,
+    "crab": 0.0,
+    "zoom": 2.149,
+    "brake_at": 0.136,
+    "brake_slope": 0.986
+   }
+  },
+  {
+   "gen": 3,
+   "score": 76.8,
+   "genes": {
+    "cruise": 2.617,
+    "duck": 2.022,
+    "replan": 1.054,
+    "carrot": 4,
+    "kyaw": 2.232,
+    "fwd_full": 0.6,
+    "yaw_lead": 0.0,
+    "fwd_stop": 0.92,
+    "cadence": 460,
+    "lift": 0.027,
+    "crab": 0.0,
+    "zoom": 2.149,
+    "brake_at": 0.136,
+    "brake_slope": 0.986
+   }
+  },
+  {
+   "gen": 4,
+   "score": 76.8,
+   "genes": {
+    "cruise": 2.617,
+    "duck": 2.022,
+    "replan": 1.054,
+    "carrot": 4,
+    "kyaw": 2.232,
+    "fwd_full": 0.6,
+    "yaw_lead": 0.0,
+    "fwd_stop": 0.92,
+    "cadence": 460,
+    "lift": 0.027,
+    "crab": 0.0,
+    "zoom": 2.149,
+    "brake_at": 0.136,
+    "brake_slope": 0.986
+   }
+  },
+  {
+   "gen": 5,
+   "score": 76.8,
+   "genes": {
+    "cruise": 2.617,
+    "duck": 2.022,
+    "replan": 1.054,
+    "carrot": 4,
+    "kyaw": 2.232,
+    "fwd_full": 0.6,
+    "yaw_lead": 0.0,
+    "fwd_stop": 0.92,
+    "cadence": 460,
+    "lift": 0.027,
+    "crab": 0.0,
+    "zoom": 2.149,
+    "brake_at": 0.136,
+    "brake_slope": 0.986
+   }
+  },
+  {
+   "gen": 6,
+   "score": 76.8,
+   "genes": {
+    "cruise": 2.617,
+    "duck": 2.022,
+    "replan": 1.054,
+    "carrot": 4,
+    "kyaw": 2.232,
+    "fwd_full": 0.6,
+    "yaw_lead": 0.0,
+    "fwd_stop": 0.92,
+    "cadence": 460,
+    "lift": 0.027,
+    "crab": 0.0,
+    "zoom": 2.149,
+    "brake_at": 0.136,
+    "brake_slope": 0.986
+   }
+  },
+  {
+   "gen": 7,
+   "score": 76.8,
+   "genes": {
+    "cruise": 2.617,
+    "duck": 2.022,
+    "replan": 1.054,
+    "carrot": 4,
+    "kyaw": 2.232,
+    "fwd_full": 0.6,
+    "yaw_lead": 0.0,
+    "fwd_stop": 0.92,
+    "cadence": 460,
+    "lift": 0.027,
+    "crab": 0.0,
+    "zoom": 2.149,
+    "brake_at": 0.136,
+    "brake_slope": 0.986
+   }
+  },
+  {
+   "gen": 8,
+   "score": 76.8,
+   "genes": {
+    "cruise": 2.617,
+    "duck": 2.022,
+    "replan": 1.054,
+    "carrot": 4,
+    "kyaw": 2.232,
+    "fwd_full": 0.6,
+    "yaw_lead": 0.0,
+    "fwd_stop": 0.92,
+    "cadence": 460,
+    "lift": 0.027,
+    "crab": 0.0,
+    "zoom": 2.149,
+    "brake_at": 0.136,
+    "brake_slope": 0.986
+   }
+  },
+  {
+   "gen": 9,
+   "score": 76.8,
+   "genes": {
+    "cruise": 2.617,
+    "duck": 2.022,
+    "replan": 1.054,
+    "carrot": 4,
+    "kyaw": 2.232,
+    "fwd_full": 0.6,
+    "yaw_lead": 0.0,
+    "fwd_stop": 0.92,
+    "cadence": 460,
+    "lift": 0.027,
+    "crab": 0.0,
+    "zoom": 2.149,
+    "brake_at": 0.136,
+    "brake_slope": 0.986
+   }
+  },
+  {
+   "gen": 10,
+   "score": 76.8,
+   "genes": {
+    "cruise": 2.617,
+    "duck": 2.022,
+    "replan": 1.054,
+    "carrot": 4,
+    "kyaw": 2.232,
+    "fwd_full": 0.6,
+    "yaw_lead": 0.0,
+    "fwd_stop": 0.92,
+    "cadence": 460,
+    "lift": 0.027,
+    "crab": 0.0,
+    "zoom": 2.149,
+    "brake_at": 0.136,
+    "brake_slope": 0.986
+   }
+  }
+ ]
+}

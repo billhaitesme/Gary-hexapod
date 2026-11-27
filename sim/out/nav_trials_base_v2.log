@@ -1,0 +1,57 @@
+resuming: stored score 270.6  {'cruise': 1.573, 'duck': 0.831, 'replan': 1.539, 'carrot': 5, 'kyaw': 2.253, 'fwd_full': 0.6, 'fwd_stop': 1.268, 'cadence': 420, 'lift': 0.015}
+  incumbent on current mechanics: 358.1
+  gen 1  score   461.1 (156s sat=0.50)  {'cruise': 1.927, 'duck': 0.987, 'replan': 1.387, 'carrot': 5, 'kyaw': 2.138, 'fwd_full': 0.6, 'fwd_stop': 1.31, 'cadence': 420, 'lift': 0.015}
+  gen 1  score   633.1 (368s sat=0.45)  {'cruise': 1.573, 'duck': 0.543, 'replan': 2.63, 'carrot': 5, 'kyaw': 2.355, 'fwd_full': 0.6, 'fwd_stop': 1.268, 'cadence': 420, 'lift': 0.012}
+  gen 1  score   361.7 (136s sat=0.40)  {'cruise': 1.708, 'duck': 0.849, 'replan': 1.539, 'carrot': 5, 'kyaw': 2.5, 'fwd_full': 0.6, 'fwd_stop': 1.006, 'cadence': 420, 'lift': 0.015}
+  gen 1  score   316.2 (150s sat=0.33)  {'cruise': 1.439, 'duck': 0.831, 'replan': 1.0, 'carrot': 6, 'kyaw': 2.5, 'fwd_full': 0.6, 'fwd_stop': 1.332, 'cadence': 420, 'lift': 0.013}
+  gen 1  score   350.5 (165s sat=0.35)  {'cruise': 1.044, 'duck': 1.0, 'replan': 1.0, 'carrot': 5, 'kyaw': 2.11, 'fwd_full': 0.6, 'fwd_stop': 1.268, 'cadence': 420, 'lift': 0.014}
+  gen 1  score   276.3 (122s sat=0.31)  {'cruise': 1.495, 'duck': 0.865, 'replan': 1.539, 'carrot': 5, 'kyaw': 1.735, 'fwd_full': 0.6, 'fwd_stop': 0.921, 'cadence': 420, 'lift': 0.015}
+  gen 1  score   647.6 (312s sat=0.54)  {'cruise': 1.308, 'duck': 0.658, 'replan': 1.539, 'carrot': 6, 'kyaw': 2.28, 'fwd_full': 0.6, 'fwd_stop': 1.267, 'cadence': 426, 'lift': 0.008}
+  gen 1  score   379.7 (156s sat=0.40)  {'cruise': 1.573, 'duck': 0.699, 'replan': 1.539, 'carrot': 5, 'kyaw': 2.5, 'fwd_full': 0.6, 'fwd_stop': 1.268, 'cadence': 420, 'lift': 0.02}
+gen 1 BEST score 276.3  {'cruise': 1.495, 'duck': 0.865, 'replan': 1.539, 'carrot': 5, 'kyaw': 1.735, 'fwd_full': 0.6, 'fwd_stop': 0.921, 'cadence': 420, 'lift': 0.015}
+  gen 2  score   418.2 (137s sat=0.47)  {'cruise': 1.789, 'duck': 0.882, 'replan': 1.85, 'carrot': 5, 'kyaw': 1.735, 'fwd_full': 0.6, 'fwd_stop': 0.921, 'cadence': 436, 'lift': 0.013}
+  gen 2  score   562.3 (216s sat=0.55)  {'cruise': 1.762, 'duck': 0.865, 'replan': 1.539, 'carrot': 5, 'kyaw': 1.747, 'fwd_full': 0.587, 'fwd_stop': 1.191, 'cadence': 479, 'lift': 0.014}
+  gen 2  score   698.9 (352s sat=0.55)  {'cruise': 1.909, 'duck': 0.865, 'replan': 1.539, 'carrot': 5, 'kyaw': 1.791, 'fwd_full': 0.6, 'fwd_stop': 1.136, 'cadence': 420, 'lift': 0.016}
+  gen 2  score   314.5 (122s sat=0.36)  {'cruise': 1.495, 'duck': 0.865, 'replan': 1.539, 'carrot': 5, 'kyaw': 1.735, 'fwd_full': 0.6, 'fwd_stop': 0.899, 'cadence': 430, 'lift': 0.015}
+  gen 2  score   323.8 (137s sat=0.35)  {'cruise': 1.495, 'duck': 1.0, 'replan': 1.539, 'carrot': 5, 'kyaw': 1.735, 'fwd_full': 0.6, 'fwd_stop': 1.023, 'cadence': 420, 'lift': 0.015}
+  gen 2  score   785.6 (492s sat=0.49)  {'cruise': 0.978, 'duck': 0.865, 'replan': 1.539, 'carrot': 4, 'kyaw': 1.735, 'fwd_full': 0.6, 'fwd_stop': 0.653, 'cadence': 431, 'lift': 0.015}
+  gen 2  score   508.4 (248s sat=0.45)  {'cruise': 1.495, 'duck': 0.771, 'replan': 2.36, 'carrot': 5, 'kyaw': 2.077, 'fwd_full': 0.6, 'fwd_stop': 1.176, 'cadence': 420, 'lift': 0.015}
+  gen 2  score   332.0 (141s sat=0.36)  {'cruise': 1.495, 'duck': 0.81, 'replan': 1.453, 'carrot': 5, 'kyaw': 1.735, 'fwd_full': 0.6, 'fwd_stop': 0.921, 'cadence': 420, 'lift': 0.013}
+gen 2 BEST score 276.3  {'cruise': 1.495, 'duck': 0.865, 'replan': 1.539, 'carrot': 5, 'kyaw': 1.735, 'fwd_full': 0.6, 'fwd_stop': 0.921, 'cadence': 420, 'lift': 0.015}
+  gen 3  score   644.2 (332s sat=0.51)  {'cruise': 1.439, 'duck': 0.928, 'replan': 1.334, 'carrot': 5, 'kyaw': 1.792, 'fwd_full': 0.489, 'fwd_stop': 0.793, 'cadence': 420, 'lift': 0.011}
+  gen 3  score   582.4 (301s sat=0.47)  {'cruise': 1.427, 'duck': 0.868, 'replan': 1.539, 'carrot': 5, 'kyaw': 1.691, 'fwd_full': 0.525, 'fwd_stop': 0.726, 'cadence': 420, 'lift': 0.015}
+  gen 3  score   411.8 (184s sat=0.41)  {'cruise': 1.495, 'duck': 0.936, 'replan': 1.6, 'carrot': 4, 'kyaw': 1.735, 'fwd_full': 0.509, 'fwd_stop': 0.907, 'cadence': 420, 'lift': 0.015}
+  gen 3  score   507.7 (223s sat=0.48)  {'cruise': 1.495, 'duck': 0.865, 'replan': 1.684, 'carrot': 6, 'kyaw': 1.587, 'fwd_full': 0.579, 'fwd_stop': 0.937, 'cadence': 420, 'lift': 0.015}
+  gen 3  score   344.3 (160s sat=0.35)  {'cruise': 1.065, 'duck': 0.865, 'replan': 1.539, 'carrot': 6, 'kyaw': 1.345, 'fwd_full': 0.6, 'fwd_stop': 0.6, 'cadence': 420, 'lift': 0.016}
+  gen 3  score   394.2 (173s sat=0.40)  {'cruise': 1.24, 'duck': 0.857, 'replan': 1.524, 'carrot': 5, 'kyaw': 1.933, 'fwd_full': 0.6, 'fwd_stop': 0.933, 'cadence': 493, 'lift': 0.015}
+  gen 3  score   668.5 (318s sat=0.56)  {'cruise': 1.449, 'duck': 1.0, 'replan': 1.729, 'carrot': 4, 'kyaw': 1.735, 'fwd_full': 0.6, 'fwd_stop': 1.055, 'cadence': 420, 'lift': 0.013}
+  gen 3  score   445.4 (167s sat=0.47)  {'cruise': 1.383, 'duck': 0.779, 'replan': 1.539, 'carrot': 5, 'kyaw': 1.735, 'fwd_full': 0.6, 'fwd_stop': 0.921, 'cadence': 420, 'lift': 0.008}
+gen 3 BEST score 276.3  {'cruise': 1.495, 'duck': 0.865, 'replan': 1.539, 'carrot': 5, 'kyaw': 1.735, 'fwd_full': 0.6, 'fwd_stop': 0.921, 'cadence': 420, 'lift': 0.015}
+  gen 4  score   481.4 (198s sat=0.47)  {'cruise': 1.323, 'duck': 0.812, 'replan': 1.494, 'carrot': 5, 'kyaw': 1.773, 'fwd_full': 0.6, 'fwd_stop': 0.841, 'cadence': 420, 'lift': 0.015}
+  gen 4  score   380.8 (159s sat=0.40)  {'cruise': 1.464, 'duck': 0.773, 'replan': 1.697, 'carrot': 5, 'kyaw': 1.701, 'fwd_full': 0.6, 'fwd_stop': 0.837, 'cadence': 420, 'lift': 0.015}
+  gen 4  score   400.6 (138s sat=0.45)  {'cruise': 1.673, 'duck': 0.865, 'replan': 1.044, 'carrot': 5, 'kyaw': 1.767, 'fwd_full': 0.6, 'fwd_stop': 0.942, 'cadence': 420, 'lift': 0.015}
+  gen 4  score   343.2 (137s sat=0.38)  {'cruise': 1.495, 'duck': 0.891, 'replan': 1.431, 'carrot': 6, 'kyaw': 1.696, 'fwd_full': 0.6, 'fwd_stop': 1.168, 'cadence': 449, 'lift': 0.015}
+  gen 4  score   293.9 (136s sat=0.32)  {'cruise': 1.303, 'duck': 0.921, 'replan': 1.503, 'carrot': 5, 'kyaw': 1.692, 'fwd_full': 0.6, 'fwd_stop': 0.935, 'cadence': 465, 'lift': 0.015}
+  gen 4  score  1035.0 (677s sat=0.57)  {'cruise': 1.495, 'duck': 0.865, 'replan': 1.539, 'carrot': 4, 'kyaw': 2.202, 'fwd_full': 0.6, 'fwd_stop': 0.921, 'cadence': 457, 'lift': 0.015}
+  gen 4  score   582.9 (318s sat=0.45)  {'cruise': 1.495, 'duck': 0.865, 'replan': 1.0, 'carrot': 4, 'kyaw': 1.735, 'fwd_full': 0.6, 'fwd_stop': 0.916, 'cadence': 420, 'lift': 0.015}
+  gen 4  score   501.3 (219s sat=0.47)  {'cruise': 1.495, 'duck': 0.903, 'replan': 1.577, 'carrot': 5, 'kyaw': 1.735, 'fwd_full': 0.6, 'fwd_stop': 0.921, 'cadence': 420, 'lift': 0.016}
+gen 4 BEST score 276.3  {'cruise': 1.495, 'duck': 0.865, 'replan': 1.539, 'carrot': 5, 'kyaw': 1.735, 'fwd_full': 0.6, 'fwd_stop': 0.921, 'cadence': 420, 'lift': 0.015}
+  gen 5  score   627.3 (340s sat=0.48)  {'cruise': 1.195, 'duck': 0.853, 'replan': 1.539, 'carrot': 5, 'kyaw': 1.711, 'fwd_full': 0.6, 'fwd_stop': 0.921, 'cadence': 420, 'lift': 0.013}
+  gen 5  score   511.7 (246s sat=0.45)  {'cruise': 1.495, 'duck': 0.865, 'replan': 1.539, 'carrot': 5, 'kyaw': 1.85, 'fwd_full': 0.598, 'fwd_stop': 1.052, 'cadence': 430, 'lift': 0.015}
+  gen 5  score   310.1 (138s sat=0.34)  {'cruise': 1.495, 'duck': 0.865, 'replan': 1.539, 'carrot': 5, 'kyaw': 1.718, 'fwd_full': 0.6, 'fwd_stop': 0.921, 'cadence': 420, 'lift': 0.014}
+  gen 5  score   345.9 (129s sat=0.39)  {'cruise': 1.706, 'duck': 0.723, 'replan': 1.719, 'carrot': 6, 'kyaw': 1.849, 'fwd_full': 0.6, 'fwd_stop': 0.996, 'cadence': 420, 'lift': 0.018}
+  gen 5  score   620.8 (342s sat=0.47)  {'cruise': 1.303, 'duck': 0.865, 'replan': 1.564, 'carrot': 5, 'kyaw': 1.709, 'fwd_full': 0.6, 'fwd_stop': 0.924, 'cadence': 420, 'lift': 0.015}
+  gen 5  score   341.1 (160s sat=0.35)  {'cruise': 1.486, 'duck': 0.865, 'replan': 1.539, 'carrot': 5, 'kyaw': 1.631, 'fwd_full': 0.6, 'fwd_stop': 0.978, 'cadence': 420, 'lift': 0.016}
+  gen 5  score   346.9 (125s sat=0.40)  {'cruise': 1.574, 'duck': 0.865, 'replan': 1.328, 'carrot': 5, 'kyaw': 1.728, 'fwd_full': 0.6, 'fwd_stop': 0.921, 'cadence': 420, 'lift': 0.015}
+  gen 5  score   339.8 (133s sat=0.38)  {'cruise': 1.495, 'duck': 0.865, 'replan': 1.521, 'carrot': 5, 'kyaw': 1.688, 'fwd_full': 0.6, 'fwd_stop': 0.921, 'cadence': 481, 'lift': 0.017}
+gen 5 BEST score 276.3  {'cruise': 1.495, 'duck': 0.865, 'replan': 1.539, 'carrot': 5, 'kyaw': 1.735, 'fwd_full': 0.6, 'fwd_stop': 0.921, 'cadence': 420, 'lift': 0.015}
+  gen 6  score   718.1 (384s sat=0.54)  {'cruise': 1.423, 'duck': 0.865, 'replan': 1.539, 'carrot': 5, 'kyaw': 1.735, 'fwd_full': 0.569, 'fwd_stop': 0.898, 'cadence': 433, 'lift': 0.019}
+  gen 6  score  1189.0 (777s sat=0.64)  {'cruise': 1.928, 'duck': 0.774, 'replan': 1.577, 'carrot': 5, 'kyaw': 1.741, 'fwd_full': 0.6, 'fwd_stop': 0.921, 'cadence': 420, 'lift': 0.013}
+  gen 6  score   336.5 (128s sat=0.38)  {'cruise': 1.592, 'duck': 0.901, 'replan': 1.539, 'carrot': 5, 'kyaw': 1.568, 'fwd_full': 0.553, 'fwd_stop': 0.922, 'cadence': 443, 'lift': 0.015}
+  gen 6  score   427.0 (165s sat=0.45)  {'cruise': 1.495, 'duck': 0.865, 'replan': 1.916, 'carrot': 5, 'kyaw': 1.774, 'fwd_full': 0.6, 'fwd_stop': 0.921, 'cadence': 420, 'lift': 0.015}
+  gen 6  score   439.9 (181s sat=0.44)  {'cruise': 1.495, 'duck': 0.865, 'replan': 1.707, 'carrot': 5, 'kyaw': 1.735, 'fwd_full': 0.6, 'fwd_stop': 0.921, 'cadence': 420, 'lift': 0.017}
+  gen 6  score   349.1 (122s sat=0.40)  {'cruise': 1.757, 'duck': 0.886, 'replan': 1.539, 'carrot': 5, 'kyaw': 1.8, 'fwd_full': 0.6, 'fwd_stop': 0.921, 'cadence': 433, 'lift': 0.013}
+  gen 6  score   345.4 (129s sat=0.39)  {'cruise': 1.464, 'duck': 0.859, 'replan': 1.518, 'carrot': 5, 'kyaw': 1.735, 'fwd_full': 0.588, 'fwd_stop': 0.924, 'cadence': 420, 'lift': 0.02}
+  gen 6  score   293.7 (143s sat=0.31)  {'cruise': 1.263, 'duck': 0.866, 'replan': 1.263, 'carrot': 4, 'kyaw': 1.668, 'fwd_full': 0.6, 'fwd_stop': 0.979, 'cadence': 420, 'lift': 0.015}
+gen 6 BEST score 276.3  {'cruise': 1.495, 'duck': 0.865, 'replan': 1.539, 'carrot': 5, 'kyaw': 1.735, 'fwd_full': 0.6, 'fwd_stop': 0.921, 'cadence': 420, 'lift': 0.015}
+{"best": {"cruise": 1.495, "duck": 0.865, "replan": 1.539, "carrot": 5, "kyaw": 1.735, "fwd_full": 0.6, "fwd_stop": 0.921, "cadence": 420, "lift": 0.015}, "score": 276.3}

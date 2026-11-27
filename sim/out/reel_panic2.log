@@ -1,0 +1,4 @@
+IMAGEIO FFMPEG_WRITER WARNING: input image is not divisible by macro_block_size=16, resizing from (960, 540) to (960, 544) to ensure video compatibility with most codecs and players. To prevent resizing, make your input image divisible by the macro_block_size or set the macro_block_size to 1 (risking incompatibility).
+  t=  58.8  map exhausted [293 cells] -> GIMBAL SCAN at (+1.85,+0.78)
+  t=  61.8  CROUCH PEEK: seeing 1.60 m PAST the wall I believed at bearing 285 deg -> carved
+{"done": true, "scouts": 1, "bans": 0, "reason": "finished", "time_s": 95.2, "coverage_cells": 360, "knee_sat": 0.712, "sat_by": {"crouch": [0.9, 29.7], "pivot": [0.55, 30.2], "scan": [0.17, 3.0], "steer": [0.85, 13.8], "straight": [0.66, 18.6]}, "pos": [2.42, 0.68]}

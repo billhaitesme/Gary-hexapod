@@ -1,0 +1,122 @@
+<mujoco model="gary">
+  <option timestep="0.002" gravity="0 0 -9.81"/>
+  <visual><global offwidth="960" offheight="540"/></visual>
+  <worldbody>
+    <light pos="0 0 1.5" dir="0 0 -1"/>
+    <geom name="floor" type="plane" size="3 3 .1" rgba=".35 .4 .35 1" friction="1.2 0.01 0.001"/>
+    <body name="base" pos="0 0 0.0503">
+      <freejoint/>
+      <geom type="box" size="0.055 0.075 0.014" mass="0.62" rgba=".15 .15 .18 1"/>
+      <!-- D500 LiDAR, 46 g (confirmed): second tier, centerline, front face at the
+           body's front edge, one body-thickness above the chassis box (Bill, 2026-08-18) -->
+      <geom name="lidar" type="cylinder" size="0.0193 0.0168" pos="0 0.0555 0.0588"
+            mass="0.046" rgba=".1 .3 .6 1"/>
+      <site name="nose" pos="0 0.075 0.02" size="0.004" rgba="1 0 0 1"/>
+
+      <body name="coxa0" pos="0.04355 0.0 0" euler="0 0 0.0">
+        <joint name="c0" axis="0 0 1" range="-60 60" damping="0.02"/>
+        <geom type="capsule" fromto="0 0 0  0.0292 0 -0.00408" size="0.006" mass="0.030"/>
+        <body name="femur0" pos="0.0292 0 -0.00408" euler="0 -45.0 0">
+          <joint name="f0" axis="0 1 0" range="-80 80" damping="0.02"/>
+          <geom type="capsule" fromto="0 0 0  0.03783 0 0" size="0.007" mass="0.050"/>
+          <body name="tibia0" pos="0.03783 0 0" euler="0 123.3 0">
+            <joint name="k0" axis="0 1 0" range="-45 60" damping="0.02"/>
+            <geom type="capsule" fromto="0 0 0  0.07435 0 0" size="0.005" mass="0.022"/>
+            <geom name="foot0" type="sphere" pos="0.07435 0 0" size="0.006" mass="0.003"
+                  friction="1.2 0.01 0.001" rgba="1 .5 .1 1"/>
+          </body>
+        </body>
+      </body>
+      <body name="coxa1" pos="0.03132 0.057 0" euler="0 0 45.0">
+        <joint name="c1" axis="0 0 1" range="-60 60" damping="0.02"/>
+        <geom type="capsule" fromto="0 0 0  0.0292 0 -0.00408" size="0.006" mass="0.030"/>
+        <body name="femur1" pos="0.0292 0 -0.00408" euler="0 -45.0 0">
+          <joint name="f1" axis="0 1 0" range="-80 80" damping="0.02"/>
+          <geom type="capsule" fromto="0 0 0  0.03783 0 0" size="0.007" mass="0.050"/>
+          <body name="tibia1" pos="0.03783 0 0" euler="0 123.3 0">
+            <joint name="k1" axis="0 1 0" range="-45 60" damping="0.02"/>
+            <geom type="capsule" fromto="0 0 0  0.07435 0 0" size="0.005" mass="0.022"/>
+            <geom name="foot1" type="sphere" pos="0.07435 0 0" size="0.006" mass="0.003"
+                  friction="1.2 0.01 0.001" rgba="1 .5 .1 1"/>
+          </body>
+        </body>
+      </body>
+      <body name="coxa2" pos="-0.03132 0.057 0" euler="0 0 135.0">
+        <joint name="c2" axis="0 0 1" range="-60 60" damping="0.02"/>
+        <geom type="capsule" fromto="0 0 0  0.0292 0 -0.00408" size="0.006" mass="0.030"/>
+        <body name="femur2" pos="0.0292 0 -0.00408" euler="0 -45.0 0">
+          <joint name="f2" axis="0 1 0" range="-80 80" damping="0.02"/>
+          <geom type="capsule" fromto="0 0 0  0.03783 0 0" size="0.007" mass="0.050"/>
+          <body name="tibia2" pos="0.03783 0 0" euler="0 123.3 0">
+            <joint name="k2" axis="0 1 0" range="-45 60" damping="0.02"/>
+            <geom type="capsule" fromto="0 0 0  0.07435 0 0" size="0.005" mass="0.022"/>
+            <geom name="foot2" type="sphere" pos="0.07435 0 0" size="0.006" mass="0.003"
+                  friction="1.2 0.01 0.001" rgba="1 .5 .1 1"/>
+          </body>
+        </body>
+      </body>
+      <body name="coxa3" pos="-0.04355 0.0 0" euler="0 0 180.0">
+        <joint name="c3" axis="0 0 1" range="-60 60" damping="0.02"/>
+        <geom type="capsule" fromto="0 0 0  0.0292 0 -0.00408" size="0.006" mass="0.030"/>
+        <body name="femur3" pos="0.0292 0 -0.00408" euler="0 -45.0 0">
+          <joint name="f3" axis="0 1 0" range="-80 80" damping="0.02"/>
+          <geom type="capsule" fromto="0 0 0  0.03783 0 0" size="0.007" mass="0.050"/>
+          <body name="tibia3" pos="0.03783 0 0" euler="0 123.3 0">
+            <joint name="k3" axis="0 1 0" range="-45 60" damping="0.02"/>
+            <geom type="capsule" fromto="0 0 0  0.07435 0 0" size="0.005" mass="0.022"/>
+            <geom name="foot3" type="sphere" pos="0.07435 0 0" size="0.006" mass="0.003"
+                  friction="1.2 0.01 0.001" rgba="1 .5 .1 1"/>
+          </body>
+        </body>
+      </body>
+      <body name="coxa4" pos="-0.03132 -0.057 0" euler="0 0 -135.0">
+        <joint name="c4" axis="0 0 1" range="-60 60" damping="0.02"/>
+        <geom type="capsule" fromto="0 0 0  0.0292 0 -0.00408" size="0.006" mass="0.030"/>
+        <body name="femur4" pos="0.0292 0 -0.00408" euler="0 -45.0 0">
+          <joint name="f4" axis="0 1 0" range="-80 80" damping="0.02"/>
+          <geom type="capsule" fromto="0 0 0  0.03783 0 0" size="0.007" mass="0.050"/>
+          <body name="tibia4" pos="0.03783 0 0" euler="0 123.3 0">
+            <joint name="k4" axis="0 1 0" range="-45 60" damping="0.02"/>
+            <geom type="capsule" fromto="0 0 0  0.07435 0 0" size="0.005" mass="0.022"/>
+            <geom name="foot4" type="sphere" pos="0.07435 0 0" size="0.006" mass="0.003"
+                  friction="1.2 0.01 0.001" rgba="1 .5 .1 1"/>
+          </body>
+        </body>
+      </body>
+      <body name="coxa5" pos="0.03132 -0.057 0" euler="0 0 -45.0">
+        <joint name="c5" axis="0 0 1" range="-60 60" damping="0.02"/>
+        <geom type="capsule" fromto="0 0 0  0.0292 0 -0.00408" size="0.006" mass="0.030"/>
+        <body name="femur5" pos="0.0292 0 -0.00408" euler="0 -45.0 0">
+          <joint name="f5" axis="0 1 0" range="-80 80" damping="0.02"/>
+          <geom type="capsule" fromto="0 0 0  0.03783 0 0" size="0.007" mass="0.050"/>
+          <body name="tibia5" pos="0.03783 0 0" euler="0 123.3 0">
+            <joint name="k5" axis="0 1 0" range="-45 60" damping="0.02"/>
+            <geom type="capsule" fromto="0 0 0  0.07435 0 0" size="0.005" mass="0.022"/>
+            <geom name="foot5" type="sphere" pos="0.07435 0 0" size="0.006" mass="0.003"
+                  friction="1.2 0.01 0.001" rgba="1 .5 .1 1"/>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <actuator>
+    <position joint="c0" kp="12.0" forcerange="-0.176 0.176" ctrlrange="-1.4 1.4"/>
+    <position joint="f0" kp="12.0" forcerange="-0.176 0.176" ctrlrange="-1.4 1.4"/>
+    <position joint="k0" kp="12.0" forcerange="-0.176 0.176" ctrlrange="-1.4 1.4"/>
+    <position joint="c1" kp="12.0" forcerange="-0.176 0.176" ctrlrange="-1.4 1.4"/>
+    <position joint="f1" kp="12.0" forcerange="-0.176 0.176" ctrlrange="-1.4 1.4"/>
+    <position joint="k1" kp="12.0" forcerange="-0.176 0.176" ctrlrange="-1.4 1.4"/>
+    <position joint="c2" kp="12.0" forcerange="-0.176 0.176" ctrlrange="-1.4 1.4"/>
+    <position joint="f2" kp="12.0" forcerange="-0.176 0.176" ctrlrange="-1.4 1.4"/>
+    <position joint="k2" kp="12.0" forcerange="-0.176 0.176" ctrlrange="-1.4 1.4"/>
+    <position joint="c3" kp="12.0" forcerange="-0.176 0.176" ctrlrange="-1.4 1.4"/>
+    <position joint="f3" kp="12.0" forcerange="-0.176 0.176" ctrlrange="-1.4 1.4"/>
+    <position joint="k3" kp="12.0" forcerange="-0.176 0.176" ctrlrange="-1.4 1.4"/>
+    <position joint="c4" kp="12.0" forcerange="-0.176 0.176" ctrlrange="-1.4 1.4"/>
+    <position joint="f4" kp="12.0" forcerange="-0.176 0.176" ctrlrange="-1.4 1.4"/>
+    <position joint="k4" kp="12.0" forcerange="-0.176 0.176" ctrlrange="-1.4 1.4"/>
+    <position joint="c5" kp="12.0" forcerange="-0.176 0.176" ctrlrange="-1.4 1.4"/>
+    <position joint="f5" kp="12.0" forcerange="-0.176 0.176" ctrlrange="-1.4 1.4"/>
+    <position joint="k5" kp="12.0" forcerange="-0.176 0.176" ctrlrange="-1.4 1.4"/>
+  </actuator>
+</mujoco>

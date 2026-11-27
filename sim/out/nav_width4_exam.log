@@ -1,0 +1,74 @@
+  t=  29.7  lane jam at (+0.05,-0.01) -> push on (1)
+  t=  29.7  STUCK at (+0.05,-0.01) front=0.04 -> bump-marked ahead, back off
+  t=  37.2  lane jam at (+0.04,-0.01) -> push on (2)
+  t=  37.2  STUCK at (+0.04,-0.01) front=0.04 -> bump-marked ahead, back off
+  t=  44.7  lane jam at (+0.05,-0.01) -> push on (3)
+  t=  44.7  STUCK at (+0.05,-0.01) front=0.04 -> bump-marked ahead, back off
+  t=  52.2  lane jam at (+0.05,-0.01) -> push on (4)
+  t=  52.2  STUCK at (+0.05,-0.01) front=0.04 -> bump-marked ahead, back off
+  t=  59.7  lane jam at (+0.05,-0.01) -> push on (5)
+  t=  59.7  STUCK at (+0.05,-0.01) front=0.05 -> bump-marked ahead, back off
+  t=  67.2  lane jam at (+0.05,-0.01) -> push on (6)
+  t=  67.2  STUCK at (+0.05,-0.01) front=0.04 -> bump-marked ahead, back off
+  t=  74.8  lane jam at (+0.06,-0.01) -> push on (7)
+  t=  74.8  STUCK at (+0.06,-0.01) front=0.05 -> bump-marked ahead, back off
+  t=  82.3  lane never admits me at (+0.05,-0.01) -> verdict revoked
+  t=  82.3  STUCK at (+0.05,-0.01) front=0.04 -> bump-marked ahead, back off
+  t= 130.3  STUCK at (+0.20,+1.37) front=2.00 -> bump-marked ahead, back off
+  t= 179.5  STUCK at (+0.75,+0.43) front=0.39 -> bump-marked ahead, back off
+  t= 187.0  I DON'T FIT at (+0.75,+0.42) -> opening blocked
+  t= 187.0  STUCK at (+0.75,+0.42) front=0.40 -> bump-marked ahead, back off
+  t= 200.5  map exhausted [429 cells] -> GIMBAL SCAN at (+0.75,+0.33)
+  t= 203.5  CROUCH PEEK: seeing 0.55 m PAST the wall I believed at bearing 120 deg -> carved
+  t= 233.0  map exhausted [429 cells] -> GIMBAL SCAN at (+0.81,+0.30)
+  t= 236.0  CROUCH PEEK: seeing 0.49 m PAST the wall I believed at bearing 0 deg -> carved
+  t= 243.5  lane jam at (+0.82,+0.28) -> push on (1)
+  t= 243.5  STUCK at (+0.82,+0.28) front=0.23 -> bump-marked ahead, back off
+  t= 251.0  lane jam at (+0.80,+0.26) -> push on (2)
+  t= 251.0  STUCK at (+0.80,+0.26) front=0.24 -> bump-marked ahead, back off
+  t= 259.6  lane jam at (+0.74,+0.25) -> push on (1)
+  t= 259.6  STUCK at (+0.74,+0.25) front=0.29 -> bump-marked ahead, back off
+  t= 267.1  lane jam at (+0.74,+0.23) -> push on (2)
+  t= 267.1  STUCK at (+0.74,+0.23) front=0.29 -> bump-marked ahead, back off
+  t= 274.6  lane jam at (+0.74,+0.23) -> push on (3)
+  t= 274.6  STUCK at (+0.74,+0.23) front=0.29 -> bump-marked ahead, back off
+  t= 282.1  lane jam at (+0.74,+0.21) -> push on (4)
+  t= 282.1  STUCK at (+0.74,+0.21) front=0.28 -> bump-marked ahead, back off
+  t= 289.6  lane jam at (+0.73,+0.21) -> push on (5)
+  t= 289.6  STUCK at (+0.73,+0.21) front=0.29 -> bump-marked ahead, back off
+  t= 297.1  lane jam at (+0.74,+0.19) -> push on (1)
+  t= 297.1  STUCK at (+0.74,+0.19) front=0.28 -> bump-marked ahead, back off
+  t= 304.6  lane jam at (+0.74,+0.18) -> push on (2)
+  t= 304.6  STUCK at (+0.74,+0.18) front=0.28 -> bump-marked ahead, back off
+  t= 312.1  lane jam at (+0.74,+0.18) -> push on (3)
+  t= 312.1  STUCK at (+0.74,+0.18) front=0.26 -> bump-marked ahead, back off
+  t= 319.6  lane jam at (+0.74,+0.16) -> push on (4)
+  t= 319.6  STUCK at (+0.74,+0.16) front=0.26 -> bump-marked ahead, back off
+  t= 327.1  lane jam at (+0.74,+0.16) -> push on (5)
+  t= 327.1  STUCK at (+0.74,+0.16) front=0.26 -> bump-marked ahead, back off
+  t= 334.7  lane jam at (+0.75,+0.15) -> push on (6)
+  t= 334.7  STUCK at (+0.75,+0.15) front=0.26 -> bump-marked ahead, back off
+  t= 342.2  lane jam at (+0.75,+0.15) -> push on (7)
+  t= 342.2  STUCK at (+0.75,+0.15) front=0.26 -> bump-marked ahead, back off
+  t= 349.7  lane never admits me at (+0.74,+0.13) -> verdict revoked
+  t= 349.7  STUCK at (+0.74,+0.13) front=0.26 -> bump-marked ahead, back off
+  t= 398.9  STUCK at (+1.10,+1.39) front=1.11 -> bump-marked ahead, back off
+  t= 454.1  WORLD SHIFTED: chamber door slides east (his map now lies) (he doesn't know yet)
+  t= 489.2  lane jam at (+2.29,+0.81) -> push on (1)
+  t= 489.2  STUCK at (+2.29,+0.81) front=2.00 -> bump-marked ahead, back off
+  t= 496.7  lane jam at (+2.29,+0.80) -> push on (2)
+  t= 496.7  STUCK at (+2.29,+0.80) front=2.00 -> bump-marked ahead, back off
+  t= 506.1  lane jam at (+2.29,+0.81) -> push on (3)
+  t= 506.1  STUCK at (+2.29,+0.81) front=2.00 -> bump-marked ahead, back off
+  t= 513.6  lane jam at (+2.29,+0.81) -> push on (4)
+  t= 513.6  STUCK at (+2.29,+0.81) front=2.00 -> bump-marked ahead, back off
+  t= 523.4  lane jam at (+2.28,+0.81) -> push on (5)
+  t= 523.4  STUCK at (+2.28,+0.81) front=2.00 -> bump-marked ahead, back off
+  t= 530.9  lane jam at (+2.29,+0.81) -> push on (6)
+  t= 530.9  STUCK at (+2.29,+0.81) front=2.00 -> bump-marked ahead, back off
+  t= 541.1  lane jam at (+2.27,+0.81) -> push on (7)
+  t= 541.1  STUCK at (+2.27,+0.81) front=2.00 -> bump-marked ahead, back off
+  t= 548.7  lane never admits me at (+2.29,+0.81) -> verdict revoked
+  t= 548.7  STUCK at (+2.29,+0.81) front=2.00 -> bump-marked ahead, back off
+{"done": true, "scouts": 2, "bans": 23, "reason": "finished", "time_s": 561.6, "coverage_cells": 429, "pos": [2.42, 0.69]}
+EXAM PASSED {"done": true, "scouts": 2, "bans": 23, "reason": "finished", "time_s": 561.6, "coverage_cells": 429, "pos": [2.42, 0.69]}

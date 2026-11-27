@@ -1,0 +1,29 @@
+# --- secrets ---
+**/wifi_secrets.h
+
+# --- Hiwonder vendor bundle (3+ GB, stays on disk next to this repo, not versioned) ---
+1. Tutorials/
+2. Software/
+3. Technical Parameter & Diagram/
+FAQ/
+MiniHexa.exe
+Quick Start Guide (Must Read).pdf
+
+# --- Windows / editor noise ---
+desktop.ini
+Thumbs.db
+~$*
+*.lnk
+__pycache__/
+*.pyc
+.venv/
+.vscode/
+
+# --- ChipIntelli SDK dumps (65-215 MB each) live in Documents\Arduino\gary_v1\WonderEcjho Firmwares\, not here ---
+voice/wonderecho/CI13*_SDK*/
+voice/wonderecho/*.zip
+!voice/wonderecho/sfw*.zip
+
+# Bill 2026-08-20: sim videos stay LOCAL (not on GitHub) for now
+sim/out/*.mp4
+cad_tools/out/cad_objects.npz

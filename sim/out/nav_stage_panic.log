@@ -1,0 +1,6 @@
+  t=  71.6  map exhausted [290 cells] -> GIMBAL SCAN at (+1.78,+0.77)
+  t=  74.6  CROUCH PEEK: seeing 1.60 m PAST the wall I believed at bearing 30 deg -> carved
+  t= 114.3  lane jam at (+2.36,+0.76) -> push on (1)
+  t= 114.3  STUCK at (+2.36,+0.76) front=2.00 -> bump-marked ahead, back off
+  t= 120.2  goal (21, 15) unresolved / no progress -> banned
+{"done": true, "scouts": 1, "bans": 1, "reason": "finished", "time_s": 121.1, "coverage_cells": 359, "knee_sat": 0.491, "sat_by": {"crouch": [0.67, 43.6], "pivot": [0.29, 39.1], "scan": [0.1, 3.0], "steer": [0.71, 14.0], "straight": [0.4, 21.4]}, "pos": [2.42, 0.77]}

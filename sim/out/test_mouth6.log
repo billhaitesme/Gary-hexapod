@@ -1,0 +1,21 @@
+line y=0.81: PASS  done=True t=27.5  sat=0.678  tunnel={'y': [0.7, 0.705, 0.71], 'footN': 0.827, 'footS': 0.585, 'band_s': 4.7}
+   carves=[[np.float32(2.22), np.float32(0.81), 1, 0, np.float32(-0.11), np.float32(0.046), np.float32(-0.266), np.float32(-0.007), np.float32(-0.203), 273, 235, 773]]
+   t=   0.8  mouth micro-peek: measuring the opening edges before committing
+line y=0.70: FAIL  done=True t=50.2  sat=0.76  tunnel={'y': [0.681, 0.7, 0.739], 'footN': 0.869, 'footS': 0.566, 'band_s': 12.7}
+   carves=[[np.float32(2.22), np.float32(0.7), 1, 0, np.float32(0.0), np.float32(0.156), np.float32(-0.156), np.float32(0.103), np.float32(-0.093), 273, 235, 773]]
+   t=   0.8  mouth micro-peek: measuring the opening edges before committing
+   t=  26.0  lane jam at (+2.33,+0.70) -> push on (1)
+   t=  26.0  STUCK at (+2.33,+0.70) front=2.00 -> bump-marked ahead, back off
+   t=  33.6  lane jam at (+2.37,+0.72) -> push on (2)
+   t=  33.6  STUCK at (+2.37,+0.72) front=2.00 -> bump-marked ahead, back off
+   t=  41.4  DEADMAN: no displacement for 20 s at (+2.36,+0.75) -> recover
+line y=0.62: FAIL  done=True t=48.5  sat=0.773  tunnel={'y': [0.622, 0.674, 0.71], 'footN': 0.827, 'footS': 0.52, 'band_s': 10.0}
+   carves=[[np.float32(2.22), np.float32(0.62), 1, 0, np.float32(0.08), np.float32(0.236), np.float32(-0.076), np.float32(0.183), np.float32(-0.013), 273, 235, 773]]
+   t=   0.8  mouth micro-peek: measuring the opening edges before committing
+   t=  27.8  lane jam at (+2.35,+0.68) -> push on (1)
+   t=  27.8  STUCK at (+2.35,+0.68) front=2.00 -> bump-marked ahead, back off
+   t=  35.7  lane jam at (+2.35,+0.63) -> push on (2)
+   t=  35.7  STUCK at (+2.35,+0.63) front=2.00 -> bump-marked ahead, back off
+   t=  43.2  lane jam at (+2.37,+0.67) -> push on (3)
+   t=  43.2  STUCK at (+2.37,+0.67) front=2.00 -> bump-marked ahead, back off
+2 CASE(S) FAILED

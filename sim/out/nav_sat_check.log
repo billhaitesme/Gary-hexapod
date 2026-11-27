@@ -1,0 +1,3 @@
+  t= 116.5  map exhausted [293 cells] -> GIMBAL SCAN at (+1.83,+0.78)
+  t= 119.5  CROUCH PEEK: seeing 1.60 m PAST the wall I believed at bearing 315 deg -> carved
+{"done": true, "scouts": 1, "bans": 0, "reason": "finished", "time_s": 161.8, "coverage_cells": 359, "knee_sat": 0.512, "pos": [2.42, 0.63]}

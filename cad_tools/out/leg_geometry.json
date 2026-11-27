@@ -1,0 +1,266 @@
+[
+ {
+  "leg": 0,
+  "azimuth_deg": -171.77,
+  "coxa_axis_xy": [
+   -43.52,
+   -6.3
+  ],
+  "coxa_hub_z": 58.42,
+  "coxa_axis_dir": [
+   -0.0,
+   -0.0,
+   -1.0
+  ],
+  "L1_coxa_axis_to_femur_axis": 29.2,
+  "coxa_femur_axis_angle": 90.0,
+  "femur_axis_z_at_closest": 54.34,
+  "femur_axis_dir": [
+   0.0,
+   1.0,
+   -0.0
+  ],
+  "L2_femur_axis_to_tibia_axis": 37.83,
+  "femur_tibia_axis_angle": 0.0,
+  "tibia_axis_pt": [
+   -99.47,
+   -16.09,
+   81.09
+  ],
+  "tibia_axis_dir": [
+   -0.0,
+   1.0,
+   -0.0
+  ],
+  "L3_tibia_axis_to_foot_tip": 99.14,
+  "foot_tip": [
+   -2.52,
+   -2.93,
+   60.38
+  ],
+  "posed_femur_pitch_deg": 45.0,
+  "posed_tibia_pitch_deg": -12.1,
+  "posed_knee_angle_deg": 147.1,
+  "coxa_to_foot_horiz": 41.14
+ },
+ {
+  "leg": 1,
+  "azimuth_deg": -116.31,
+  "coxa_axis_xy": [
+   -31.29,
+   -63.28
+  ],
+  "coxa_hub_z": 58.42,
+  "coxa_axis_dir": [
+   0.0,
+   -0.0,
+   -1.0
+  ],
+  "L1_coxa_axis_to_femur_axis": 29.2,
+  "coxa_femur_axis_angle": 90.0,
+  "femur_axis_z_at_closest": 54.34,
+  "femur_axis_dir": [
+   -0.707,
+   0.707,
+   -0.0
+  ],
+  "L2_femur_axis_to_tibia_axis": 37.83,
+  "femur_tibia_axis_angle": 0.0,
+  "tibia_axis_pt": [
+   -63.93,
+   -109.77,
+   81.09
+  ],
+  "tibia_axis_dir": [
+   -0.707,
+   0.707,
+   -0.0
+  ],
+  "L3_tibia_axis_to_foot_tip": 104.33,
+  "foot_tip": [
+   0.61,
+   -33.98,
+   48.86
+  ],
+  "posed_femur_pitch_deg": 45.0,
+  "posed_tibia_pitch_deg": -18.0,
+  "posed_knee_angle_deg": 153.0,
+  "coxa_to_foot_horiz": 43.32
+ },
+ {
+  "leg": 2,
+  "azimuth_deg": -63.67,
+  "coxa_axis_xy": [
+   31.32,
+   -63.28
+  ],
+  "coxa_hub_z": 58.42,
+  "coxa_axis_dir": [
+   -0.0,
+   -0.0,
+   -1.0
+  ],
+  "L1_coxa_axis_to_femur_axis": 29.2,
+  "coxa_femur_axis_angle": 90.0,
+  "femur_axis_z_at_closest": 54.34,
+  "femur_axis_dir": [
+   0.707,
+   0.707,
+   -0.0
+  ],
+  "L2_femur_axis_to_tibia_axis": 37.83,
+  "femur_tibia_axis_angle": 0.0,
+  "tibia_axis_pt": [
+   63.95,
+   -109.77,
+   81.09
+  ],
+  "tibia_axis_dir": [
+   0.707,
+   0.707,
+   -0.0
+  ],
+  "L3_tibia_axis_to_foot_tip": 104.63,
+  "foot_tip": [
+   -6.22,
+   -39.18,
+   48.86
+  ],
+  "posed_femur_pitch_deg": 45.0,
+  "posed_tibia_pitch_deg": -17.9,
+  "posed_knee_angle_deg": 152.9,
+  "coxa_to_foot_horiz": 44.61
+ },
+ {
+  "leg": 3,
+  "azimuth_deg": -8.23,
+  "coxa_axis_xy": [
+   43.55,
+   -6.3
+  ],
+  "coxa_hub_z": 58.42,
+  "coxa_axis_dir": [
+   0.0,
+   -0.0,
+   -1.0
+  ],
+  "L1_coxa_axis_to_femur_axis": 29.2,
+  "coxa_femur_axis_angle": 90.0,
+  "femur_axis_z_at_closest": 54.34,
+  "femur_axis_dir": [
+   -0.0,
+   1.0,
+   -0.0
+  ],
+  "L2_femur_axis_to_tibia_axis": 37.83,
+  "femur_tibia_axis_angle": 0.0,
+  "tibia_axis_pt": [
+   99.5,
+   -16.09,
+   81.09
+  ],
+  "tibia_axis_dir": [
+   0.0,
+   1.0,
+   -0.0
+  ],
+  "L3_tibia_axis_to_foot_tip": 99.04,
+  "foot_tip": [
+   2.65,
+   -2.93,
+   60.38
+  ],
+  "posed_femur_pitch_deg": 45.0,
+  "posed_tibia_pitch_deg": -12.1,
+  "posed_knee_angle_deg": 147.1,
+  "coxa_to_foot_horiz": 41.05
+ },
+ {
+  "leg": 4,
+  "azimuth_deg": 58.27,
+  "coxa_axis_xy": [
+   31.34,
+   50.69
+  ],
+  "coxa_hub_z": 58.42,
+  "coxa_axis_dir": [
+   0.0,
+   -0.0,
+   -1.0
+  ],
+  "L1_coxa_axis_to_femur_axis": 29.2,
+  "coxa_femur_axis_angle": 90.0,
+  "femur_axis_z_at_closest": 54.34,
+  "femur_axis_dir": [
+   -0.707,
+   0.707,
+   -0.0
+  ],
+  "L2_femur_axis_to_tibia_axis": 37.83,
+  "femur_tibia_axis_angle": 0.0,
+  "tibia_axis_pt": [
+   77.83,
+   83.32,
+   81.09
+  ],
+  "tibia_axis_dir": [
+   -0.707,
+   0.707,
+   -0.0
+  ],
+  "L3_tibia_axis_to_foot_tip": 102.72,
+  "foot_tip": [
+   -3.4,
+   32.63,
+   38.08
+  ],
+  "posed_femur_pitch_deg": 45.0,
+  "posed_tibia_pitch_deg": -24.8,
+  "posed_knee_angle_deg": 159.8,
+  "coxa_to_foot_horiz": 39.16
+ },
+ {
+  "leg": 5,
+  "azimuth_deg": 121.71,
+  "coxa_axis_xy": [
+   -31.32,
+   50.69
+  ],
+  "coxa_hub_z": 58.42,
+  "coxa_axis_dir": [
+   -0.0,
+   -0.0,
+   -1.0
+  ],
+  "L1_coxa_axis_to_femur_axis": 29.2,
+  "coxa_femur_axis_angle": 90.0,
+  "femur_axis_z_at_closest": 54.34,
+  "femur_axis_dir": [
+   0.707,
+   0.707,
+   -0.0
+  ],
+  "L2_femur_axis_to_tibia_axis": 37.83,
+  "femur_tibia_axis_angle": 0.0,
+  "tibia_axis_pt": [
+   -77.8,
+   83.32,
+   81.09
+  ],
+  "tibia_axis_dir": [
+   0.707,
+   0.707,
+   -0.0
+  ],
+  "L3_tibia_axis_to_foot_tip": 100.81,
+  "foot_tip": [
+   -6.27,
+   28.26,
+   34.74
+  ],
+  "posed_femur_pitch_deg": 45.0,
+  "posed_tibia_pitch_deg": -27.4,
+  "posed_knee_angle_deg": 162.4,
+  "coxa_to_foot_horiz": 33.62
+ }
+]

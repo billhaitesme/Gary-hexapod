@@ -1,0 +1,505 @@
+{
+ "dist_m": 2.5,
+ "rows": [
+  {
+   "stride": 1.0,
+   "cadence": 350,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 48.0,
+   "speed_cms": 5.2,
+   "knee_sat": 0.001,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 1.0,
+   "cadence": 350,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 46.5,
+   "speed_cms": 5.38,
+   "knee_sat": 0.052,
+   "veer_m": 0.01
+  },
+  {
+   "stride": 1.0,
+   "cadence": 420,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 48.6,
+   "speed_cms": 5.14,
+   "knee_sat": 0.001,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 1.0,
+   "cadence": 420,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 47.0,
+   "speed_cms": 5.32,
+   "knee_sat": 0.001,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 1.0,
+   "cadence": 490,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 49.0,
+   "speed_cms": 5.1,
+   "knee_sat": 0.002,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 1.0,
+   "cadence": 490,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 47.2,
+   "speed_cms": 5.3,
+   "knee_sat": 0.002,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 1.0,
+   "cadence": 560,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 49.2,
+   "speed_cms": 5.09,
+   "knee_sat": 0.0,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 1.0,
+   "cadence": 560,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 47.2,
+   "speed_cms": 5.29,
+   "knee_sat": 0.0,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 1.5,
+   "cadence": 350,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 32.2,
+   "speed_cms": 7.78,
+   "knee_sat": 0.025,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 1.5,
+   "cadence": 350,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 30.8,
+   "speed_cms": 8.12,
+   "knee_sat": 0.116,
+   "veer_m": 0.01
+  },
+  {
+   "stride": 1.5,
+   "cadence": 420,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 32.4,
+   "speed_cms": 7.72,
+   "knee_sat": 0.002,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 1.5,
+   "cadence": 420,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 31.5,
+   "speed_cms": 7.94,
+   "knee_sat": 0.03,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 1.5,
+   "cadence": 490,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 32.8,
+   "speed_cms": 7.63,
+   "knee_sat": 0.002,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 1.5,
+   "cadence": 490,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 31.7,
+   "speed_cms": 7.89,
+   "knee_sat": 0.008,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 1.5,
+   "cadence": 560,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 32.8,
+   "speed_cms": 7.62,
+   "knee_sat": 0.002,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 1.5,
+   "cadence": 560,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 31.6,
+   "speed_cms": 7.9,
+   "knee_sat": 0.001,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 2.0,
+   "cadence": 350,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 24.2,
+   "speed_cms": 10.34,
+   "knee_sat": 0.043,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 2.0,
+   "cadence": 350,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 23.0,
+   "speed_cms": 10.87,
+   "knee_sat": 0.338,
+   "veer_m": 0.01
+  },
+  {
+   "stride": 2.0,
+   "cadence": 420,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 24.6,
+   "speed_cms": 10.18,
+   "knee_sat": 0.089,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 2.0,
+   "cadence": 420,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 23.7,
+   "speed_cms": 10.53,
+   "knee_sat": 0.118,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 2.0,
+   "cadence": 490,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 24.7,
+   "speed_cms": 10.13,
+   "knee_sat": 0.166,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 2.0,
+   "cadence": 490,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 23.8,
+   "speed_cms": 10.5,
+   "knee_sat": 0.144,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 2.0,
+   "cadence": 560,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 24.4,
+   "speed_cms": 10.25,
+   "knee_sat": 0.215,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 2.0,
+   "cadence": 560,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 23.5,
+   "speed_cms": 10.62,
+   "knee_sat": 0.16,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 2.5,
+   "cadence": 350,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 19.4,
+   "speed_cms": 12.88,
+   "knee_sat": 0.398,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 2.5,
+   "cadence": 350,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 18.3,
+   "speed_cms": 13.66,
+   "knee_sat": 0.803,
+   "veer_m": 0.01
+  },
+  {
+   "stride": 2.5,
+   "cadence": 420,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 19.6,
+   "speed_cms": 12.72,
+   "knee_sat": 0.415,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 2.5,
+   "cadence": 420,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 19.1,
+   "speed_cms": 13.11,
+   "knee_sat": 0.622,
+   "veer_m": 0.01
+  },
+  {
+   "stride": 2.5,
+   "cadence": 490,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 19.5,
+   "speed_cms": 12.82,
+   "knee_sat": 0.41,
+   "veer_m": 0.01
+  },
+  {
+   "stride": 2.5,
+   "cadence": 490,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 18.9,
+   "speed_cms": 13.25,
+   "knee_sat": 0.504,
+   "veer_m": 0.01
+  },
+  {
+   "stride": 2.5,
+   "cadence": 560,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 19.5,
+   "speed_cms": 12.82,
+   "knee_sat": 0.59,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 2.5,
+   "cadence": 560,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 18.7,
+   "speed_cms": 13.39,
+   "knee_sat": 0.583,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 3.0,
+   "cadence": 350,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 16.3,
+   "speed_cms": 15.34,
+   "knee_sat": 0.756,
+   "veer_m": 0.0
+  },
+  {
+   "stride": 3.0,
+   "cadence": 350,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 15.7,
+   "speed_cms": 15.88,
+   "knee_sat": 0.949,
+   "veer_m": 0.01
+  },
+  {
+   "stride": 3.0,
+   "cadence": 420,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 16.3,
+   "speed_cms": 15.34,
+   "knee_sat": 0.703,
+   "veer_m": 0.01
+  },
+  {
+   "stride": 3.0,
+   "cadence": 420,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 15.9,
+   "speed_cms": 15.76,
+   "knee_sat": 0.889,
+   "veer_m": 0.01
+  },
+  {
+   "stride": 3.0,
+   "cadence": 490,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 16.6,
+   "speed_cms": 15.1,
+   "knee_sat": 0.683,
+   "veer_m": 0.02
+  },
+  {
+   "stride": 3.0,
+   "cadence": 490,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 15.7,
+   "speed_cms": 15.94,
+   "knee_sat": 0.879,
+   "veer_m": 0.01
+  },
+  {
+   "stride": 3.0,
+   "cadence": 560,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 16.4,
+   "speed_cms": 15.22,
+   "knee_sat": 0.813,
+   "veer_m": 0.02
+  },
+  {
+   "stride": 3.0,
+   "cadence": 560,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 15.7,
+   "speed_cms": 15.92,
+   "knee_sat": 0.864,
+   "veer_m": 0.01
+  },
+  {
+   "stride": 3.5,
+   "cadence": 350,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 14.4,
+   "speed_cms": 17.4,
+   "knee_sat": 0.976,
+   "veer_m": 0.04
+  },
+  {
+   "stride": 3.5,
+   "cadence": 350,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 13.6,
+   "speed_cms": 18.38,
+   "knee_sat": 1.0,
+   "veer_m": 0.01
+  },
+  {
+   "stride": 3.5,
+   "cadence": 420,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 14.2,
+   "speed_cms": 17.58,
+   "knee_sat": 0.904,
+   "veer_m": 0.04
+  },
+  {
+   "stride": 3.5,
+   "cadence": 420,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 13.8,
+   "speed_cms": 18.07,
+   "knee_sat": 1.0,
+   "veer_m": 0.01
+  },
+  {
+   "stride": 3.5,
+   "cadence": 490,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 14.2,
+   "speed_cms": 17.58,
+   "knee_sat": 0.958,
+   "veer_m": 0.01
+  },
+  {
+   "stride": 3.5,
+   "cadence": 490,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 14.0,
+   "speed_cms": 17.91,
+   "knee_sat": 0.99,
+   "veer_m": 0.02
+  },
+  {
+   "stride": 3.5,
+   "cadence": 560,
+   "lift": 0.01,
+   "outcome": "ok",
+   "t": 14.3,
+   "speed_cms": 17.54,
+   "knee_sat": 0.963,
+   "veer_m": 0.01
+  },
+  {
+   "stride": 3.5,
+   "cadence": 560,
+   "lift": 0.017,
+   "outcome": "ok",
+   "t": 14.0,
+   "speed_cms": 17.87,
+   "knee_sat": 0.993,
+   "veer_m": 0.01
+  }
+ ],
+ "best_any": {
+  "stride": 3.5,
+  "cadence": 350,
+  "lift": 0.017,
+  "outcome": "ok",
+  "t": 13.6,
+  "speed_cms": 18.38,
+  "knee_sat": 1.0,
+  "veer_m": 0.01
+ },
+ "best_knee_legal": {
+  "stride": 2.0,
+  "cadence": 420,
+  "lift": 0.017,
+  "outcome": "ok",
+  "t": 23.7,
+  "speed_cms": 10.53,
+  "knee_sat": 0.118,
+  "veer_m": 0.0
+ }
+}

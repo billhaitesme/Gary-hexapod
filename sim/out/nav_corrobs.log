@@ -1,0 +1,14 @@
+  t=  46.9  STUCK at (+0.31,+1.31) front=2.00 -> bump-marked ahead, back off
+  t=  52.7  goal (6, 4) unresolved / no progress -> banned
+  t=  90.5  STUCK at (+0.76,+0.44) front=2.00 -> bump-marked ahead, back off
+  t=  96.3  goal (9, 13) unresolved / no progress -> banned
+  t= 112.6  STUCK at (+0.86,+0.79) front=0.36 -> bump-marked ahead, back off
+  t= 118.5  goal (10, 13) unresolved / no progress -> banned
+  t= 120.1  STUCK at (+0.86,+0.78) front=0.33 -> bump-marked ahead, back off
+  t= 127.7  STUCK at (+0.86,+0.79) front=0.39 -> bump-marked ahead, back off
+  t= 127.7  map exhausted [177 cells] -> GIMBAL SCAN at (+0.86,+0.79)
+  t= 144.7  GIMBAL: nothing low at this wall -> next suspect
+  t= 155.4  STUCK at (+0.86,+0.88) front=0.39 -> bump-marked ahead, back off
+  t= 162.9  STUCK at (+0.86,+0.89) front=0.36 -> bump-marked ahead, back off
+  t= 162.9  goal (11, 13) unresolved / no progress -> banned
+{"done": false, "scouts": 1, "bans": 5, "reason": "timeout", "time_s": 900.0, "coverage_cells": 180, "pos": [0.96, 0.84]}

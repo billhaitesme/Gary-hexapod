@@ -1,0 +1,19 @@
+  t=  58.8  map exhausted [293 cells] -> GIMBAL SCAN at (+1.85,+0.78)
+  t=  61.8  CROUCH PEEK: seeing 1.60 m PAST the wall I believed at bearing 285 deg -> carved
+  t= 102.9  goal (20, 14) unresolved / no progress -> banned
+  t= 105.2  lane jam at (+2.21,+0.58) -> push on (1)
+  t= 105.2  STUCK at (+2.21,+0.58) front=2.00 -> bump-marked ahead, back off
+  t= 125.1  lane jam at (+2.21,+0.72) -> push on (1)
+  t= 125.1  STUCK at (+2.21,+0.72) front=2.00 -> bump-marked ahead, back off
+  t= 129.4  goal (22, 1) unresolved / no progress -> banned
+  t= 144.7  goal (23, 1) unresolved / no progress -> banned
+  t= 159.0  goal (21, 0) unresolved / no progress -> banned
+  t= 173.0  goal (23, 13) unresolved / no progress -> banned
+  t= 191.6  goal (22, 13) unresolved / no progress -> banned
+  t= 207.1  goal (19, 15) unresolved / no progress -> banned
+  t= 222.0  goal (20, 14) unresolved / no progress -> banned
+  t= 243.5  goal (22, 1) unresolved / no progress -> banned
+  t= 257.1  goal (23, 1) unresolved / no progress -> banned
+  t= 271.3  goal (21, 0) unresolved / no progress -> banned
+  t= 284.9  goal (23, 13) unresolved / no progress -> banned
+{"done": true, "scouts": 1, "bans": 12, "reason": "finished", "time_s": 305.2, "coverage_cells": 361, "knee_sat": 0.712, "sat_by": {"climb": [0.92, 38.4], "crouch": [0.7, 65.5], "pivot": [0.68, 167.9], "scan": [0.17, 3.0], "steer": [0.85, 13.2], "straight": [0.64, 17.2]}, "pos": [2.42, 0.77]}

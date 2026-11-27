@@ -1,0 +1,31 @@
+  t=  56.7  map exhausted [292 cells] -> GIMBAL SCAN at (+1.77,+0.81)
+  t=  59.7  CROUCH PEEK: seeing 1.55 m PAST the wall I believed at bearing 45 deg -> carved
+  t=  69.8  map exhausted [297 cells] -> GIMBAL SCAN at (+1.95,+0.80)
+  t=  72.8  CROUCH PEEK: seeing 1.70 m PAST the wall I believed at bearing 90 deg -> carved
+  t=  88.9  lane jam at (+1.93,+1.00) -> push on (1)
+  t=  88.9  STUCK at (+1.93,+1.00) front=0.00 -> bump-marked ahead, back off
+  t=  96.4  lane jam at (+1.93,+1.00) -> push on (2)
+  t=  96.4  STUCK at (+1.93,+1.00) front=0.00 -> bump-marked ahead, back off
+  t= 103.9  I DON'T FIT at (+1.95,+1.03) -> opening blocked
+  t= 103.9  STUCK at (+1.95,+1.03) front=0.00 -> bump-marked ahead, back off
+  t= 143.0  goal (22, 5) unresolved / no progress -> banned
+  t= 197.8  lane jam at (+2.23,+0.56) -> push on (1)
+  t= 197.8  STUCK at (+2.23,+0.56) front=2.00 -> bump-marked ahead, back off
+  t= 200.6  goal (21, 14) unresolved / no progress -> banned
+  t= 205.3  lane jam at (+2.22,+0.56) -> push on (2)
+  t= 205.3  STUCK at (+2.22,+0.56) front=2.00 -> bump-marked ahead, back off
+  t= 212.8  lane jam at (+2.23,+0.57) -> push on (3)
+  t= 212.8  STUCK at (+2.23,+0.57) front=2.00 -> bump-marked ahead, back off
+  t= 220.3  lane jam at (+2.25,+0.58) -> push on (4)
+  t= 220.3  STUCK at (+2.25,+0.58) front=2.00 -> bump-marked ahead, back off
+  t= 223.1  goal (22, 13) unresolved / no progress -> banned
+  t= 227.8  lane jam at (+2.24,+0.57) -> push on (5)
+  t= 227.8  STUCK at (+2.24,+0.57) front=2.00 -> bump-marked ahead, back off
+  t= 235.3  lane jam at (+2.24,+0.58) -> push on (6)
+  t= 235.3  STUCK at (+2.24,+0.58) front=2.00 -> bump-marked ahead, back off
+  t= 238.2  goal (20, 14) unresolved / no progress -> banned
+  t= 242.8  lane jam at (+2.23,+0.57) -> push on (7)
+  t= 242.8  STUCK at (+2.23,+0.57) front=2.00 -> bump-marked ahead, back off
+  t= 250.4  lane never admits me at (+2.24,+0.58) -> verdict revoked
+  t= 250.4  STUCK at (+2.24,+0.58) front=2.00 -> bump-marked ahead, back off
+{"done": true, "scouts": 2, "bans": 7, "reason": "finished", "time_s": 265.4, "coverage_cells": 359, "knee_sat": 0.823, "sat_by": {"back": [1.0, 1.6], "climb": [0.94, 6.3], "crouch": [0.92, 152.0], "pivot": [0.63, 71.6], "scan": [0.05, 6.0], "steer": [0.94, 15.6], "straight": [0.86, 12.4]}, "pos": [2.42, 0.67]}

@@ -1,0 +1,2859 @@
+// =============================================================================
+// gary_v1.ino
+//
+// Gary — a MiniHexa K12 v1.0 robot personality firmware.
+// Built on top of Hiwonder's open-source MiniHexa libraries.
+//
+// v1 SCOPE:
+//   - Voice commands via WonderEcho (FACTORY firmware, NOT custom)
+//   - R2-D2-style emotional buzzer sounds (NON-BLOCKING — Gary moves AND beeps)
+//   - Free-roam with ultrasonic obstacle avoidance
+//   - Emotional eye color state machine
+//   - Sound-startle reactivity
+//   - Self-balancing while idle
+//   - Battery monitoring with low-batt alarm
+//   - Tip detection
+//   - "Come here" face-tracking (when camera enabled)
+//
+// VOICE NOTE: Gary uses the WonderEcho FACTORY firmware. To talk to Gary:
+//   1. Wake: "HELLO-HI-WONDER" or "Hey Gary" → "I'm here"
+//   2. Then say a factory command phrase. Examples:
+//        "go straight" → forward
+//        "stop"        → halt
+//        "dance"       → dance routine
+//        "execute action one" → custom Gary action 1
+//   3. After ~5s of silence Gary drifts back to roaming.
+//
+// SOUND NOTE: Sounds are NON-BLOCKING. Triggering a sound returns immediately;
+// the buzzer plays in the background while motion continues. To make this
+// work, every delay() call in the action sequences uses gary_delay() which
+// keeps pumping gary_sounds_update() during the wait. Don't use plain delay()
+// inside action sequences.
+//
+// NOT IN v1 (deferred): touch sensor, IR sensors, VL53L0X cliff array,
+//   D500 LiDAR, PS5 controller, Pi co-processor, person-specific recognition,
+//   custom WonderEcho firmware with R2-D2 sound clips.
+// =============================================================================
+
+#include "hiwonder_robot.h"
+#include "gary_config.h"
+#include "gary_sounds.h"
+#include "gary_face.h"
+#include "gary_lidar.h"
+#include "pu_ble_client.h"
+#include <Bluepad32.h>
+
+// -----------------------------------------------------------------------------
+// WiFi scan streaming -- lets gary_lidar_view.py / gary_lidar_map.py connect
+// over the network ("python gary_lidar_map.py tcp:<Gary's IP>:3333") instead
+// of a USB cable.
+// -----------------------------------------------------------------------------
+// FILL THESE IN with your own network's credentials before flashing. This is
+// your robot's own firmware talking to your own router over your own local
+// network -- nothing here leaves your network or goes anywhere external.
+#define WIFI_SSID      "YOUR_WIFI_SSID_HERE"
+#define WIFI_PASSWORD  "YOUR_WIFI_PASSWORD_HERE"
+#define WIFI_SCAN_PORT 3333
+
+#include <WiFi.h>
+WiFiServer wifi_scan_server(WIFI_SCAN_PORT);
+WiFiClient wifi_scan_client;
+bool wifi_connected = false;
+
+void wifi_begin() {
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  Serial.print(">>> WiFi connecting");
+  uint32_t start = millis();
+  // Give it up to 8s at boot, then move on regardless -- a WiFi hiccup
+  // should never hold up the rest of Gary's boot sequence. Bluepad32 (BLE)
+  // is already running by this point; WiFi + BLE share the same radio and
+  // time-slice reasonably well on ESP32, but this is the first time this
+  // sketch runs both together, so watch for controller lag/hiccups the
+  // first few times you test it with WiFi active.
+  while (WiFi.status() != WL_CONNECTED && millis() - start < 8000) {
+    delay(250);
+    Serial.print(".");
+  }
+  Serial.println();
+  if (WiFi.status() == WL_CONNECTED) {
+    wifi_connected = true;
+    wifi_scan_server.begin();
+    Serial.print(">>> WiFi connected. Scan server at tcp:");
+    Serial.print(WiFi.localIP());
+    Serial.print(":");
+    Serial.println(WIFI_SCAN_PORT);
+  } else {
+    Serial.println(">>> WiFi connect FAILED (timed out) -- continuing without it. Scan data is still available over USB serial either way.");
+  }
+}
+
+void wifi_pump() {
+  if (!wifi_connected) return;
+  // Accept a new client if one's waiting. Only one viewer at a time for
+  // simplicity -- a fresh connection just replaces whatever was there.
+  if (wifi_scan_server.hasClient()) {
+    if (wifi_scan_client) wifi_scan_client.stop();
+    wifi_scan_client = wifi_scan_server.available();
+  }
+}
+
+void wifi_scan_broadcast(const char* line) {
+  if (wifi_connected && wifi_scan_client && wifi_scan_client.connected()) {
+    wifi_scan_client.print(line);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// WiFi CSI (Channel State Information) sensing -- runs on Gary's own radio,
+// piggybacking off the same STA connection already used for scan streaming
+// (no second ESP32 needed). Triggered by voice command "execute action
+// thirteen" (CMD_ACTION_13) -- see STATE_SENSING below.
+//
+// CSI measures how the WiFi signal between Gary and the router is being
+// scattered by everything in the room -- a real (if noisy, research-grade)
+// way to sense that something moved nearby, meant as an extra layer on top
+// of the LiDAR map, NOT a replacement for LiDAR's precise geometry.
+//
+// IMPORTANT: this only works while GARY HIMSELF IS STANDING STILL. His own
+// motion dominates the channel and completely swamps any signal from
+// something else moving in the room -- that is exactly why this is gated
+// behind an explicit stand-still state (STATE_SENSING) instead of running
+// continuously in the background while he walks/roams.
+// -----------------------------------------------------------------------------
+#include "esp_wifi.h"
+
+// Manual forward declarations -- see the long comment on csi_rx_cb() below
+// for why these are spelled out explicitly instead of relying on Arduino's
+// automatic prototype generation.
+void csi_push_sample(uint32_t t_ms, int8_t rssi, float mean_amp, float variance, int len);
+void csi_rx_cb(void *ctx, wifi_csi_info_t *info);
+void csi_pump();
+void csi_capture_begin();
+void csi_capture_end();
+
+#define CSI_CAPTURE_DURATION_MS 8000   // how long STATE_SENSING holds still + captures
+
+volatile bool csi_capturing = false;
+volatile uint32_t csi_packet_count = 0;
+
+struct CsiSample {
+  uint32_t t_ms;
+  int8_t   rssi;
+  float    mean_amp;
+  float    variance;
+  int      len;
+};
+
+// Small single-producer (WiFi task, via the CSI callback) / single-consumer
+// (main loop) ring buffer. The callback must NOT do Serial.print itself --
+// running Serial I/O from inside a WiFi-task callback is a known source of
+// instability on ESP32 -- so it only computes a couple of cheap summary
+// stats and queues them here; csi_pump() drains the queue from loop_sensing().
+#define CSI_RING_SIZE 32
+volatile CsiSample csi_ring[CSI_RING_SIZE];
+volatile uint16_t csi_ring_head = 0;
+volatile uint16_t csi_ring_tail = 0;
+
+void csi_push_sample(uint32_t t_ms, int8_t rssi, float mean_amp, float variance, int len) {
+  uint16_t next = (csi_ring_head + 1) % CSI_RING_SIZE;
+  if (next == csi_ring_tail) return;  // ring full -- drop the sample rather than block the WiFi task
+  csi_ring[csi_ring_head].t_ms     = t_ms;
+  csi_ring[csi_ring_head].rssi     = rssi;
+  csi_ring[csi_ring_head].mean_amp = mean_amp;
+  csi_ring[csi_ring_head].variance = variance;
+  csi_ring[csi_ring_head].len      = len;
+  csi_ring_head = next;
+}
+
+void csi_rx_cb(void *ctx, wifi_csi_info_t *info) {
+  if (!csi_capturing || !info || !info->buf || info->len <= 0) return;
+
+  // Cheap summary computed right here: mean absolute amplitude and variance
+  // across subcarriers. Rising variance/magnitude relative to a quiet-room
+  // baseline is the same first-pass feature real CSI presence-detection
+  // systems key off of -- we're not attempting full localization here.
+  int8_t* buf = info->buf;
+  int n = info->len;
+  int32_t sum = 0;
+  int32_t sum_sq = 0;
+  for (int i = 0; i < n; i++) {
+    int32_t v = buf[i];
+    sum += abs(v);
+    sum_sq += v * v;
+  }
+  float mean_amp = (float)sum / n;
+  float mean_sq  = (float)sum_sq / n;
+  float variance = mean_sq - (mean_amp * mean_amp);
+
+  csi_packet_count++;
+  csi_push_sample(millis(), info->rx_ctrl.rssi, mean_amp, variance, n);
+}
+
+void csi_pump() {
+  // Safe to Serial.print here -- this runs from the main loop, not the
+  // WiFi task. Tags each line "CSI:" so the Python side can tell it apart
+  // from "SCAN:" lines sharing the same Serial/TCP stream.
+  //
+  // NOTE: csi_ring is `volatile` (written from the WiFi task's callback),
+  // so it can't be copied via a plain struct assignment -- the compiler
+  // has no volatile-qualified copy constructor for CsiSample. Read each
+  // field out individually instead; built-in types support volatile reads
+  // directly, no copy constructor needed.
+  while (csi_ring_tail != csi_ring_head) {
+    uint32_t t_ms    = csi_ring[csi_ring_tail].t_ms;
+    int8_t   rssi    = csi_ring[csi_ring_tail].rssi;
+    float    mean_amp = csi_ring[csi_ring_tail].mean_amp;
+    float    variance = csi_ring[csi_ring_tail].variance;
+    int      len      = csi_ring[csi_ring_tail].len;
+    csi_ring_tail = (csi_ring_tail + 1) % CSI_RING_SIZE;
+
+    char line[96];
+    snprintf(line, sizeof(line), "CSI:%lu,%d,%.1f,%.1f,%d\n",
+             (unsigned long)t_ms, (int)rssi, mean_amp, variance, len);
+    Serial.print(line);
+    wifi_scan_broadcast(line);
+  }
+}
+
+void csi_capture_begin() {
+  csi_packet_count = 0;
+  csi_ring_head = 0;
+  csi_ring_tail = 0;
+
+  wifi_csi_config_t csi_config = {
+    .lltf_en = true,
+    .htltf_en = true,
+    .stbc_htltf2_en = true,
+    .ltf_merge_en = true,
+    .channel_filter_en = false,
+    .manu_scale = false,
+    .shift = 0,
+  };
+  esp_wifi_set_csi_config(&csi_config);
+  esp_wifi_set_csi_rx_cb(&csi_rx_cb, NULL);
+  esp_wifi_set_csi(true);
+  csi_capturing = true;
+  Serial.println(">>> CSI capture started -- holding still");
+}
+
+void csi_capture_end() {
+  csi_capturing = false;
+  esp_wifi_set_csi(false);
+  Serial.printf(">>> CSI capture done -- %lu packets captured\n", (unsigned long)csi_packet_count);
+}
+
+
+// -----------------------------------------------------------------------------
+// Global robot object
+// -----------------------------------------------------------------------------
+Robot gary;
+
+// -----------------------------------------------------------------------------
+// State enumeration
+// -----------------------------------------------------------------------------
+enum GaryState {
+  STATE_BOOT,
+  STATE_IDLE,
+  STATE_LISTENING,
+  STATE_EXECUTING,
+  STATE_ROAMING,
+  STATE_COMING,
+  STATE_STARTLED,
+  STATE_ALARMED,
+  STATE_CONTROLLER, // PS5 DualSense controller is in command
+  STATE_SENSING     // holding still, capturing WiFi CSI (see CMD_ACTION_13)
+};
+
+GaryState current_state = STATE_BOOT;
+GaryState previous_state = STATE_BOOT;
+uint32_t state_entered_ms = 0;
+uint32_t last_voice_check_ms = 0;
+uint32_t last_boredom_kick_ms = 0;
+uint16_t last_sound_value = 0;
+
+// Coming-mode sub-state
+enum ComingPhase { COMING_SEARCH, COMING_APPROACH, COMING_ARRIVED };
+ComingPhase coming_phase = COMING_SEARCH;
+
+// LISTENING two-tier timeout tracker.
+bool listening_got_command = false;
+
+// Movement targets.
+Velocity_t vel = {0.0f, 0.0f, 0.0f};
+Vector_t pos = {0.0f, 0.0f, 1.5f};
+Euler_t att = {0.0f, 0.0f, 0.0f};
+
+// Camera readings buffer
+uint8_t camera_buf[4] = {0};
+
+// Battery state
+uint16_t last_battery_mv = 8400;
+
+// =============================================================================
+// HELPER FUNCTIONS
+// =============================================================================
+
+// Forward declarations
+void return_to_listening();
+const char* state_name(GaryState s);
+void on_state_enter(GaryState s);
+
+// -----------------------------------------------------------------------------
+// gary_delay(ms) — replacement for delay() that keeps the buzzer track alive.
+// Use this in action sequences where you want sound to keep playing during
+// the wait. For super-short waits (<10ms) plain delay() is fine.
+// -----------------------------------------------------------------------------
+void gary_delay(uint32_t ms) {
+  uint32_t end_t = millis() + ms;
+  while ((int32_t)(end_t - millis()) > 0) {
+    gary_sounds_update();
+    delay(2);
+  }
+}
+
+void transition_to(GaryState new_state) {
+  if (new_state == current_state) return;
+
+  previous_state = current_state;
+  current_state = new_state;
+  state_entered_ms = millis();
+
+#if ENABLE_DEBUG_SERIAL
+  Serial.print("STATE: ");
+  Serial.print(state_name(previous_state));
+  Serial.print(" -> ");
+  Serial.println(state_name(new_state));
+#endif
+
+  on_state_enter(new_state);
+}
+
+const char* state_name(GaryState s) {
+  switch (s) {
+    case STATE_BOOT:      return "BOOT";
+    case STATE_IDLE:      return "IDLE";
+    case STATE_LISTENING: return "LISTENING";
+    case STATE_EXECUTING: return "EXECUTING";
+    case STATE_ROAMING:   return "ROAMING";
+    case STATE_COMING:    return "COMING";
+    case STATE_STARTLED:  return "STARTLED";
+    case STATE_ALARMED:   return "ALARMED";
+    case STATE_CONTROLLER:return "CONTROLLER";
+    case STATE_SENSING:   return "SENSING";
+    default:              return "?";
+  }
+}
+
+void set_eyes(const uint8_t rgb[3]) {
+  uint8_t copy1[3] = { rgb[0], rgb[1], rgb[2] };
+  uint8_t copy2[3] = { rgb[0], rgb[1], rgb[2] };
+  gary.sensor.set_ultrasound_rgb(RGB_WORK_SOLID_MODE, copy1, copy2);
+}
+
+void set_eyes_breathing(const uint8_t rgb[3]) {
+  uint8_t copy1[3] = { rgb[0], rgb[1], rgb[2] };
+  uint8_t copy2[3] = { rgb[0], rgb[1], rgb[2] };
+  gary.sensor.set_ultrasound_rgb(RGB_WORK_BREATHING_MODE, copy1, copy2);
+}
+
+// -----------------------------------------------------------------------------
+// say(clip_id) — non-blocking. Triggers a buzzer track and returns instantly.
+// -----------------------------------------------------------------------------
+void say(uint8_t clip_id) {
+  switch (clip_id) {
+    case CLIP_LOOK:                gary_chirp_happy();        break;
+    case CLIP_SNAPPY:              gary_chirp_snappy();       break;
+    case CLIP_UNSURE:              gary_unsure_descend();     break;
+    case CLIP_PROCESSING:          gary_processing();         break;
+    case CLIP_CHATTER:             gary_chatter_playful();    break;
+    case CLIP_WHISTLING_EXCITED:   gary_whistle_excited();    break;
+    case CLIP_PROUD:               gary_proud_fanfare();      break;
+    case CLIP_SCREAM:              gary_scream();             break;
+    case CLIP_SAD:                 gary_sad_descend();        break;
+    case CLIP_WHISTLE:             gary_whistle();            break;
+    case CLIP_PLAYFUL:             gary_chatter_playful();    break;
+    case CLIP_VERY_EXCITED:        gary_whistle_excited();    break;
+    case CLIP_LAUGHTER:            gary_laughter();           break;
+    case CLIP_CONCERNED:           gary_concerned_low();      break;
+    case CLIP_SHOCKED:             gary_shocked_blast();      break;
+    case CLIP_DETERMINED:          gary_determined_growl();   break;
+    case CLIP_WHISTLE_INQUISITIVE: gary_whistle_curious();    break;
+    default: break;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+// Custom dance/show routines — replace gary.acting_cute() which made painful
+// held buzzer tones during built-in routines. These use gary.move() directly,
+// which is silent during motion, so we have full control of the audio.
+// -----------------------------------------------------------------------------
+
+void gary_dance_routine() {
+  Velocity_t vel = {0.0f, 0.0f, 0.0f};
+  Velocity_t zero = {0.0f, 0.0f, 0.0f};
+  Vector_t pos = {0.0f, 0.0f, 1.5f};
+  Euler_t att = {0.0f, 0.0f, 0.0f};
+
+  // Beat 1: bouncy left-right rolls — Imperial cog rotating
+  say(CLIP_LAUGHTER);
+  anim_diagnostic();
+  for (int i = 0; i < 2; i++) {
+    att = {20.0f, 5.0f, 0.0f};
+    gary.move(&zero, &pos, &att, 250);
+    gary_delay(280);
+    att = {-20.0f, -5.0f, 0.0f};
+    gary.move(&zero, &pos, &att, 250);
+    gary_delay(260);
+  }
+  gary_delay(50);  // extra time so cog animation is visible (no cog visible)
+
+  // Beat 2: spin in place — Rebel starbird flapping (no its not)
+  say(CLIP_VERY_EXCITED);
+  anim_pulse_squares();
+  vel = {0.0f, 0.0f, 10.0f};
+  gary.move(&vel, &pos, &att, 250);
+  gary_delay(245);
+    vel = {0.0f, 0.0f, -10.0f};
+  gary.move(&vel, &pos, &att, 250);
+  gary_delay(245);
+  gary_delay(50);  // extra time so starbird flap is visible
+
+  // Beat 3: pitch + roll combo + yaw — control panel chaos
+  say(CLIP_PLAYFUL);
+  anim_control_panel();
+  att = {20.0f, 10.0f, -10.0f};
+  gary.move(&zero, &pos, &att, 250,3);
+  gary_delay(280);
+  att = {-20.0f, -10.0f, 10.0f};
+  gary.move(&zero, &pos, &att, 325,3);
+    anim_control_panel();
+  att = {20.0f, 10.0f, -10.0f};
+  gary.move(&zero, &pos, &att, 325,3);
+  gary_delay(280);
+  att = {-20.0f, -10.0f, 10.0f};
+  gary.move(&zero, &pos, &att, 250,3);
+  gary_delay(280);
+  gary_delay(50);  // extra time so control panel is visible
+
+  // Beat 4: BIG finish — hyperspace jump + scream
+  say(CLIP_SCREAM);
+  set_eyes(EYE_SABER_PURPLE);    // mace windu purple for finale flair
+  anim_hyperspace();
+  pos = {0.0f, 0.0f, 10.0f};         // stand tall
+  att = {0.0f, 0.0f, 20.0f};
+  gary.move(&zero, &pos, &att, 150);
+  gary_delay(180);
+  pos = {0.0f, 0.0f, 0.2f};         // crouch low
+  gary.move(&zero, &pos, &att, 150);
+  gary_delay(180);
+  say(CLIP_VERY_EXCITED);
+    pos = {0.0f, 0.0f, 10.0f};         // stand tall
+  att = {0.0f, 0.0f, -20.0f};
+  gary.move(&zero, &pos, &att, 200);
+  gary_delay(210);
+  say(CLIP_SCREAM);
+    pos = {0.0f, 0.0f, 0.2f};         // crouch low
+  gary.move(&zero, &pos, &att, 500);
+  gary_delay(800);
+  pos = {0.0f, 0.0f, 1.5f};         // back to neutral
+  gary.move(&zero, &pos, &att, 1500);
+  gary_delay(1800);
+}
+
+void gary_introduce_routine() {
+  Velocity_t zero = {0.0f, 0.0f, 0.0f};
+  Vector_t pos = {0.0f, 0.0f, 1.5f};
+  Euler_t att = {0.0f, 0.0f, 0.0f};
+
+  say(CLIP_PROUD);
+  anim_imperial_cog();          // 
+  // Stand tall
+  pos = {0.0f, 0.0f, 20.0f};
+  gary.move(&zero, &pos, &att, 100);
+  gary_delay(150);
+  // Slight bow
+  att = {20.0f, 15.0f, -15.0f};
+  pos = {0.0f, -10.0f, 0.5f};
+  gary.move(&zero, &pos, &att, 1500);
+  gary_delay(1550);
+  // Rise back up
+  att = {0.0f, 0.0f, 0.0f};
+  pos = {0.0f, 0.0f, 1.7f};
+  gary.move(&zero, &pos, &att, 1000);
+  gary_delay(1000);
+}
+
+void gary_show_skill_routine() {
+  Velocity_t zero = {0.0f, 0.0f, 0.0f};
+  Vector_t pos = {0.0f, 0.0f, 1.5f};
+  Euler_t att = {0.0f, 0.0f, 0.0f};
+
+  say(CLIP_VERY_EXCITED);
+  anim_hyperspace();
+  // Quick rolls
+  for (int i = 0; i < 3; i++) {
+    att = {40.0f, 0.0f, 0.0f};
+    pos = {0.0f, 0.0f, 20.0f};
+    gary.move(&zero, &pos, &att, 200);
+    gary_delay(220);
+    att = {-40.0f, 0.0f, 0.0f};
+    pos = {0.0f, 0.0f, -20.0f};
+    gary.move(&zero, &pos, &att, 200);
+    gary_delay(220);
+  }
+  // Triumphant pose
+  say(CLIP_PROUD);
+  att = {0.0f, -20.0f, 0.0f};
+  pos = {0.0f, 0.0f, 5.0f};
+  gary.move(&zero, &pos, &att, 500);
+  gary_delay(600);
+    say(CLIP_PROUD);
+  att = {0.0f, 20.0f, 0.0f};
+  pos = {0.0f, 0.0f, 5.0f};
+  gary.move(&zero, &pos, &att, 500);
+  gary_delay(600);
+  // Reset
+  att = {0.0f, 0.0f, 0.0f};
+  pos = {0.0f, 0.0f, 1.5f};
+  gary.move(&zero, &pos, &att, 400);
+  gary_delay(500);
+}
+
+
+// ============================================================================
+// PS5 DualSense controller support via Bluepad32
+//
+// Tuning is based on Hiwonder's official remote.ino reference:
+//   - Walking: call gary.move(&vel, &pos, &att) with NO duration argument
+//     — the gait planner handles its own step phasing internally.
+//   - Stationary pose-only: gary.move(&vel, &pos, &att, 200) for smooth blend.
+//   - vel.vx / vel.vy: ±3.0 m/s
+//   - vel.omega (yaw rate): ±2.5 rad/s stationary, ±0.2 while walking
+//   - att.roll / att.pitch: degrees, scaled with body height
+//
+// CONVENTIONS:
+//   Euler_t att = {pitch_deg, roll_deg, yaw_deg}
+//   Vector_t pos = {x_cm, y_cm, z}
+//   Velocity_t vel = {vx, vy, vz}
+// ============================================================================
+
+GamepadPtr myGamepad = nullptr;
+bool controller_was_connected = false;
+bool controller_muted = false;
+bool ctrl_pu_mode = false;   // false = drive Gary, true = relay to PU
+int pending_pu_button_cmd = 0;
+uint32_t controller_disconnect_debounce_ms = 0;
+const uint32_t CONTROLLER_DISCONNECT_HOLD_MS = 500;
+uint32_t last_ctrl_status_ms = 0;
+uint32_t last_pu_send_ms = 0;
+const uint32_t PU_SEND_MIN_INTERVAL_MS = 60; // minimum ms between PU drive sends (was 250 -- now the lower-impact of the two throttles; see PU_MIN_SEND_INTERVAL_MS in pu_ble_client.cpp for the one that actually gates BLE write rate)
+const float CTRL_TILT_INPUT_SCALE = 15000.0f;   // PS5 accel raw scale to normalized [-1,1]
+const float CTRL_TILT_DEADZONE = 0.06f;
+
+// ----------------------------------------------------------------------------
+// MOVEMENT Tuning — values mirrored from Hiwonder remote.ino
+// ----------------------------------------------------------------------------
+const float CTRL_VX_MAX           = 5.0f;   // forward/back & strafe ceiling
+const float CTRL_VY_MAX           = 7.0f;
+const float CTRL_OMEGA_STATIONARY = 4.0f;   // yaw rate when not walking
+const float CTRL_OMEGA_WALKING    = 0.3f;   // Hiwonder docs: "too high causes spin-in-place"   // tiny yaw blend while walking
+const float CTRL_R_ROLL_MAX_DEG   = 30.0f;  // tuned to mid pos.z
+const float CTRL_R_PITCH_MAX_DEG  = 15.0f;
+const float CTRL_R1_LEAN_MAX_DEG  = 20.0f;
+const float CTRL_R1_SHIFT_MAX_CM  = 5.0f;
+const float CTRL_HEIGHT_BASE      = 1.5f;
+const float CTRL_HEIGHT_RANGE     = 1.5f;   // 0..3 (Hiwonder's pos.z range)
+const float CTRL_STICK_EXPONENT   = 1.3f;
+
+// Cadence-from-stick: small deflection -> long step period (slow saunter),
+// full deflection -> 400ms (library's floor when MOVING). Mapped linearly.
+// Lib floor confirmed at line 624 of hiwonder_robot.cpp:
+//   move_time = time > 400 ? time : 400;
+const uint16_t CTRL_CADENCE_MIN_MS = 400;   // fast (library floor)
+const uint16_t CTRL_CADENCE_MAX_MS = 1200;  // slow shuffle
+
+// D-pad up/down hold-to-nudge body height. While held, height adjusts every
+// HEIGHT_NUDGE_INTERVAL_MS by HEIGHT_NUDGE_STEP cm. Holding D-pad UP for ~2.5s
+// sweeps from -3 to +3 (CLAMP_HEIGHT_MIN..MAX below).
+const uint32_t HEIGHT_NUDGE_INTERVAL_MS = 50;
+const float    HEIGHT_NUDGE_STEP        = 0.30f;
+
+// Per-axis deadbands
+const int CTRL_DEADBAND_LX = 30;
+const int CTRL_DEADBAND_LY = 30;
+const int CTRL_DEADBAND_RX = 40;
+const int CTRL_DEADBAND_RY = 40;
+
+// Hard safety clamps (final outputs to gary.move())
+const float CLAMP_PITCH_DEG = 35.0f;   // was 30 -- raised for nod-scan headroom;
+                                        // paired with the IMU_TIP_THRESHOLD_DEG bump
+                                        // in gary_config.h so intentional tilt can't
+                                        // trip the tip alarm at max pitch.
+const float CLAMP_ROLL_DEG  = 30.0f;
+const float CLAMP_HEIGHT_MIN = -3.0f;   // almost flat (library clamps at -4 internally)
+const float CLAMP_HEIGHT_MAX =  3.0f;   // tall stance
+const float CLAMP_BODY_Y_CM  = 3.0f;
+const float CLAMP_VX = 7.0f;
+const float CLAMP_VY = 7.0f;
+const float CLAMP_OMEGA = 5.0f;
+
+// Continuous targets
+float ctrl_target_vy = 0.0f;       // forward/back
+float ctrl_target_omega = 0.0f;    // yaw rate
+float ctrl_target_vx = 0.0f;       // strafe
+float ctrl_target_pitch = 0.0f;    // degrees
+float ctrl_target_roll  = 0.0f;
+float ctrl_target_height = CTRL_HEIGHT_BASE;
+float ctrl_target_body_y = 0.0f;
+
+
+
+int8_t ctrl_strafe_toggle_dir = 0;
+uint32_t dpad_left_last_tap_ms = 0;
+uint32_t dpad_right_last_tap_ms = 0;
+uint32_t dpad_height_last_nudge_ms = 0;
+
+struct ButtonEdge {
+  bool cross, circle, triangle, square;
+  bool l1, r1, l2, r2, l3, r3;
+  bool select_b, start_b, ps_b, mute_b;
+  bool tp_click;
+  uint8_t dpad;
+} prev_btn = {0};
+
+uint8_t ctrl_gait_speed_idx = 1;
+const float CTRL_GAIT_SPEEDS[3] = {0.15f, 1.0f, 2.0f};   // SLOW=sneak, NORMAL, FAST
+const char* CTRL_SPEED_NAMES[3] = {"SLOW", "NORMAL", "FAST"};
+
+bool ctrl_combat_mode = false;
+bool ctrl_flashlight_on = false;
+
+uint32_t ps_hold_start_ms = 0;
+const uint16_t PS_HOLD_DISCONNECT_MS = 2000;
+
+uint8_t ctrl_action_idx = 0;
+const uint8_t CTRL_ACTION_COUNT = 7;
+const uint8_t CTRL_ACTION_CMDS[CTRL_ACTION_COUNT] = {
+  CMD_ACTION_12, CMD_ACTION_4, CMD_ACTION_5,
+  CMD_SHAKE_HEAD, CMD_MARCH_PLACE, CMD_MARCH, CMD_ACTION_3
+};
+
+const uint16_t DOUBLE_TAP_WINDOW_MS = 400;
+uint32_t triangle_last_press_ms = 0;
+uint32_t square_last_press_ms = 0;
+uint32_t circle_last_press_ms = 0;
+
+const float CTRL_SMOOTHING = 0.40f;
+float ctrl_smooth_vy = 0.0f;
+float ctrl_smooth_omega = 0.0f;
+float ctrl_smooth_vx = 0.0f;
+float ctrl_smooth_pitch = 0.0f;
+float ctrl_smooth_roll = 0.0f;
+float ctrl_smooth_height = CTRL_HEIGHT_BASE;
+float ctrl_smooth_body_y = 0.0f;
+
+uint32_t last_debug_ms = 0;
+const uint16_t DEBUG_INTERVAL_MS = 250;
+
+// ----------------------------------------------------------------------------
+// Bluepad32 callbacks
+// ----------------------------------------------------------------------------
+
+void onConnectedGamepad(GamepadPtr gp) {
+  Serial.println("[CTRL] Controller connected");
+  myGamepad = gp;
+}
+
+void onDisconnectedGamepad(GamepadPtr gp) {
+  Serial.println("[CTRL] Controller disconnected");
+  if (myGamepad == gp) myGamepad = nullptr;
+}
+
+// ----------------------------------------------------------------------------
+// Helpers
+// ----------------------------------------------------------------------------
+
+inline int apply_deadband(int v, int dz) {
+  if (v >  dz) return v - dz;
+  if (v < -dz) return v + dz;
+  return 0;
+}
+
+inline float stick_raw(int v, int dz) {
+  v = apply_deadband(v, dz);
+  if (v == 0) return 0.0f;
+  float f = (float)v / (512.0f - dz);
+  if (f >  1.0f) f =  1.0f;
+  if (f < -1.0f) f = -1.0f;
+  return f;
+}
+
+inline float curve(float f) {
+  float sign = (f < 0) ? -1.0f : 1.0f;
+  return sign * powf(fabsf(f), CTRL_STICK_EXPONENT);
+}
+
+inline float clamp_f(float v, float lo, float hi) {
+  if (v < lo) return lo;
+  if (v > hi) return hi;
+  return v;
+}
+
+void cycle_gait_speed() {
+  ctrl_gait_speed_idx = (ctrl_gait_speed_idx + 1) % 3;
+  Serial.printf("[CTRL] Speed: %s (%.2fx)\n",
+                CTRL_SPEED_NAMES[ctrl_gait_speed_idx],
+                CTRL_GAIT_SPEEDS[ctrl_gait_speed_idx]);
+  say(CLIP_WHISTLE);
+}
+
+// ---------------------------------------------------------------------------
+// GAIT PATTERN — TRIPOD / WAVE / RIPPLE
+// Cycled by R3 click. Only TRIPOD is implemented today (uses gary.move() and
+// the library's hardcoded tripod scheduler). WAVE and RIPPLE are stubs that
+// log a warning and fall through to TRIPOD until we wire up our own per-leg
+// phase scheduler in the next pass.
+// ---------------------------------------------------------------------------
+enum GaitPattern { GAIT_TRIPOD = 0, GAIT_WAVE = 1, GAIT_RIPPLE = 2 };
+GaitPattern ctrl_gait_pattern = GAIT_TRIPOD;
+
+const char* gait_pattern_name(int g) {
+  switch (g) {
+    case GAIT_TRIPOD: return "TRIPOD";
+    case GAIT_WAVE:   return "WAVE";
+    case GAIT_RIPPLE: return "RIPPLE";
+    default:          return "?";
+  }
+}
+
+void cycle_gait_pattern() {
+  ctrl_gait_pattern = (GaitPattern)(((int)ctrl_gait_pattern + 1) % 3);
+  Serial.printf("[CTRL] Gait pattern: %s\n", gait_pattern_name((int)ctrl_gait_pattern));
+  switch (ctrl_gait_pattern) {
+    case GAIT_TRIPOD: gary_chirp_snappy();    break;
+    case GAIT_WAVE:   gary_whistle_curious(); break;
+    case GAIT_RIPPLE: gary_chatter_playful(); break;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// CUSTOM GAIT SCHEDULER — wave + ripple (bypasses the library's tripod)
+//
+// Mechanism:
+//   1. Call gary.move(&v, &p, &a, t) — library populates each leg's
+//      .amplitude (.x/.y) based on the commanded velocity.
+//   2. Set gary.func_state = ACTION_GROUP — disables the library's internal
+//      Robot::update() trajectory math (its switch on func_state hits the
+//      empty ACTION_GROUP case and breaks out).
+//   3. Compute our own per-leg target each tick using phase offsets and a
+//      stance/swing window matched to the gait, then call legN.move(p, 0)
+//      directly. The library's per-leg ikine() and servo dispatch still run.
+//
+// Trajectory shape (per leg):
+//   STANCE: foot moves linearly backward through 2*amp over β cycle.
+//           All grounded legs move at the same body-frame velocity, so the
+//           body translates without skidding.
+//   SWING:  foot moves linearly forward through 2*amp over (1-β) cycle, with
+//           a half-sine z-arc for ground clearance.
+//
+//   Stride scale = 2β so body forward velocity matches across all gaits at
+//   the same commanded vy. (Library's amp assumes β=0.5; we compensate.)
+//
+// Phase offsets:
+//   TRIPOD: legs {1,3,5}=0, {2,4,6}=½  (matches library; we don't actually
+//           use this — TRIPOD path stays on the library — but it's here for
+//           reference and possible future unification)
+//   WAVE:   metachronal, 1 leg in swing at a time. Order: 3→4→2→5→1→6
+//           (back→back, mid→mid, front→front, alternating sides).
+//   RIPPLE: 3 pairs of opposite legs, each pair offset by ⅓.
+//           Pair (1,4)=0, (2,5)=⅓, (3,6)=⅔.
+// ---------------------------------------------------------------------------
+
+// Indexed [pattern][leg_idx-1]. Phase offset is fraction of cycle.
+const float GAIT_PHASE_OFFSETS[3][6] = {
+  {0.0f,    0.5f,    0.0f,    0.5f,    0.0f,    0.5f   },  // TRIPOD
+  {4.0f/6,  2.0f/6,  0.0f/6,  1.0f/6,  3.0f/6,  5.0f/6 },  // WAVE (3,4,2,5,1,6)
+  {0.0f/3,  1.0f/3,  2.0f/3,  0.0f/3,  1.0f/3,  2.0f/3 },  // RIPPLE
+};
+
+const float GAIT_STANCE_FRACTION[3] = {
+  0.5f,        // TRIPOD: 3 legs always grounded
+  5.0f/6,      // WAVE:   5 legs always grounded
+  2.0f/3,      // RIPPLE: 4 legs always grounded
+};
+
+// Per-gait limits. Wave + ripple are inherently slower than tripod and the
+// servos can't sustain fast cadence with the larger leg sweeps these gaits
+// require. These caps prevent the "frantic" servo strain at full stick.
+//   speed_cap  = multiplier on send_vy/vx/omega before passing to gary.move()
+//   omega_cap  = additional multiplier on yaw rate (yaw is hardest in slow gaits)
+//   cadence_ms = minimum step period; longer = slower cycles, smoother motion
+//
+// Wave/ripple speed caps were halved because of a touchdown-scoot problem:
+// at touchdown, foot world-velocity ≈ +V_body (carried forward by the body
+// during swing). The servo can't snap to v=0 instantly; foot scoots forward,
+// pushing body backward. With 5-6 touchdowns per cycle, backward kicks were
+// canceling forward propulsion (or beating it — "marches in place / moves
+// backward"). Slowing the gait makes the scoot small enough that propulsion
+// dominates.
+const float    GAIT_SPEED_CAP[3]    = {1.0f, 0.15f, 0.30f};   // tripod/wave/ripple
+const float    GAIT_OMEGA_CAP[3]    = {1.0f, 0.15f, 0.25f};
+const uint16_t GAIT_MIN_CADENCE[3]  = {400,  1200,  800  };   // ms
+
+const float CUSTOM_GAIT_LIFT_CM = 2.5f;   // base foot clearance during swing (scaled by height)
+
+void run_custom_gait_scheduler(int gait, uint16_t move_time_ms, float lift_cm,
+                               float omega_rad_s) {
+  // Body-frame positions of each leg's hip in cm. Used to compute the
+  // per-leg tangential amplitude contribution from yaw rate (omega) — the
+  // library doesn't encode this in leg.amplitude for non-tripod gaits, so we
+  // add it ourselves. Values match the leg origins in hiwonder_robot.h.
+  static const float LEG_POS_X[6] = {  3.15f,  4.34f,  3.15f, -3.15f, -4.34f, -3.15f };
+  static const float LEG_POS_Y[6] = { -5.65f,  0.00f,  5.65f,  5.65f,  0.00f, -5.65f };
+
+  // Scale factor on omega-derived amplitude. 1.0 = "fully translate the
+  // tangential velocity into a foot stride." Lower if turning is too aggressive,
+  // higher if too weak. Foot stride is clamped below to leg's kinematic limits.
+  const float OMEGA_AMP_SCALE = 1.0f;
+  const float OMEGA_AMP_CLAMP_CM = 3.0f;   // max per-leg rot contribution
+
+  static float    cycle_t = 0.0f;          // [0, 1) phase state — survives across calls
+  static uint32_t last_call_ms = 0;
+  static int      last_gait = GAIT_TRIPOD;
+  uint32_t now = millis();
+
+  // Reset phase when entering wave/ripple from idle, or when switching gaits.
+  // Otherwise advance cycle_t by elapsed_time / current_move_time_ms — this
+  // way, changes in move_time mid-cycle (which happen for ripple as stick
+  // deflection varies) advance phase smoothly instead of jumping.
+  // The 500ms reset threshold (was 200ms) tolerates occasional long loops
+  // (Bluetooth, sensor reads, debug prints) without snapping all legs to
+  // phase=0 mid-walk.
+  bool reset = (last_call_ms == 0) || ((now - last_call_ms) > 500) || (gait != last_gait);
+  if (reset) {
+    cycle_t = 0.0f;
+    last_gait = gait;
+  } else {
+    if (move_time_ms < 1) move_time_ms = 1;
+    float dt_phase = (float)(now - last_call_ms) / (float)move_time_ms;
+    // Cap per-update phase advance. If a loop occasionally takes 150ms+,
+    // foot targets would otherwise jump 12%+ of cycle in one update — that's
+    // the "slam / twitch / double-step" pattern. Capping causes a tiny phase
+    // lag instead of a visible servo jolt; small loops are unaffected.
+    if (dt_phase > 0.06f) dt_phase = 0.06f;
+    cycle_t += dt_phase;
+    while (cycle_t >= 1.0f) cycle_t -= 1.0f;
+  }
+  last_call_ms = now;
+
+  const float* offsets = GAIT_PHASE_OFFSETS[gait];
+  float beta           = GAIT_STANCE_FRACTION[gait];
+  // stride_scale = 1.0 (was 2β). The 2β factor was matching wave/ripple body
+  // velocity to tripod for the same amp. Hypothesis: that scaling pushed amps
+  // past the kinematic envelope for some legs, producing the "moves backward
+  // / marches in place" pathology. Using amp directly = slower base speed but
+  // motion stays inside the leg's reachable space.
+  float stride_scale   = 1.0f;
+
+  RobotLeg* legs[6] = {&gary.leg1, &gary.leg2, &gary.leg3,
+                       &gary.leg4, &gary.leg5, &gary.leg6};
+
+  // Per-leg rotational amplitude contribution from omega. The library doesn't
+  // encode this in leg.amplitude for our use case, so we compute it. T/2 because
+  // amplitude is half-stroke; sign such that positive omega rotates CCW from above.
+  float T_sec = (float)move_time_ms * 0.001f;
+  float rot_factor = omega_rad_s * T_sec * 0.5f * OMEGA_AMP_SCALE;
+
+  for (int i = 0; i < 6; i++) {
+    float phase_t = cycle_t - offsets[i];
+    phase_t = phase_t - floorf(phase_t);   // wrap to [0, 1)
+
+    // Compute rotational amp contribution per leg from omega.
+    float rot_amp_x = -LEG_POS_Y[i] * rot_factor;
+    float rot_amp_y =  LEG_POS_X[i] * rot_factor;
+    // Clamp so a runaway omega doesn't send feet to unreachable positions.
+    if (rot_amp_x >  OMEGA_AMP_CLAMP_CM) rot_amp_x =  OMEGA_AMP_CLAMP_CM;
+    if (rot_amp_x < -OMEGA_AMP_CLAMP_CM) rot_amp_x = -OMEGA_AMP_CLAMP_CM;
+    if (rot_amp_y >  OMEGA_AMP_CLAMP_CM) rot_amp_y =  OMEGA_AMP_CLAMP_CM;
+    if (rot_amp_y < -OMEGA_AMP_CLAMP_CM) rot_amp_y = -OMEGA_AMP_CLAMP_CM;
+
+    // Combined amplitude = translation (from library) + rotation (ours).
+    float amp_x = legs[i]->amplitude.x + rot_amp_x;
+    float amp_y = legs[i]->amplitude.y + rot_amp_y;
+
+    Vector_t target;
+    target.x = legs[i]->result.x;
+    target.y = legs[i]->result.y;
+    target.z = legs[i]->result.z;
+
+    if (phase_t < beta) {
+      // STANCE: linear backward sweep — kinematically required for slip-free
+      // body translation when multiple phased legs are simultaneously grounded.
+      // (Sinusoidal/cosine stance was tried and produces visible jitter and
+      // stick-slip friction artifacts: phased stance legs with different
+      // velocities over-constrain the body, servos fight each other.)
+      float k = 1.0f - 2.0f * phase_t / beta;
+      target.x += amp_x * k * stride_scale;
+      target.y += amp_y * k * stride_scale;
+      // z grounded
+    } else {
+      // SWING: cosine-eased X return + sin² Z arc.
+      // Cosine X: foot velocity = 0 at swing endpoints (no jerky transition
+      // at liftoff; touchdown still has the X velocity discontinuity into
+      // linear stance — that's the price of slip-free stance).
+      // sin² Z: zero z-velocity at takeoff AND touchdown — kills the stomp.
+      float swing_t = (phase_t - beta) / (1.0f - beta);
+      float k = -cosf(PI * swing_t);   // -1 → +1
+      target.x += amp_x * k * stride_scale;
+      target.y += amp_y * k * stride_scale;
+      float s = sinf(PI * swing_t);
+      target.z += lift_cm * s * s;
+    }
+
+    legs[i]->move(target, 0);
+  }
+}
+
+void toggle_flashlight() {
+  ctrl_flashlight_on = !ctrl_flashlight_on;
+  Serial.printf("[CTRL] Flashlight: %s\n", ctrl_flashlight_on ? "ON" : "OFF");
+  if (ctrl_flashlight_on) {
+    uint8_t white[3] = {255, 255, 255};
+    set_eyes(white);
+  } else {
+    set_eyes(EYE_SABER_BLUE);
+  }
+}
+
+void cycle_action_group(int8_t direction) {
+  if (direction > 0) ctrl_action_idx = (ctrl_action_idx + 1) % CTRL_ACTION_COUNT;
+  else ctrl_action_idx = (ctrl_action_idx + CTRL_ACTION_COUNT - 1) % CTRL_ACTION_COUNT;
+  Serial.printf("[CTRL] Action: %d\n", ctrl_action_idx + 1);
+  say(CLIP_SNAPPY);
+}
+
+void controller_execute_action(uint8_t cmd) {
+  Serial.printf("[CTRL] Executing CMD %d\n", cmd);
+  handle_voice_command(cmd);
+  if (myGamepad && myGamepad->isConnected()) {
+    transition_to(STATE_CONTROLLER);
+  }
+}
+
+void controller_execute_selected_action() {
+  controller_execute_action(CTRL_ACTION_CMDS[ctrl_action_idx]);
+}
+
+void set_strafe(int8_t dir, bool hold_only) {
+  if (hold_only) {
+    if (ctrl_strafe_toggle_dir != 0 && ctrl_strafe_toggle_dir != dir) {
+      ctrl_strafe_toggle_dir = 0;
+      Serial.println("[CTRL] Strafe toggle CANCELED");
+    }
+    return;
+  }
+  if (dir == 0) {
+    if (ctrl_strafe_toggle_dir != 0) Serial.println("[CTRL] Strafe OFF");
+    ctrl_strafe_toggle_dir = 0;
+  } else if (ctrl_strafe_toggle_dir == dir) {
+    ctrl_strafe_toggle_dir = 0;
+    Serial.println("[CTRL] Strafe OFF (re-toggle)");
+  } else {
+    ctrl_strafe_toggle_dir = dir;
+    Serial.printf("[CTRL] Strafe %s\n", dir < 0 ? "LEFT" : "RIGHT");
+    say(CLIP_SNAPPY);
+  }
+}
+
+// ----------------------------------------------------------------------------
+// Process one frame
+// ----------------------------------------------------------------------------
+
+void process_controller() {
+  if (!myGamepad || !myGamepad->isConnected()) {
+    if (controller_was_connected) {
+      if (controller_disconnect_debounce_ms == 0) {
+        controller_disconnect_debounce_ms = millis();
+      } else if (millis() - controller_disconnect_debounce_ms >= CONTROLLER_DISCONNECT_HOLD_MS) {
+        Serial.println("[CTRL] Connection lost, returning to voice mode");
+        controller_was_connected = false;
+        controller_disconnect_debounce_ms = 0;
+        controller_muted = false;
+        ctrl_combat_mode = false;
+        ctrl_flashlight_on = false;
+        ctrl_strafe_toggle_dir = 0;
+        ctrl_gait_pattern = GAIT_TRIPOD;
+        transition_to(STATE_IDLE);
+      }
+    }
+    return;
+  }
+  controller_disconnect_debounce_ms = 0;
+  controller_was_connected = true;
+
+  if (millis() - last_ctrl_status_ms >= 2000) {
+    last_ctrl_status_ms = millis();
+    Serial.printf("[CTRL] status: pu_mode=%d connected=%d pu_ready=%d pending_btn=%d buttons=0x%08X misc=0x%08X AX=%d AY=%d RX=%d RY=%d accX=%d accY=%d accZ=%d\n",
+                  ctrl_pu_mode ? 1 : 0,
+                  myGamepad->isConnected() ? 1 : 0,
+                  pu_ble_is_ready() ? 1 : 0,
+                  pending_pu_button_cmd,
+                  myGamepad->buttons(),
+                  myGamepad->miscButtons(),
+                  myGamepad->axisX(),
+                  myGamepad->axisY(),
+                  myGamepad->axisRX(),
+                  myGamepad->axisRY(),
+                  myGamepad->accelX(),
+                  myGamepad->accelY(),
+                  myGamepad->accelZ());
+  }
+
+  bool cross    = myGamepad->a();
+  bool circle   = myGamepad->b();
+  bool triangle = myGamepad->y();
+  bool square   = myGamepad->x();
+  bool l1       = myGamepad->l1();
+  bool r1       = myGamepad->r1();
+
+  uint32_t buttons = myGamepad->buttons();
+  bool l2 = (buttons & BUTTON_TRIGGER_L) != 0;
+  bool r2 = (buttons & BUTTON_TRIGGER_R) != 0;
+  bool l3 = (buttons & BUTTON_THUMB_L) != 0;
+  bool r3 = (buttons & BUTTON_THUMB_R) != 0;
+
+  uint32_t misc = myGamepad->miscButtons();
+  bool ps_b      = (misc & MISC_BUTTON_SYSTEM)  != 0;
+  bool select_b  = (misc & MISC_BUTTON_BACK)    != 0;
+  bool start_b   = (misc & MISC_BUTTON_START)   != 0;
+  bool tp_click  = (misc & MISC_BUTTON_CAPTURE) != 0;
+  bool mute_b = false;
+
+  uint8_t dpad = myGamepad->dpad();
+  if (cross || l3) {
+  Serial.printf("[DIAG] cross=%d l3=%d buttons_raw=0x%08X axisX=%d axisY=%d\n",
+                cross, l3, buttons, myGamepad->axisX(), myGamepad->axisY());
+}
+
+  // PS button: tap = no-op (gyro disabled), hold ~2s = disconnect
+  if (ps_b && !prev_btn.ps_b) ps_hold_start_ms = millis();
+  if (!ps_b && prev_btn.ps_b) {
+    uint32_t held = millis() - ps_hold_start_ms;
+    if (held >= PS_HOLD_DISCONNECT_MS) {
+      Serial.println("[CTRL] PS held - disconnecting");
+      myGamepad->disconnect();
+      ps_hold_start_ms = 0;
+    }
+  }
+
+  // Mute button (currently no-op until we identify the bit)
+  if (mute_b && !prev_btn.mute_b) {
+    controller_muted = !controller_muted;
+    Serial.printf("[CTRL] %s\n", controller_muted ? "MUTED" : "UNMUTED");
+    if (controller_muted) {
+      ctrl_target_vy = 0; ctrl_target_omega = 0; ctrl_target_vx = 0;
+      ctrl_target_roll = 0; ctrl_target_pitch = 0;
+      ctrl_target_height = CTRL_HEIGHT_BASE; ctrl_target_body_y = 0;
+      ctrl_strafe_toggle_dir = 0;
+      say(CLIP_SAD);
+    } else say(CLIP_PLAYFUL);
+  }
+
+  if (controller_muted) {
+    prev_btn.ps_b = ps_b;
+    prev_btn.mute_b = mute_b;
+    return;
+  }
+  // ---- PU relay mode toggle (Start button) ----
+if (start_b && !prev_btn.start_b) {
+    ctrl_pu_mode = !ctrl_pu_mode;
+    Serial.printf("[CTRL] PU relay mode: %s\n", ctrl_pu_mode ? "ON (driving PU)" : "OFF (driving Gary)");
+    if (ctrl_pu_mode) {
+      if (!pu_ble_is_ready()) {
+        Serial.println("[CTRL] PU not ready, requesting BLE connect...");
+        pu_ble_request_connect();
+      } else {
+        Serial.println("[CTRL] PU already ready");
+      }
+    }
+}
+
+if (ctrl_pu_mode) {
+    if (pending_pu_button_cmd != 0) {
+      if (pu_send_button(pending_pu_button_cmd)) {
+        Serial.printf("[CTRL] PU resend button %d OK\n", pending_pu_button_cmd);
+        pending_pu_button_cmd = 0;
+      }
+    }
+
+    float lx_raw = stick_raw(myGamepad->axisX(), CTRL_DEADBAND_LX);
+    float ly_raw = stick_raw(myGamepad->axisY(), CTRL_DEADBAND_LY);
+    static float headPitchSmooth = 0;
+    static float headRollSmooth = 0;
+    // accelY() only carries tilt MAGNITUDE -- it's the axis gravity sits on when the
+    // controller is level, so it stays ~8000-9200 regardless of pitch direction and
+    // just shrinks as you rotate away from level either way. accelZ() is the axis that
+    // actually swings sign with direction (confirmed from a live log: ~-8300 pitched
+    // one way, ~+7800 pitched the other, both maxing near +-9000 -- 1g -- at a full
+    // ~90 degree tilt, same scale accelY was already using).
+    headPitchSmooth = headPitchSmooth * 0.85f + (myGamepad->accelZ() / 20000.0f) * 0.15f;
+    headRollSmooth  = headRollSmooth  * 0.85f + (myGamepad->accelX() / 20000.0f) * 0.15f;
+
+    // Driving via left stick only; gyro/accel are used for head-look only.
+    float drive_turn = curve(lx_raw);
+    float drive_speed = -curve(ly_raw);
+
+    // Throttle drive sends to PU to avoid overwhelming the micro:bit GATT handler.
+    uint32_t now = millis();
+    bool drive_ok = true;
+    if ((int32_t)(now - last_pu_send_ms) >= (int32_t)PU_SEND_MIN_INTERVAL_MS) {
+      drive_ok = pu_send_all_axes_combined(drive_turn, drive_speed, headPitchSmooth, headRollSmooth);
+      if (drive_ok) last_pu_send_ms = now;
+    } else {
+      // Skipped send due to throttle; consider this successful to avoid reconnect spam.
+      drive_ok = true;
+    }
+    if (!drive_ok && !pu_ble_is_ready()) {
+      Serial.println("[CTRL] PU drive send failed: reconnecting");
+      pu_ble_request_connect();
+    }
+
+    if (cross    && !prev_btn.cross) {
+      if (!pu_send_button(1)) {
+        Serial.println("[CTRL] PU button Greet failed, queued");
+        pending_pu_button_cmd = 1;
+      }
+    }
+    if (triangle && !prev_btn.triangle) {
+      if (!pu_send_button(2)) {
+        Serial.println("[CTRL] PU button Dance failed, queued");
+        pending_pu_button_cmd = 2;
+      }
+    }
+    if (square   && !prev_btn.square) {
+      if (!pu_send_button(3)) {
+        Serial.println("[CTRL] PU button Explore failed, queued");
+        pending_pu_button_cmd = 3;
+      }
+    }
+    if (circle   && !prev_btn.circle) {
+      if (!pu_send_button(4)) {
+        Serial.println("[CTRL] PU button Rest failed, queued");
+        pending_pu_button_cmd = 4;
+      }
+    }
+    if (tp_click && !prev_btn.tp_click) {
+      if (!pu_send_button(5)) {
+        Serial.println("[CTRL] PU button Stop failed, queued");
+        pending_pu_button_cmd = 5;
+      }
+    }
+
+    prev_btn.cross = cross; prev_btn.circle = circle;
+    prev_btn.triangle = triangle; prev_btn.square = square;
+    prev_btn.l1 = l1; prev_btn.r1 = r1;
+    prev_btn.l2 = l2; prev_btn.r2 = r2;
+    prev_btn.l3 = l3; prev_btn.r3 = r3;
+    prev_btn.select_b = select_b; prev_btn.start_b = start_b;
+    prev_btn.ps_b = ps_b; prev_btn.mute_b = mute_b;
+    prev_btn.tp_click = tp_click;
+    prev_btn.dpad = dpad;
+    return;
+}
+
+  if (l3 && !prev_btn.l3) cycle_gait_speed();
+  if (r3 && !prev_btn.r3) cycle_gait_pattern();
+
+  if (l2 && !prev_btn.l2) { controller_execute_action(CMD_LEFT_HOOK); return; }
+  if (r2 && !prev_btn.r2) { controller_execute_action(CMD_RIGHT_HOOK); return; }
+
+  if (l1 && r1 && !(prev_btn.l1 && prev_btn.r1)) {
+    controller_execute_action(CMD_ACTION_6);
+    return;
+  }
+
+  if (select_b && !prev_btn.select_b) toggle_flashlight();
+
+  if (cross && !prev_btn.cross) {
+    controller_execute_selected_action();
+    return;
+  }
+
+  if (square && !prev_btn.square) {
+    uint32_t now = millis();
+    if (now - square_last_press_ms < DOUBLE_TAP_WINDOW_MS) {
+      controller_execute_action(CMD_ACTION_8);
+      square_last_press_ms = 0;
+      return;
+    } else square_last_press_ms = now;
+  }
+  if (square_last_press_ms != 0 && (millis() - square_last_press_ms) >= DOUBLE_TAP_WINDOW_MS) {
+    square_last_press_ms = 0;
+    controller_execute_action(CMD_DIVE_FWD);
+    return;
+  }
+
+  if (circle && !prev_btn.circle) {
+    uint32_t now = millis();
+    if (now - circle_last_press_ms < DOUBLE_TAP_WINDOW_MS) {
+      controller_execute_action(CMD_SPREAD);
+      circle_last_press_ms = 0;
+      return;
+    } else circle_last_press_ms = now;
+  }
+  if (circle_last_press_ms != 0 && (millis() - circle_last_press_ms) >= DOUBLE_TAP_WINDOW_MS) {
+    circle_last_press_ms = 0;
+    controller_execute_action(CMD_DIVE_BACK);
+    return;
+  }
+
+  if (triangle && !prev_btn.triangle) {
+    uint32_t now = millis();
+    if (now - triangle_last_press_ms < DOUBLE_TAP_WINDOW_MS) {
+      controller_execute_action(CMD_DANCE);
+      triangle_last_press_ms = 0;
+      return;
+    } else triangle_last_press_ms = now;
+  }
+  if (triangle_last_press_ms != 0 && (millis() - triangle_last_press_ms) >= DOUBLE_TAP_WINDOW_MS) {
+    triangle_last_press_ms = 0;
+    controller_execute_action(CMD_INTRODUCE);
+    return;
+  }
+
+  bool dpad_up_now    = (dpad & DPAD_UP)    && !(prev_btn.dpad & DPAD_UP);
+  bool dpad_down_now  = (dpad & DPAD_DOWN)  && !(prev_btn.dpad & DPAD_DOWN);
+  bool dpad_left_now  = (dpad & DPAD_LEFT)  && !(prev_btn.dpad & DPAD_LEFT);
+  bool dpad_right_now = (dpad & DPAD_RIGHT) && !(prev_btn.dpad & DPAD_RIGHT);
+
+  // D-pad UP/DOWN: continuous body-height nudging while held.
+  // (Old behavior — discrete STEP_OVER/SQUEEZE toggle — replaced.)
+  // Hold duration: ~80ms per 0.25cm step => full -3..+3 sweep in ~2.5s.
+  if ((dpad & DPAD_UP) || (dpad & DPAD_DOWN)) {
+    if (millis() - dpad_height_last_nudge_ms >= HEIGHT_NUDGE_INTERVAL_MS) {
+      dpad_height_last_nudge_ms = millis();
+      if (dpad & DPAD_UP)   ctrl_target_height += HEIGHT_NUDGE_STEP;
+      if (dpad & DPAD_DOWN) ctrl_target_height -= HEIGHT_NUDGE_STEP;
+      ctrl_target_height = clamp_f(ctrl_target_height, CLAMP_HEIGHT_MIN, CLAMP_HEIGHT_MAX);
+    }
+  }
+
+  if (dpad_left_now) {
+    if (l1) {
+      uint32_t now = millis();
+      if (now - dpad_left_last_tap_ms < DOUBLE_TAP_WINDOW_MS) {
+        set_strafe(-1, false);
+        dpad_left_last_tap_ms = 0;
+      } else dpad_left_last_tap_ms = now;
+    } else cycle_action_group(-1);
+  }
+  if (dpad_right_now) {
+    if (l1) {
+      uint32_t now = millis();
+      if (now - dpad_right_last_tap_ms < DOUBLE_TAP_WINDOW_MS) {
+        set_strafe(+1, false);
+        dpad_right_last_tap_ms = 0;
+      } else dpad_right_last_tap_ms = now;
+    } else cycle_action_group(+1);
+  }
+
+  // ---- Stick reads ----
+  float lx_raw = stick_raw(myGamepad->axisX(),  CTRL_DEADBAND_LX);
+  float ly_raw = stick_raw(myGamepad->axisY(),  CTRL_DEADBAND_LY);
+  float rx_raw = stick_raw(myGamepad->axisRX(), CTRL_DEADBAND_RX);
+  float ry_raw = stick_raw(myGamepad->axisRY(), CTRL_DEADBAND_RY);
+
+  float lx_curved = curve(lx_raw);
+  float ly_curved = curve(ly_raw);
+
+  float speed_cap = CTRL_GAIT_SPEEDS[ctrl_gait_speed_idx];
+
+  // L stick walking — using Hiwonder ranges
+  ctrl_target_vy = -ly_curved * CTRL_VY_MAX * speed_cap;
+
+  // Yaw rate — smoothly blend stationary (full omega) → walking (small omega)
+  // based on STICK input (not smoothed vy) so releasing forward gives instant
+  // turn-in-place response without waiting for vy to decay.
+  float walking_amount = fabsf(ly_curved);  // 0 when stick X-only or centered
+  if (walking_amount > 1.0f) walking_amount = 1.0f;
+  float omega_max = CTRL_OMEGA_STATIONARY
+                  + (CTRL_OMEGA_WALKING - CTRL_OMEGA_STATIONARY) * walking_amount;
+  ctrl_target_omega = -lx_curved * omega_max * speed_cap;
+
+  // R stick interpretation
+  // (Removed: L1+R-stick used to drive height — that's now D-pad UP/DOWN.)
+  if (r1) {
+    ctrl_target_roll  = -curve(rx_raw) * CTRL_R1_LEAN_MAX_DEG;
+    ctrl_target_body_y = -curve(ry_raw) * CTRL_R1_SHIFT_MAX_CM;
+  } else if (l1) {
+    // L1 alone is a strafe modifier (with D-pad) — don't move pose from R-stick
+    // while it's held, so accidental stick wiggle doesn't tilt Gary.
+    ctrl_target_roll  *= 0.7f;
+    ctrl_target_pitch *= 0.7f;
+    ctrl_target_body_y = 0.0f;
+  } else {
+    bool l_stopped = (fabsf(ctrl_target_vy) < 0.05f && fabsf(ctrl_target_omega) < 0.05f);
+    if (l_stopped) {
+      ctrl_target_roll  = -curve(rx_raw) * CTRL_R_ROLL_MAX_DEG;
+      ctrl_target_pitch = -curve(ry_raw) * CTRL_R_PITCH_MAX_DEG;
+    } else {
+      ctrl_target_roll  *= 0.7f;
+      ctrl_target_pitch *= 0.7f;
+    }
+    ctrl_target_body_y = 0.0f;
+  }
+
+  // Strafe
+  ctrl_target_vx = 0.0f;
+  if (l1 && (dpad & DPAD_LEFT)) {
+    ctrl_target_vx = -CTRL_VX_MAX * speed_cap;
+    set_strafe(-1, true);
+  } else if (l1 && (dpad & DPAD_RIGHT)) {
+    ctrl_target_vx =  CTRL_VX_MAX * speed_cap;
+    set_strafe(+1, true);
+  } else if (ctrl_strafe_toggle_dir != 0) {
+    ctrl_target_vx = (float)ctrl_strafe_toggle_dir * CTRL_VX_MAX * speed_cap;
+  }
+
+  // Smoothing
+  ctrl_smooth_vy     += CTRL_SMOOTHING * (ctrl_target_vy     - ctrl_smooth_vy);
+  ctrl_smooth_omega  += CTRL_SMOOTHING * (ctrl_target_omega  - ctrl_smooth_omega);
+  ctrl_smooth_vx     += CTRL_SMOOTHING * (ctrl_target_vx     - ctrl_smooth_vx);
+  ctrl_smooth_pitch  += CTRL_SMOOTHING * (ctrl_target_pitch  - ctrl_smooth_pitch);
+  ctrl_smooth_roll   += CTRL_SMOOTHING * (ctrl_target_roll   - ctrl_smooth_roll);
+  ctrl_smooth_height += CTRL_SMOOTHING * (ctrl_target_height - ctrl_smooth_height);
+  ctrl_smooth_body_y += CTRL_SMOOTHING * (ctrl_target_body_y - ctrl_smooth_body_y);
+
+  // ---- HARD CLAMPS before issuing move ----
+  float send_pitch  = clamp_f(ctrl_smooth_pitch,  -CLAMP_PITCH_DEG, CLAMP_PITCH_DEG);
+  float send_roll   = clamp_f(ctrl_smooth_roll,   -CLAMP_ROLL_DEG,  CLAMP_ROLL_DEG);
+  float send_height = clamp_f(ctrl_smooth_height, CLAMP_HEIGHT_MIN, CLAMP_HEIGHT_MAX);
+  float send_body_y = clamp_f(ctrl_smooth_body_y, -CLAMP_BODY_Y_CM, CLAMP_BODY_Y_CM);
+  float send_vx     = clamp_f(ctrl_smooth_vx,     -CLAMP_VX, CLAMP_VX);
+  float send_vy     = clamp_f(ctrl_smooth_vy,     -CLAMP_VY, CLAMP_VY);
+  float send_omega  = clamp_f(ctrl_smooth_omega,  -CLAMP_OMEGA, CLAMP_OMEGA);
+
+  odom_update(send_vy, send_omega);  // feed dead-reckoning every controller tick
+
+  // ---- Cadence-from-stick ----
+  // Library default is 600ms; floor 400ms when MOVING. Map demand magnitude
+  // (the largest of vy/vx/omega normalized) to step period: 0 -> CADENCE_MAX_MS,
+  // 1 -> CADENCE_MIN_MS. This gives variable cadence the prior bare-call missed.
+  float vy_demand = fabsf(send_vy)    / CTRL_VY_MAX;
+  float vx_demand = fabsf(send_vx)    / CTRL_VX_MAX;
+  float om_demand = fabsf(send_omega) / CTRL_OMEGA_STATIONARY;
+  float demand    = vy_demand;
+  if (vx_demand > demand) demand = vx_demand;
+  if (om_demand > demand) demand = om_demand;
+  if (demand > 1.0f) demand = 1.0f;
+  uint16_t move_time_ms = (uint16_t)(CTRL_CADENCE_MAX_MS
+                                    + (CTRL_CADENCE_MIN_MS - CTRL_CADENCE_MAX_MS) * demand);
+
+  // ---- Push to gary.move() — Hiwonder pattern ----
+  Velocity_t cv = {send_vx, send_vy, send_omega};
+  Vector_t   cp = {0.0f, send_body_y, send_height};
+  Euler_t    ca = {send_pitch, send_roll, 0.0f};
+
+  // Hysteresis on the moving flag. Stick deflection near the boundary used to
+  // flicker `moving` true/false repeatedly, switching between custom scheduler
+  // and library stationary mode every loop — that's the touch/release stutter
+  // and the "fights itself at intermediate stick" wild-movement behavior.
+  // Now: need a clear push (HI) to start moving, smaller value (LO) to keep going.
+  static bool was_moving = false;
+  const float MOVE_THRESH_HI = 0.15f;   // need this much demand to START moving
+  const float MOVE_THRESH_LO = 0.04f;   // stays moving until below this
+  float thresh = was_moving ? MOVE_THRESH_LO : MOVE_THRESH_HI;
+  bool moving = fabsf(send_vy) > thresh
+             || fabsf(send_omega) > thresh
+             || fabsf(send_vx) > thresh;
+  was_moving = moving;
+
+  if (moving) {
+    switch (ctrl_gait_pattern) {
+      case GAIT_WAVE:
+      case GAIT_RIPPLE: {
+        // Per-gait velocity & cadence limits — wave/ripple can't sustain
+        // tripod-level speeds. Yaw is hardest in slow gaits so it gets a
+        // tighter cap than translation.
+        int g = (int)ctrl_gait_pattern;
+        Velocity_t cv_g = {
+          send_vx    * GAIT_SPEED_CAP[g],
+          send_vy    * GAIT_SPEED_CAP[g],
+          send_omega * GAIT_OMEGA_CAP[g]
+        };
+        uint16_t t_g = move_time_ms;
+        if (t_g < GAIT_MIN_CADENCE[g]) t_g = GAIT_MIN_CADENCE[g];
+
+        // Dynamic lift: scale with body height so foot clearance grows when
+        // standing tall. (Mirrors the library's _leg_lift formula on z >= 0.)
+        float lift = CUSTOM_GAIT_LIFT_CM;
+        if      (send_height >= 2.0f) lift = 3.2f;
+        else if (send_height >= 1.0f) lift = 2.7f;
+        else if (send_height >= 0.0f) lift = 2.2f;
+        else                          lift = 1.6f;   // crouched: smaller lift
+
+        // Per-gait lift trim — wave is the "stick-bug" gait, lifts barely
+        // need to clear the surface; ripple a touch lower than tripod-equivalent.
+        if      (ctrl_gait_pattern == GAIT_WAVE)   lift *= 0.50f;
+        else if (ctrl_gait_pattern == GAIT_RIPPLE) lift *= 0.75f;
+
+        // 1) Push velocity to library so it updates leg.amplitude.
+        gary.move(&cv_g, &cp, &ca, t_g);
+        // 2) Disable library's tripod scheduler.
+        gary.func_state = Robot::ACTION_GROUP;
+        // 3) Drive legs ourselves. Pass omega so the scheduler can compute
+        //    per-leg rotational amplitude (library doesn't encode it in
+        //    leg.amplitude for our use, so we add it ourselves).
+        run_custom_gait_scheduler((int)ctrl_gait_pattern, t_g, lift, cv_g.omega);
+        break;
+      }
+      case GAIT_TRIPOD:
+      default:
+        // Library handles tripod natively. gary.move() resets func_state=CRAWL.
+        gary.move(&cv, &cp, &ca, move_time_ms);
+        break;
+    }
+  } else {
+    // Stationary: library handles pose blends. gary.move() will reset
+    // func_state=CRAWL automatically, so the library scheduler resumes.
+    gary.move(&cv, &cp, &ca, 200);
+  }
+
+  // Periodic Serial debug
+  if (millis() - last_debug_ms >= DEBUG_INTERVAL_MS) {
+    last_debug_ms = millis();
+    // Show the ACTUAL cadence used by the gait (post-floor), not the raw
+    // cadence-from-stick value, which is misleading for wave/ripple.
+    uint16_t actual_cadence = move_time_ms;
+    if (ctrl_gait_pattern == GAIT_WAVE   && actual_cadence < GAIT_MIN_CADENCE[GAIT_WAVE])   actual_cadence = GAIT_MIN_CADENCE[GAIT_WAVE];
+    if (ctrl_gait_pattern == GAIT_RIPPLE && actual_cadence < GAIT_MIN_CADENCE[GAIT_RIPPLE]) actual_cadence = GAIT_MIN_CADENCE[GAIT_RIPPLE];
+
+    Serial.printf("[CTRL] L(%d,%d) R(%d,%d) | vy=%.2f om=%.2f pitch=%.1f roll=%.1f h=%.2f t=%ums gait=%s spd=%s\n",
+      myGamepad->axisX(), myGamepad->axisY(),
+      myGamepad->axisRX(), myGamepad->axisRY(),
+      send_vy, send_omega, send_pitch, send_roll, send_height,
+      (unsigned)actual_cadence,
+      gait_pattern_name((int)ctrl_gait_pattern),
+      CTRL_SPEED_NAMES[ctrl_gait_speed_idx]);
+    // Diagnostic: amp, result, AND result.z. If result.z isn't reasonable
+    // (i.e., foot home isn't at ground level), legs are floating during
+    // stance and that explains marches-in-place.
+    Serial.printf("[CTRL]   amp2=(%.2f,%.2f) amp5=(%.2f,%.2f) r2=(%.2f,%.2f,z=%.2f) r5=(%.2f,%.2f,z=%.2f)\n",
+      gary.leg2.amplitude.x, gary.leg2.amplitude.y,
+      gary.leg5.amplitude.x, gary.leg5.amplitude.y,
+      gary.leg2.result.x, gary.leg2.result.y, gary.leg2.result.z,
+      gary.leg5.result.x, gary.leg5.result.y, gary.leg5.result.z);
+  }
+
+  // Save edge state
+  prev_btn.cross = cross; prev_btn.circle = circle;
+  prev_btn.triangle = triangle; prev_btn.square = square;
+  prev_btn.l1 = l1; prev_btn.r1 = r1;
+  prev_btn.l2 = l2; prev_btn.r2 = r2;
+  prev_btn.l3 = l3; prev_btn.r3 = r3;
+  prev_btn.select_b = select_b; prev_btn.start_b = start_b;
+  prev_btn.ps_b = ps_b; prev_btn.mute_b = mute_b;
+  prev_btn.tp_click = tp_click;
+  prev_btn.dpad = dpad;
+}
+
+// -----------------------------------------------------------------------------
+// Dead-reckoning odometry (ROUGH -- read this before trusting it)
+// -----------------------------------------------------------------------------
+// Gary's kinematics library expresses velocity in its own internal units
+// (send_vy / send_omega, clamped to +/-CLAMP_VY / +/-CLAMP_OMEGA), not
+// calibrated real-world units. The two scale constants below convert those
+// units into cm/s and deg/s so odom_x/odom_y/odom_theta_deg are usable --
+// but the defaults (1.0) are just a placeholder guess. CALIBRATE THEM:
+//   1. Drive Gary a known straight-line distance (e.g. 200cm) with the
+//      controller, watch odom_x/odom_y in the ODOM serial line, and scale
+//      ODOM_VY_SCALE until the reported distance matches reality.
+//   2. Spin Gary a known angle (e.g. one full turn back to start) and scale
+//      ODOM_OMEGA_SCALE until odom_theta_deg matches.
+// This is PURE dead reckoning -- there is no correction against the LiDAR
+// scan or anything else, so error accumulates continuously. It'll hold up
+// fine for a short walk-around mapping session; don't trust it for anything
+// long-running or precise. It's also only updated from process_controller()
+// below -- autonomous movement (exec_walk/exec_turn during roaming) does
+// NOT currently feed odometry, so the pose estimate silently freezes during
+// autonomous motion. Wiring those in is a reasonable next step if the
+// autonomous-exploration + mapping combo becomes something you want.
+static float ODOM_VY_SCALE    = 1.0f;   // cm/s per unit of send_vy -- CALIBRATE
+static float ODOM_OMEGA_SCALE = 1.0f;   // deg/s per unit of send_omega -- CALIBRATE
+
+static float odom_x = 0.0f;         // cm, world frame
+static float odom_y = 0.0f;         // cm, world frame
+static float odom_theta_deg = 0.0f; // deg, world frame heading (0 = however Gary was facing at boot)
+static uint32_t odom_last_update_ms = 0;
+
+void odom_update(float vy_units, float omega_units) {
+  uint32_t now = millis();
+  if (odom_last_update_ms == 0) { odom_last_update_ms = now; return; }
+  float dt = (now - odom_last_update_ms) / 1000.0f;
+  odom_last_update_ms = now;
+  if (dt <= 0.0f || dt > 0.5f) return;  // skip absurd gaps (e.g. after a stall/pause)
+
+  float speed_cms = vy_units * ODOM_VY_SCALE;
+  float turn_dps  = omega_units * ODOM_OMEGA_SCALE;
+
+  // Integrate heading first, then move along the midpoint heading (simple
+  // midpoint integration -- more accurate than plain Euler for a turning
+  // robot, at basically no extra cost).
+  float theta_rad_before = odom_theta_deg * (PI / 180.0f);
+  odom_theta_deg += turn_dps * dt;
+  while (odom_theta_deg > 180.0f)  odom_theta_deg -= 360.0f;
+  while (odom_theta_deg < -180.0f) odom_theta_deg += 360.0f;
+  float theta_rad_mid = (theta_rad_before + odom_theta_deg * (PI / 180.0f)) / 2.0f;
+
+  odom_x += speed_cms * dt * cosf(theta_rad_mid);
+  odom_y += speed_cms * dt * sinf(theta_rad_mid);
+}
+
+void loop_controller() {
+  process_controller();
+}
+
+void stop_motion() {
+  vel = {0.0f, 0.0f, 0.0f};
+  gary.move(&vel, &pos, &att);
+}
+
+// -----------------------------------------------------------------------------
+// Movement helpers
+// -----------------------------------------------------------------------------
+
+void exec_walk(float vy, uint16_t step_ms, uint8_t steps) {
+  transition_to(STATE_EXECUTING);
+  vel = {0.0f, vy, 0.0f};
+  gary.move(&vel, &pos, &att, step_ms, steps);
+  gary_delay(step_ms * steps + 100);
+  return_to_listening();
+}
+
+void exec_turn(float yaw_rate, uint16_t step_ms, uint8_t steps) {
+  transition_to(STATE_EXECUTING);
+  vel = {0.0f, 0.0f, yaw_rate};
+  gary.move(&vel, &pos, &att, step_ms, steps);
+  gary_delay(step_ms * steps + 100);
+  return_to_listening();
+}
+
+void exec_pose(Vector_t new_pos, uint16_t hold_ms) {
+  transition_to(STATE_EXECUTING);
+  Velocity_t zero = {0.0f, 0.0f, 0.0f};
+  Euler_t zero_att = {0.0f, 0.0f, 0.0f};
+  gary.move(&zero, &new_pos, &zero_att, hold_ms);
+  gary_delay(hold_ms + 100);
+  Vector_t standing = {0.0f, 0.0f, 1.5f};
+  gary.move(&zero, &standing, &zero_att, 600);
+  gary_delay(700);
+  return_to_listening();
+}
+
+// =============================================================================
+// STATE ENTRY HANDLERS
+// =============================================================================
+
+void on_state_enter(GaryState s) {
+  switch (s) {
+    case STATE_BOOT:
+      set_eyes(EYE_SABER_BLUE);      // lightsaber blue at startup
+      anim_lightsaber();             // saber ignition
+      say(CLIP_WHISTLE);
+      break;
+
+    case STATE_IDLE:
+      set_eyes_breathing(EYE_IDLE);
+      anim_control_panel();          // dashboard lights — Gary is on standby
+      stop_motion();
+      break;
+
+    case STATE_LISTENING:
+      set_eyes_breathing(EYE_LISTENING);
+      anim_sensor_grid();
+      say(CLIP_LOOK);
+      listening_got_command = false;
+      break;
+
+    case STATE_EXECUTING:
+      set_eyes(EYE_IMPERIAL);
+      anim_progress_bars();
+      say(CLIP_SNAPPY);
+      break;
+
+    case STATE_ROAMING:
+      set_eyes_breathing(EYE_TIE_GREEN);  // engine glow
+      anim_radar_room();             // sweeping radar with persistent blips
+      say(CLIP_CHATTER);
+      last_boredom_kick_ms = millis();
+      break;
+
+    case STATE_COMING:
+      set_eyes_breathing(EYE_REBEL);           // rebel orange — heading to base
+      anim_radar_room();                 // X-Radar search
+      say(CLIP_WHISTLING_EXCITED);
+      coming_phase = COMING_SEARCH;
+      break;
+
+    case STATE_STARTLED:
+      set_eyes(EYE_HYPERSPACE);      // hyperspace jump panic blue
+      anim_hyperspace();             // panic radial streaks
+      say(CLIP_SCREAM);
+      // Backwards jump WHILE screaming — non-blocking sound makes this work
+      vel = {0.0f, -5.0f, 0.0f};
+      gary.move(&vel, &pos, &att, 300, 1);
+      break;
+
+    case STATE_ALARMED:
+      set_eyes_breathing(EYE_SABER_RED);  // sith red — turn to dark side
+      anim_death_star();             // Death Star charging — ominous
+      say(CLIP_SAD);
+      stop_motion();
+      break;
+
+    case STATE_CONTROLLER:
+      if (ctrl_pu_mode) {
+        uint8_t green[3] = {0x00, 0xFF, 0x80};
+        set_eyes_breathing(green);
+      } else {
+        set_eyes_breathing(EYE_SABER_BLUE);
+      }
+      anim_target_hud();
+      stop_motion();
+      ctrl_target_vy = 0.0f;
+      ctrl_target_omega = 0.0f;
+      ctrl_target_vx = 0.0f;
+      ctrl_target_roll = 0.0f;
+      ctrl_target_pitch = 0.0f;
+      ctrl_target_height = 1.5f;
+      ctrl_target_body_y = 0.0f;
+      ctrl_smooth_vy = 0.0f;
+      ctrl_smooth_omega = 0.0f;
+      ctrl_smooth_vx = 0.0f;
+      ctrl_smooth_roll = 0.0f;
+      ctrl_smooth_pitch = 0.0f;
+      ctrl_smooth_height = 1.5f;
+      ctrl_smooth_body_y = 0.0f;
+      Serial.println("[CTRL] Entering controller mode");
+      break;
+
+    case STATE_SENSING:
+      set_eyes_breathing(EYE_SABER_PURPLE);  // distinct color -- "listening" with the radio, not the mic
+      anim_sensor_grid();
+      say(CLIP_PROCESSING);
+      stop_motion();
+      csi_capture_begin();
+      break;
+  }
+}
+
+// =============================================================================
+// VOICE COMMAND HANDLER
+// =============================================================================
+
+bool handle_voice_command(uint8_t cmd) {
+  if (cmd == CMD_NONE) return false;
+
+#if ENABLE_DEBUG_SERIAL
+  Serial.print("VOICE CMD: 0x");
+  if (cmd < 0x10) Serial.print("0");
+  Serial.println(cmd, HEX);
+#endif
+
+  switch (cmd) {
+
+    // ====================================================================
+    //  MOVEMENT
+    // ====================================================================
+    case CMD_FORWARD:
+      exec_walk(WALK_SPEED, STEP_TIME_MS, DEFAULT_STEPS);
+      return true;
+
+    case CMD_BACKWARD:
+      // BACK + concerned chirp simultaneously
+      say(CLIP_CONCERNED);
+      exec_walk(-WALK_SPEED, STEP_TIME_MS, DEFAULT_STEPS);
+      return true;
+
+    case CMD_TURN_LEFT:
+      exec_turn(TURN_SPEED, STEP_TIME_MS, DEFAULT_STEPS);
+      return true;
+
+    case CMD_TURN_RIGHT:
+      exec_turn(-TURN_SPEED, STEP_TIME_MS, DEFAULT_STEPS);
+      return true;
+
+    case CMD_MARCH:
+      exec_turn(5.0, DISMISSAL_TURN_MS , 5);
+      return true;
+
+    case CMD_SPEED_UP: {
+      transition_to(STATE_EXECUTING);
+      vel = {0.0f, WALK_SPEED * 2.0f, 0.0f};
+      gary.move(&vel, &pos, &att, STEP_TIME_MS, DEFAULT_STEPS);
+      gary_delay(STEP_TIME_MS * DEFAULT_STEPS + 300);
+      return_to_listening();
+      return true;
+    }
+
+    case CMD_SLOW_DOWN: {
+      transition_to(STATE_EXECUTING);
+      vel = {0.0f, WALK_SPEED * 0.25f, 0.0f};
+      gary.move(&vel, &pos, &att, STEP_TIME_MS, DEFAULT_STEPS);
+      gary_delay(STEP_TIME_MS * DEFAULT_STEPS + 300);
+      return_to_listening();
+      return true;
+    }
+
+    case CMD_STOP:
+      stop_motion();
+      say(CLIP_SNAPPY);
+      return_to_listening();
+      return true;
+
+    case CMD_ATTENTION:
+      stop_motion();
+      set_eyes(EYE_ALERT);
+      say(CLIP_DETERMINED);
+      return_to_listening();
+      return true;
+
+    case CMD_SIT_DOWN:
+      exec_pose({0.0f, 0.0f, 0.0f}, 1500);
+      return true;
+
+    case CMD_RAISE_BODY:
+      exec_pose({0.0f, 0.0f, 100.0f}, 3000);
+      return true;
+
+    // ====================================================================
+    //  SPEECH / GREETING
+    // ====================================================================
+    case CMD_HELLO:
+      transition_to(STATE_EXECUTING);
+      say(CLIP_PLAYFUL);
+      pos = {0.0f, 0.0f, .0f};
+      gary.move(&vel, &pos, &att, 400);
+      gary_delay(500);
+      pos = {0.0f, 0.0f, 1.5f};
+      gary.move(&vel, &pos, &att, 400);
+      gary_delay(500);
+      return_to_listening();
+      return true;
+
+    case CMD_INTRODUCE:
+      transition_to(STATE_EXECUTING);
+      gary_introduce_routine();
+      return_to_listening();
+      return true;
+
+    case CMD_SHOW_SKILL:
+      transition_to(STATE_EXECUTING);
+      gary_show_skill_routine();
+      return_to_listening();
+      return true;
+
+    case CMD_SHAKE_HEAD:
+      transition_to(STATE_EXECUTING);
+      say(CLIP_WHISTLE_INQUISITIVE);
+      att = {0.0f, 0.0f, 20.0f};
+      gary.move(&vel, &pos, &att, 200, 1);
+      gary_delay(250);
+      att = {0.0f, 0.0f, -20.0f};
+      gary.move(&vel, &pos, &att, 200, 1);
+      gary_delay(250);
+      att = {0.0f, 0.0f, 20.0f};
+      gary.move(&vel, &pos, &att, 200, 1);
+      gary_delay(250);
+      return_to_listening();
+      return true;
+
+    case CMD_COMBAT:
+      transition_to(STATE_ALARMED);
+      say(CLIP_DETERMINED);
+      pos = {0.0f, 0.0f, 0.5f};
+      att = {20.0f, 0.0f, -5.0f};
+      gary.move(&vel, &pos, &att, 400);
+      gary_delay(500);
+      vel = {0.0f, WALK_SPEED * 1.5f, 0.0f};
+      gary.move(&vel, &pos, &att, 600, 1);
+      gary_delay(700);
+      pos = {0.0f, 0.0f, 1.5f};
+      gary.move(&vel, &pos, &att, 400);
+      gary_delay(500);
+      return_to_listening();
+      return true;
+
+    case CMD_SHAKE_OFF:
+      transition_to(STATE_EXECUTING);
+      say(CLIP_LAUGHTER);
+      for (int i = 0; i < 3; i++) {
+        att = {0.0f, 0.0f, 10.0f};
+        gary.move(&vel, &pos, &att, 200);
+        gary_delay(220);
+        att = {0.0f, 0.0f, -10.0f};
+        gary.move(&vel, &pos, &att, 200);
+        gary_delay(220);
+      }
+      att = {0.0f, 0.0f, 0.0f};
+      gary.move(&vel, &pos, &att, 200);
+      gary_delay(220);
+      return_to_listening();
+      return true;
+
+    // ====================================================================
+    //  DANCE / ANIMATIONS
+    // ====================================================================
+    case CMD_DANCE:
+      transition_to(STATE_EXECUTING);
+      gary_dance_routine();
+      return_to_listening();
+      return true;
+
+    case CMD_BOW:
+      // BOW — pitch forward AND lower body so it reads as a deep, deliberate bow
+      transition_to(STATE_EXECUTING);
+      say(CLIP_PROUD);
+      att = {40.0f, 0.0f, 0.0f};       // ~28° forward pitch (was 0.3 / ~17°)
+      pos = {0.0f, -20.0f, 0.7f};       // also lower the body
+      gary.move(&vel, &pos, &att, 1200);  // slower so legs can actually reach it
+      gary_delay(1400);
+      gary_delay(1500);                // hold the bow
+      att = {0.0f, 0.0f, 0.0f};
+      pos = {0.0f, 0.0f, 1.5f};
+      gary.move(&vel, &pos, &att, 1500);  // unhurried rise
+      gary_delay(1100);
+      return_to_listening();
+      return true;
+
+    case CMD_WAVE:
+      // WAVE — rise tall, pitch back, big side-to-side roll. Big values + slow
+      // durations so the IK can actually achieve the poses.
+      transition_to(STATE_EXECUTING);
+      say(CLIP_PLAYFUL);
+      pos = {0.0f, 0.0f, 1.9f};         // stand taller
+      att = {0.0f, -0.4f, 0.0f};        // pitch back ~23° (was -0.2 / ~11°)
+      gary.move(&vel, &pos, &att, 800);
+      gary_delay(900);
+      for (int i = 0; i < 3; i++) {
+        att = {0.5f, -0.4f, 0.0f};      // big roll right (~28°)
+        gary.move(&vel, &pos, &att, 500);
+        gary_delay(550);
+        att = {-0.5f, -0.4f, 0.0f};     // big roll left
+        gary.move(&vel, &pos, &att, 500);
+        gary_delay(550);
+      }
+      att = {0.0f, 0.0f, 0.0f};
+      pos = {0.0f, 0.0f, 1.5f};
+      gary.move(&vel, &pos, &att, 700);
+      gary_delay(800);
+      return_to_listening();
+      return true;
+
+    case CMD_MARCH_PLACE:
+      transition_to(STATE_EXECUTING);
+      say(CLIP_DETERMINED);                  // low growl masks any library squeak
+      for (int i = 0; i < 4; i++) {
+        vel = {0.0f, 0.5f, 0.0f};
+        gary.move(&vel, &pos, &att, 300, 1);
+        if (i == 1) say(CLIP_PLAYFUL);       // mid-routine chatter
+        gary_delay(350);
+      }
+      return_to_listening();
+      return true;
+
+case CMD_STRUT:
+  transition_to(STATE_EXECUTING);
+  say(CLIP_PROUD);
+  pos = {0.0f, 0.0f, 2.0f};         // head up
+  
+  for (int i = 0; i < 3; i++) {
+    // Step 1: hip swing right + step forward
+    att = {-15.0f, 0.0f, 30.0f};      // roll right ~14°
+    vel = {0.0f, 2.0f, 0.0f};       // strong forward push
+    gary.move(&vel, &pos, &att, 2000, 1);  // ONE long step
+    gary_delay(1000);
+    say(CLIP_PROUD);
+    // Step 2: hip swing left + step forward
+    att = {-10.0f, 0.0f, -30.0f};     // roll left
+    gary.move(&vel, &pos, &att, 2000, 1);  // ONE long step
+    gary_delay(1000);
+  }
+  
+  // reset
+  pos = {0.0f, 0.0f, 1.5f};
+  att = {0.0f, 0.0f, 0.0f};
+  vel = {0.0f, 0.0f, 0.0f};
+  gary.move(&vel, &pos, &att, 400);
+  gary_delay(500);
+  return_to_listening();
+  return true;
+
+    // ====================================================================
+    //  ACTION SLOTS
+    // ====================================================================
+
+    case CMD_ACTION_1:
+      // Gary RUN — sustained sprint + excited screaming
+      transition_to(STATE_EXECUTING);
+      say(CLIP_VERY_EXCITED);
+      vel = {0.0f, WALK_SPEED * 1.8f, 0.0f};
+      gary.move(&vel, &pos, &att, STEP_TIME_MS, 4);
+      gary_delay(STEP_TIME_MS * 4 + 100);
+      return_to_listening();
+      return true;
+
+    case CMD_ACTION_2:
+      transition_to(STATE_EXECUTING);
+      say(CLIP_DETERMINED);
+      vel = {0.0f, 0.0f, TURN_SPEED};
+      gary.move(&vel, &pos, &att, DISMISSAL_TURN_MS, 1);
+      gary_delay(DISMISSAL_TURN_MS + 200);
+      vel = {0.0f, WALK_SPEED, 0.0f};
+      gary.move(&vel, &pos, &att, STEP_TIME_MS, 3);
+      gary_delay(STEP_TIME_MS * 3 + 100);
+      return_to_listening();
+      return true;
+
+    case CMD_ACTION_3:
+      // SAY_GOODBYE — sad chirp + back away
+      transition_to(STATE_EXECUTING);
+      say(CLIP_SAD);
+      att = {0.2f, -0.2f, 0.0f};
+      gary.move(&vel, &pos, &att, 500);
+      gary_delay(600);
+      att = {-0.2f, -0.2f, 0.0f};
+      gary.move(&vel, &pos, &att, 500);
+      gary_delay(600);
+      att = {0.0f, 0.0f, 0.0f};
+      vel = {0.0f, -WALK_SPEED * 0.8f, 0.0f};
+      gary.move(&vel, &pos, &att, STEP_TIME_MS, 2);
+      gary_delay(STEP_TIME_MS * 2 + 100);
+      return_to_listening();
+      return true;
+
+    case CMD_ACTION_4:
+      // SHOW DISTANCE — read ultrasonic sensor and display range as a bar graph
+      transition_to(STATE_EXECUTING);
+      say(CLIP_WHISTLE);
+      {
+        // Show distance for ~3 seconds, refreshing every 200ms
+        uint32_t t0 = millis();
+        while (millis() - t0 < 3000) {
+          uint16_t cm = gary.sensor.get_distance();
+          anim_distance(cm);
+          gary_delay(200);
+        }
+      }
+      return_to_listening();
+      return true;
+
+    case CMD_ACTION_5:
+      transition_to(STATE_EXECUTING);
+      say(CLIP_PROUD);
+      for (int i = 0; i < 2; i++) {
+        pos = {0.0f, 0.0f, 1.9f};
+        gary.move(&vel, &pos, &att, 250);
+        gary_delay(280);
+        pos = {0.0f, 0.0f, 1.5f};
+        gary.move(&vel, &pos, &att, 250);
+        gary_delay(280);
+      }
+      return_to_listening();
+      return true;
+
+    case CMD_ACTION_6:
+      transition_to(STATE_EXECUTING);
+      say(CLIP_PLAYFUL);
+      pos = {0.0f, 0.0f, 2.2f};
+      att = {0.0f, -0.3f, 0.0f};
+      gary.move(&vel, &pos, &att, 500);
+      gary_delay(1500);
+      att = {0.0f, 0.0f, 0.0f};
+      pos = {0.0f, 0.0f, 1.5f};
+      gary.move(&vel, &pos, &att, 500);
+      gary_delay(600);
+      return_to_listening();
+      return true;
+
+    case CMD_ACTION_7:
+      transition_to(STATE_EXECUTING);
+      say(CLIP_LAUGHTER);
+      vel = {0.0f, WALK_SPEED * 0.5f, 0.0f};
+      pos = {0.0f, 0.0f, 1.2f};
+      gary.move(&vel, &pos, &att, STEP_TIME_MS, 1);
+      gary_delay(STEP_TIME_MS + 100);
+      for (int i = 0; i < 3; i++) {
+        att = {0.15f, 0.0f, 0.0f};
+        gary.move(&vel, &pos, &att, 250);
+        gary_delay(280);
+        att = {-0.15f, 0.0f, 0.0f};
+        gary.move(&vel, &pos, &att, 250);
+        gary_delay(280);
+      }
+      att = {0.0f, 0.0f, 0.0f};
+      pos = {0.0f, 0.0f, 1.5f};
+      gary.move(&vel, &pos, &att, 400);
+      gary_delay(500);
+      return_to_listening();
+      return true;
+
+    case CMD_ACTION_8:
+      // SIC_EM — determined growl + aggressive crouch + lunge
+      transition_to(STATE_ALARMED);
+      say(CLIP_DETERMINED);
+      pos = {0.0f, 0.0f, 1.0f};
+      gary.move(&vel, &pos, &att, 300);
+      gary_delay(350);
+      vel = {0.0f, WALK_SPEED * 2.0f, 0.0f};
+      gary.move(&vel, &pos, &att, 600, 2);
+      gary_delay(1300);
+      pos = {0.0f, 0.0f, 1.5f};
+      gary.move(&vel, &pos, &att, 400);
+      gary_delay(500);
+      return_to_listening();
+      return true;
+
+    case CMD_ACTION_9:
+      // CHARGE — very excited yelp + sustained sprint
+      transition_to(STATE_ALARMED);
+      say(CLIP_VERY_EXCITED);
+      vel = {0.0f, WALK_SPEED * 2.0f, 0.0f};
+      gary.move(&vel, &pos, &att, 800, 3);
+      gary_delay(800 * 3 + 100);
+      return_to_listening();
+      return true;
+
+    case CMD_ACTION_10:
+      stop_motion();
+      say(CLIP_CONCERNED);
+      gary_delay(400);
+      vel = {0.0f, 0.0f, TURN_SPEED};
+      gary.move(&vel, &pos, &att, DISMISSAL_TURN_MS, 1);
+      gary_delay(DISMISSAL_TURN_MS + 200);
+      transition_to(STATE_ROAMING);
+      return true;
+
+    case CMD_ACTION_11: // COME HERE
+#if ENABLE_CAMERA
+      transition_to(STATE_COMING);
+#else
+      say(CLIP_WHISTLING_EXCITED);
+      exec_walk(WALK_SPEED * 1.2f, STEP_TIME_MS, 3);
+#endif
+      return true;
+
+    case CMD_ACTION_12:
+      // SHOW BATTERY — read battery voltage and display as a fuel gauge
+      transition_to(STATE_EXECUTING);
+      say(CLIP_WHISTLE);
+      {
+        // Quick voltage read (Hiwonder library: gary.board.bat_voltage)
+        gary.board.bat_voltage_update();
+        uint16_t mv = gary.board.bat_voltage;
+        last_battery_mv = mv;
+        anim_battery(mv);
+        gary_delay(3000);  // hold display 3 seconds
+      }
+      return_to_listening();
+      return true;
+
+    case CMD_ACTION_13:
+      // SENSE AREA — hold still and capture WiFi CSI for CSI_CAPTURE_DURATION_MS.
+      // loop_sensing() handles the timeout and returns to STATE_IDLE on its own.
+      transition_to(STATE_SENSING);
+      return true;
+
+    // ====================================================================
+    //  ADDITIONAL FACTORY COMMANDS — body manipulation / lean / pose
+    // ====================================================================
+
+    case CMD_LEAN_FWD:
+      // Pitch forward, hold, return
+      transition_to(STATE_EXECUTING);
+      say(CLIP_WHISTLE);
+      att = {30.0f, 0.0f, 0.0f};
+      gary.move(&vel, &pos, &att, 600);
+      gary_delay(800);
+      att = {0.0f, 0.0f, 0.0f};
+      gary.move(&vel, &pos, &att, 500);
+      gary_delay(600);
+      return_to_listening();
+      return true;
+
+    case CMD_LEAN_BACK:
+      transition_to(STATE_EXECUTING);
+      say(CLIP_WHISTLE);
+      att = {-300.0f, 0.0f, 0.0f};
+      gary.move(&vel, &pos, &att, 600);
+      gary_delay(800);
+      att = {0.0f, 0.0f, 0.0f};
+      gary.move(&vel, &pos, &att, 500);
+      gary_delay(600);
+      return_to_listening();
+      return true;
+
+    case CMD_LEAN_LEFT:
+      transition_to(STATE_EXECUTING);
+      say(CLIP_WHISTLE);
+      att = {60.0f, 0.0f, 0.0f};
+      gary.move(&vel, &pos, &att, 600);
+      gary_delay(800);
+      att = {0.0f, 0.0f, 0.0f};
+      gary.move(&vel, &pos, &att, 500);
+      gary_delay(600);
+      return_to_listening();
+      return true;
+
+    case CMD_LEAN_RIGHT:
+      transition_to(STATE_EXECUTING);
+      say(CLIP_WHISTLE);
+      att = {-60.0f, 0.0f, 0.0f};
+      gary.move(&vel, &pos, &att, 600);
+      gary_delay(800);
+      att = {0.0f, 0.0f, 0.0f};
+      gary.move(&vel, &pos, &att, 500);
+      gary_delay(600);
+      return_to_listening();
+      return true;
+
+    case CMD_GET_DOWN:
+      // Lower further than sit — flatten body close to ground
+      exec_pose({0.0f, 0.0f, 0.2f}, 1500);
+      return true;
+
+    case CMD_LOWER_BODY:
+      // Crouch slightly — opposite of RAISE_BODY
+      exec_pose({0.0f, 0.0f, 0.5f}, 1000);
+      return true;
+
+    case CMD_MAKE_SOUND:
+      // Just chirp playfully and stay listening
+      say(CLIP_PLAYFUL);
+      return_to_listening();
+      return true;
+
+    case CMD_DIVE_FWD:
+      // Lower + lurch forward like a dive
+      transition_to(STATE_ALARMED);
+      say(CLIP_DETERMINED);
+      pos = {0.0f, 0.0f, 0.8f};
+      att = {25.0f, 0.0f, 0.0f};
+      gary.move(&vel, &pos, &att, 500);
+      gary_delay(600);
+      vel = {0.0f, WALK_SPEED * 4.0f, -5.0f};
+      gary.move(&vel, &pos, &att, 600, 2);
+      gary_delay(620);
+      pos = {0.0f, 0.0f, 2.0f};
+      gary.move(&vel, &pos, &att, 500);
+      gary_delay(550);
+      return_to_listening();
+      return true;
+
+    case CMD_DIVE_BACK:
+      transition_to(STATE_ALARMED);
+      say(CLIP_CONCERNED);
+      pos = {0.0f, 0.0f, 0.8f};
+      gary.move(&vel, &pos, &att, 150);
+      gary_delay(300);
+      vel = {0.0f, -WALK_SPEED * 3.0f, -2.0f};
+      gary.move(&vel, &pos, &att, 600, 2);
+      gary_delay(400);
+      pos = {0.0f, 0.0f, 0.8f};
+      gary.move(&vel, &pos, &att, 500);
+      gary_delay(550);
+      return_to_listening();
+      return true;
+
+    case CMD_SQUAT:
+      // Lower than sit, hold longer
+      att = {25.0f, 0.0f, 0.0f}; 
+      exec_pose({0.0f, 0.0f, 0.4f},1800);
+      return true;
+
+    // ====================================================================
+    //  MORE FACTORY ANIMATIONS
+    // ====================================================================
+
+    case CMD_PUSH_UP:
+      // Body pumps up and down repeatedly
+      transition_to(STATE_EXECUTING);
+      say(CLIP_DETERMINED);
+      for (int i = 0; i < 6; i++) {
+        pos = {0.0f, 0.0f, 0.5f};
+        att = {20.0f, 0.0f, 0.0f};
+        gary.move(&vel, &pos, &att, 350);
+        gary_delay(400);
+        pos = {0.0f, 0.0f, 20.0f};
+        att = {-20.0f, 0.0f, 0.0f};
+        gary.move(&vel, &pos, &att, 350);
+        gary_delay(400);
+      }
+      pos = {0.0f, 0.0f, 1.5f};
+      gary.move(&vel, &pos, &att, 800);
+      gary_delay(900);
+      return_to_listening();
+      return true;
+
+    case CMD_TWIST:
+      // Yaw body left-right rapidly without translating
+      transition_to(STATE_EXECUTING);
+      say(CLIP_PLAYFUL);
+      for (int i = 0; i < 3; i++) {
+        att = {0.0f, 0.0f, 40.0f};
+        gary.move(&vel, &pos, &att, 250);
+        gary_delay(280);
+        att = {0.0f, 0.0f, -40.0f};
+        gary.move(&vel, &pos, &att, 250);
+        gary_delay(280);
+      }
+      att = {0.0f, 0.0f, 0.0f};
+      gary.move(&vel, &pos, &att, 200);
+      gary_delay(220);
+      return_to_listening();
+      return true;
+
+    case CMD_SIT_UP:
+      // Rise from a sit — opposite of sit_down
+      exec_pose({0.0f, 0.0f, 2.0f}, 800);
+      return true;
+
+    case CMD_SPREAD:
+      // Hexapod can't really spread "hands" — interpret as wide stance pose:
+      // pitch back + elevated body to look proud / stretched
+      transition_to(STATE_EXECUTING);
+      say(CLIP_PROUD);
+      pos = {0.0f, 0.0f, 10.0f};
+      att = {-45.0f, 0.0f, 0.0f};
+      gary.move(&vel, &pos, &att, 700);
+      gary_delay(1500);
+      att = {0.0f, 0.0f, 0.0f};
+      pos = {0.0f, 0.0f, 1.5f};
+      gary.move(&vel, &pos, &att, 500);
+      gary_delay(600);
+      return_to_listening();
+      return true;
+
+    case CMD_FALL_STAND:
+      // Fall flat, pause, then rise dramatically
+      transition_to(STATE_EXECUTING);
+      say(CLIP_SHOCKED);
+      pos = {0.0f, 0.0f, 0.2f};
+      gary.move(&vel, &pos, &att, 50);
+      gary_delay(900);
+      gary_delay(800);  // lie there
+      say(CLIP_DETERMINED);
+      pos = {0.0f, 0.0f, 1.5f};
+      att = {-15.0f, 0.0f, 0.0f};
+      gary.move(&vel, &pos, &att, 1000);
+      gary_delay(1100);
+      return_to_listening();
+      return true;
+
+    case CMD_LEFT_HOOK:
+      // Quick body lunge to the left + lean right (like throwing a hook)
+      transition_to(STATE_ALARMED);
+      say(CLIP_DETERMINED);
+      att = {-10.0f, 30.0f, 20.0f};   // roll left + slight yaw
+      gary.move(&vel, &pos, &att, 250);
+      gary_delay(300);
+      att = {-10.0f, -30.0f, -20.0f}; // recover with opposite roll
+      gary.move(&vel, &pos, &att, 250);
+      gary_delay(300);
+      att = {10.0f, 0.0f, 0.0f};
+      gary.move(&vel, &pos, &att, 300);
+      gary_delay(350);
+      return_to_listening();
+      return true;
+
+    case CMD_RIGHT_HOOK:
+      transition_to(STATE_ALARMED);
+      say(CLIP_DETERMINED);
+      att = {-10.0f, -30.0f, -20.0f};
+      gary.move(&vel, &pos, &att, 250);
+      gary_delay(300);
+      att = {-10.0f, 30.0f, 20.0f};
+      gary.move(&vel, &pos, &att, 250);
+      gary_delay(300);
+      att = {10.0f, 0.0f, 0.0f};
+      gary.move(&vel, &pos, &att, 300);
+      gary_delay(350);
+      return_to_listening();
+      return true;
+
+    default:
+      say(CLIP_UNSURE);
+      return false;
+  }
+}
+
+void return_to_listening() {
+  listening_got_command = true;
+  state_entered_ms = millis();
+  current_state = STATE_LISTENING;
+  set_eyes(EYE_LISTENING);
+}
+
+// =============================================================================
+// BACKGROUND CHECKS
+// =============================================================================
+
+bool run_background_checks() {
+
+#if ENABLE_BATTERY_MONITOR
+  static uint32_t last_battery_check = 0;
+  static uint8_t consecutive_low_readings = 0;
+
+  if (millis() - last_battery_check > 5000) {
+    gary.board.bat_voltage_update();
+    uint16_t reading = gary.board.bat_voltage;
+    last_battery_check = millis();
+
+    const uint16_t SANITY_FLOOR_MV = 5000;
+
+    if (reading < SANITY_FLOOR_MV) {
+#if ENABLE_DEBUG_SERIAL
+      Serial.print(">>> BATTERY: ignoring bad sample = ");
+      Serial.println(reading);
+#endif
+    } else {
+      last_battery_mv = reading;
+#if ENABLE_DEBUG_SERIAL
+      Serial.print(">>> BATTERY: reading = ");
+      Serial.print(reading);
+      Serial.print("mV  consecutive_low=");
+      Serial.println(consecutive_low_readings);
+#endif
+
+      if (last_battery_mv < BATTERY_LOW_MV) {
+        consecutive_low_readings++;
+        if (consecutive_low_readings >= 3 && current_state != STATE_ALARMED) {
+          transition_to(STATE_ALARMED);
+          return true;
+        }
+      } else {
+        consecutive_low_readings = 0;
+      }
+    }
+  }
+#endif
+
+  // Tip detection — with sanity filtering.
+  //
+  // Why filter: the IMU on the I2C bus has been observed returning wildly
+  // implausible values (roll swinging ±150° while Gary is sitting still),
+  // probably from voltage sag during high servo current draw. A single bad
+  // sample shouldn't trip alarm; we require 3 consecutive over-threshold
+  // readings AND we discard "implausible" samples (>175° roll or pitch,
+  // which are physically impossible for an upright hexapod).
+  float euler_data[3];
+  gary.board.get_imu_euler(euler_data);
+  float roll  = euler_data[0];
+  float pitch = euler_data[1];
+
+  static uint8_t consecutive_tip_readings = 0;
+  const float IMU_INSANITY_DEG = 175.0f;  // beyond this = bad sample, ignore
+
+  if (abs(roll) > IMU_INSANITY_DEG || abs(pitch) > IMU_INSANITY_DEG) {
+    // Implausible reading — IMU glitched. Don't count it, don't reset counter.
+#if ENABLE_DEBUG_SERIAL
+    Serial.print(">>> IMU: ignoring bad sample roll=");
+    Serial.print(roll);
+    Serial.print(" pitch=");
+    Serial.println(pitch);
+#endif
+  } else if (abs(roll) > IMU_TIP_THRESHOLD_DEG || abs(pitch) > IMU_TIP_THRESHOLD_DEG) {
+    consecutive_tip_readings++;
+    if (consecutive_tip_readings >= 3 && current_state != STATE_ALARMED) {
+#if ENABLE_DEBUG_SERIAL
+      Serial.print("TIP DETECTED (3 consecutive): roll=");
+      Serial.print(roll);
+      Serial.print(" pitch=");
+      Serial.println(pitch);
+#endif
+      transition_to(STATE_ALARMED);
+      consecutive_tip_readings = 0;
+      return true;
+    }
+  } else {
+    consecutive_tip_readings = 0;
+  }
+
+#if ENABLE_DEBUG_SERIAL
+  static uint32_t last_sensor_debug = 0;
+  if (millis() - last_sensor_debug > 2000) {
+    uint16_t debug_sound = gary.board.get_sound_val();
+    uint16_t debug_dist = gary.sensor.get_distance();
+    Serial.print(">>> GARY SENSORS | sound=");
+    Serial.print(debug_sound);
+    Serial.print(" dist=");
+    Serial.print(debug_dist);
+    Serial.print("mm roll=");
+    Serial.print(roll, 1);
+    Serial.print(" pitch=");
+    Serial.println(pitch, 1);
+    last_sensor_debug = millis();
+  }
+#endif
+
+#if ENABLE_SOUND_STARTLE
+  static volatile uint8_t startle_enabled = ENABLE_SOUND_STARTLE;
+  /* Skip startle checks while under controller mode so brief audio spikes
+     or PU relay activity doesn't yank control away from the user. */
+  if (startle_enabled && current_state != STATE_CONTROLLER) {
+    uint16_t sound_value = gary.board.get_sound_val();
+    int delta = (int)sound_value - (int)last_sound_value;
+
+    if (sound_value >= SOUND_STARTLE_THRESHOLD
+        && delta >= SOUND_STARTLE_DELTA
+        && current_state != STATE_STARTLED
+        && current_state != STATE_ALARMED
+        && !gary_sounds_is_playing()) {  // Don't startle from our own buzzer
+      transition_to(STATE_STARTLED);
+      last_sound_value = sound_value;
+      return true;
+    }
+    last_sound_value = sound_value;
+  }
+#endif
+
+  return false;
+}
+
+// =============================================================================
+// PER-STATE LOOP HANDLERS
+// =============================================================================
+
+void loop_idle() {
+#if ENABLE_BALANCE
+  gary.balance(true);
+#endif
+
+#if ENABLE_VOICE
+  uint8_t cmd = gary.sensor.asr.rec_recognition();
+  if (cmd != CMD_NONE) {
+    transition_to(STATE_LISTENING);
+    handle_voice_command(cmd);
+    return;
+  }
+#endif
+
+  // Stay-put mode: don't drift into ROAMING after a timeout.
+  // To re-enable autonomous roaming, uncomment the block below:
+  // if (millis() - state_entered_ms > IDLE_TO_ROAM_MS) {
+  //   transition_to(STATE_ROAMING);
+  // }
+}
+
+void loop_listening() {
+#if ENABLE_VOICE
+  uint8_t cmd = gary.sensor.asr.rec_recognition();
+  if (cmd != CMD_NONE) {
+    handle_voice_command(cmd);
+    return;
+  }
+#endif
+
+  uint32_t timeout = listening_got_command
+                     ? LISTENING_TIMEOUT_MS
+                     : LISTENING_FIRST_TIMEOUT_MS;
+
+  if (millis() - state_entered_ms > timeout) {
+    say(CLIP_UNSURE);
+    transition_to(STATE_IDLE);  // Stay put after silence (was STATE_ROAMING)
+  }
+}
+
+void loop_executing() {
+  transition_to(STATE_IDLE);
+}
+
+void loop_roaming() {
+#if ENABLE_VOICE
+  uint8_t cmd = gary.sensor.asr.rec_recognition();
+  if (cmd != CMD_NONE) {
+    transition_to(STATE_LISTENING);
+    handle_voice_command(cmd);
+    return;
+  }
+#endif
+
+  uint16_t dis = gary.sensor.get_distance();
+  gary.avoid(dis);
+
+#if ENABLE_BOREDOM_TIMER
+  if (millis() - last_boredom_kick_ms > ROAM_BOREDOM_MS) {
+    last_boredom_kick_ms = millis();
+    float turn = ((float)(random(90) - 45)) * 0.02f;
+    vel = {0.0f, 0.0f, turn};
+    gary.move(&vel, &pos, &att, 500, 1);
+    if (random(4) == 0) {
+      say(random(2) ? CLIP_WHISTLE : CLIP_PLAYFUL);
+    }
+  }
+#endif
+
+  uint32_t cycle = (millis() / 100) % 60;
+  if (cycle == 0)  set_eyes(EYE_ROAMING_A);
+  if (cycle == 30) set_eyes(EYE_ROAMING_B);
+
+  if (millis() - state_entered_ms > ROAM_TIMEOUT_MS) {
+    transition_to(STATE_IDLE);
+  }
+}
+
+void loop_coming() {
+#if !ENABLE_CAMERA
+  say(CLIP_UNSURE);
+  transition_to(STATE_IDLE);
+  return;
+#endif
+
+#if ENABLE_CAMERA
+  switch (coming_phase) {
+
+    case COMING_SEARCH: {
+      gary.sensor.camera.face_data_receive(camera_buf, sizeof(camera_buf));
+
+      if (camera_buf[0] != 0) {
+        coming_phase = COMING_APPROACH;
+        say(CLIP_WHISTLE_INQUISITIVE);
+        return;
+      }
+
+      vel = {0.0f, 0.0f, 1.5f};
+      gary.move(&vel, &pos, &att, 300, 1);
+
+      if (millis() - state_entered_ms > COMING_SEARCH_TIMEOUT_MS) {
+        say(CLIP_SAD);
+        transition_to(STATE_IDLE);
+      }
+      break;
+    }
+
+    case COMING_APPROACH: {
+      gary.sensor.camera.face_data_receive(camera_buf, sizeof(camera_buf));
+
+      if (camera_buf[0] == 0) {
+        coming_phase = COMING_SEARCH;
+        return;
+      }
+
+      uint8_t face_x = camera_buf[0];
+      uint8_t face_w = camera_buf[2];
+      float yaw_offset = ((float)face_x - 80.0f) / 80.0f * 0.5f;
+
+      uint16_t dis = gary.sensor.get_distance();
+
+      if (face_w >= FACE_SIZE_CLOSE || dis < DISTANCE_ARRIVED_MM) {
+        coming_phase = COMING_ARRIVED;
+        return;
+      }
+
+      vel = {0.0f, WALK_SPEED * 0.7f, yaw_offset};
+      gary.move(&vel, &pos, &att, 400, 1);
+      break;
+    }
+
+    case COMING_ARRIVED: {
+      stop_motion();
+      set_eyes(EYE_PROUD);
+      gary_introduce_routine();   // proud "presented myself" routine, no library buzzer
+      return_to_listening();
+      break;
+    }
+  }
+
+  uint8_t cmd = gary.sensor.asr.rec_recognition();
+  if (cmd == CMD_STOP) {
+    transition_to(STATE_IDLE);
+  }
+#endif
+}
+
+void loop_startled() {
+  if (millis() - state_entered_ms > STARTLED_DURATION_MS) {
+    if (previous_state == STATE_LISTENING) {
+      transition_to(STATE_LISTENING);
+    } else {
+      transition_to(STATE_IDLE);  // Stay-put: was STATE_ROAMING
+    }
+  }
+}
+
+void loop_sensing() {
+  csi_pump();
+  if (millis() - state_entered_ms > CSI_CAPTURE_DURATION_MS) {
+    csi_capture_end();
+    transition_to(STATE_IDLE);
+  }
+}
+
+void loop_alarmed() {
+  float euler_data[3];
+  gary.board.get_imu_euler(euler_data);
+  float roll  = euler_data[0];
+  float pitch = euler_data[1];
+
+#if ENABLE_BATTERY_MONITOR
+  bool battery_ok = (last_battery_mv >= BATTERY_LOW_MV + 200);
+#else
+  bool battery_ok = true;
+#endif
+
+  // Require 3 consecutive level samples to recover, with insanity filter.
+  // Prevents recovery from getting stuck if IMU glitches one direction or the
+  // other while Gary is actually upright again.
+  const float IMU_INSANITY_DEG = 175.0f;
+  bool insane = (abs(roll) > IMU_INSANITY_DEG || abs(pitch) > IMU_INSANITY_DEG);
+  bool level_now = (!insane
+                   && abs(roll) < IMU_TIP_THRESHOLD_DEG / 2
+                   && abs(pitch) < IMU_TIP_THRESHOLD_DEG / 2);
+
+  static uint8_t consecutive_level_readings = 0;
+  if (level_now) {
+    consecutive_level_readings++;
+  } else if (!insane) {
+    // Real not-level reading resets the counter. Insane samples are ignored.
+    consecutive_level_readings = 0;
+  }
+
+  if (consecutive_level_readings >= 3 && battery_ok) {
+    consecutive_level_readings = 0;
+    transition_to(STATE_IDLE);
+  }
+
+  static uint32_t last_chirp = 0;
+  if (millis() - last_chirp > 5000) {
+    say(CLIP_SAD);
+    last_chirp = millis();
+  }
+}
+
+// =============================================================================
+// SETUP / LOOP
+// =============================================================================
+
+void setup() {
+  Serial.begin(115200);
+  BP32.setup(&onConnectedGamepad, &onDisconnectedGamepad);
+  pu_ble_init();
+  Serial.println("[CTRL] Bluepad32 ready - press PS button to pair DualSense");
+  delay(500);
+
+
+#if ENABLE_DEBUG_SERIAL
+  Serial.println();
+  Serial.println("=== GARY v1 BOOTING ===");
+  Serial.print(">>> COMPILED FLAGS: SOUND_STARTLE=");
+  Serial.print(ENABLE_SOUND_STARTLE);
+  Serial.print(" BATTERY=");
+  Serial.print(ENABLE_BATTERY_MONITOR);
+  Serial.print(" VOICE=");
+  Serial.println(ENABLE_VOICE);
+  Serial.println(">>> Voice: factory firmware (CI1302 V00729)");
+  Serial.println(">>> Wake: \"HELLO-HI-WONDER\" or \"Hey Gary\" -> \"I'm here\"");
+  Serial.println(">>> Sounds: NON-BLOCKING (motion + buzzer simultaneous)");
+#endif
+
+  randomSeed(analogRead(34));
+
+  gary.begin();
+  delay(1000);
+
+    // MAARTAS SOUND SWITCH // 
+
+  ledcWriteTone(LEDC_CHANNEL_0, 0);
+  ledcDetachPin(BUZZER_PIN);   // disconnect pin from PWM
+  pinMode(BUZZER_PIN, INPUT);  // float the pin so nothing can drive it
+
+  gary_sounds_begin();
+  gary_face_begin();
+  gary_lidar_begin();
+  face_scroll_text("GARY");  // boot greeting
+
+#if ENABLE_DEBUG_SERIAL
+  Serial.println(">>> GARY: standing up");
+#endif
+  Velocity_t stand_vel = {0.0f, 0.0f, 0.0f};
+  Vector_t stand_pos = {0.0f, 0.0f, 1.5f};
+  Euler_t stand_att = {0.0f, 0.0f, 0.0f};
+  gary.move(&stand_vel, &stand_pos, &stand_att, 1000);
+  delay(1500);
+
+#if ENABLE_DEBUG_SERIAL
+  // ---- Startup joint diagnostic ----
+  // Reads the deviation table (per-joint calibration trim) and the runtime
+  // state of all 18 joints. If one joint is mechanically wrong at boot, look
+  // for an outlier in either:
+  //   - dev: deviation way out of family with same-joint-letter peers
+  //   - duty: PWM commanded substantially different from peers
+  //   - angle: commanded angle different from peers
+  // Same-letter joints across legs should land within a few units of each
+  // other after the symmetric standup pose.
+  {
+    int8_t devs[18] = {0};
+    gary.read_deviation(devs);
+
+    RobotLeg* legs[6] = {&gary.leg1, &gary.leg2, &gary.leg3,
+                         &gary.leg4, &gary.leg5, &gary.leg6};
+    const char* leg_names[6] = {"FR", "MR", "BR", "BL", "ML", "FL"};
+
+    Serial.println();
+    Serial.println(">>> JOINT DIAGNOSTIC (after standup, before any motion)");
+    Serial.println("Leg     | A (hip)              | B (femur)            | C (tibia)");
+    Serial.println("--------+----------------------+----------------------+----------------------");
+    for (int i = 0; i < 6; i++) {
+      RobotJoint& ja = legs[i]->joint_a;
+      RobotJoint& jb = legs[i]->joint_b;
+      RobotJoint& jc = legs[i]->joint_c;
+      Serial.printf("Leg%d %s | id=%02u dev=%+3d ang=%+5.1f | id=%02u dev=%+3d ang=%+5.1f | id=%02u dev=%+3d ang=%+5.1f\n",
+        i + 1, leg_names[i],
+        (unsigned)ja.id, (int)ja.deviation, ja.angle,
+        (unsigned)jb.id, (int)jb.deviation, jb.angle,
+        (unsigned)jc.id, (int)jc.deviation, jc.angle);
+    }
+
+    // Also dump the raw devs[] array in case its order differs from what we
+    // think (the library might index it by servo id rather than by leg).
+    Serial.print(">>> Raw deviations array (18 entries): ");
+    for (int i = 0; i < 18; i++) {
+      Serial.printf("%+d ", (int)devs[i]);
+    }
+    Serial.println();
+
+    // Per-column min/max of deviation, so outliers in any one column pop out.
+    int dev_a_min = 127, dev_a_max = -128;
+    int dev_b_min = 127, dev_b_max = -128;
+    int dev_c_min = 127, dev_c_max = -128;
+    for (int i = 0; i < 6; i++) {
+      int da = legs[i]->joint_a.deviation;
+      int db = legs[i]->joint_b.deviation;
+      int dc = legs[i]->joint_c.deviation;
+      if (da < dev_a_min) dev_a_min = da;
+      if (da > dev_a_max) dev_a_max = da;
+      if (db < dev_b_min) dev_b_min = db;
+      if (db > dev_b_max) dev_b_max = db;
+      if (dc < dev_c_min) dev_c_min = dc;
+      if (dc > dev_c_max) dev_c_max = dc;
+    }
+    Serial.printf(">>> Per-joint-letter dev spread: A=[%+d..%+d]  B=[%+d..%+d]  C=[%+d..%+d]\n",
+      dev_a_min, dev_a_max, dev_b_min, dev_b_max, dev_c_min, dev_c_max);
+    Serial.println();
+  }
+#endif
+
+  set_eyes(EYE_BOOT);
+  delay(500);
+
+  // Boot into IDLE — Gary stays put until commanded.
+  // To revert to autonomous roaming, change to STATE_ROAMING and re-enable
+  // the IDLE_TO_ROAM_MS timeout in loop_idle().
+  transition_to(STATE_IDLE);
+
+#if ENABLE_DEBUG_SERIAL
+  Serial.println("=== GARY v1 READY ===");
+#endif
+
+  wifi_begin();
+}
+
+void loop() {
+  // Pump Bluepad32 first - keeps connection alive and reads new packets
+  BP32.update();
+
+  // Auto-transition to controller mode when DualSense connects
+  if (myGamepad && myGamepad->isConnected() && current_state != STATE_CONTROLLER) {
+    transition_to(STATE_CONTROLLER);
+  }
+
+  // Pump the sound state machine every loop iteration
+  gary_sounds_update();
+  gary_face_update();
+  gary_lidar_update();
+  wifi_pump();
+
+#if ENABLE_DEBUG_SERIAL
+  static uint32_t last_heartbeat = 0;
+  if (millis() - last_heartbeat > 2000) {
+    Serial.print(">>> GARY HB | state=");
+    Serial.print(state_name(current_state));
+    Serial.print(" | t=");
+    Serial.print(millis());
+    Serial.print(" | bat=");
+    Serial.print(last_battery_mv);
+    Serial.println("mV");
+    last_heartbeat = millis();
+  }
+
+  static uint32_t last_lidar_diag = 0;
+  if (millis() - last_lidar_diag > 2000) {
+    last_lidar_diag = millis();
+    // Quick LiDAR status: ready flag, packet rate, and the cardinal-direction
+    // distances. Forward = 0°, right = 90°, back = 180°, left = 270° (in
+    // LiDAR frame; physical orientation depends on mount).
+    // bytes=... added to tell apart "nothing arriving on the wire at all"
+    // (bytes stuck at 0 -- power/wiring/pin, a hardware problem) from "bytes
+    // arriving but never forming a valid packet" (bytes climbing, pkts not --
+    // baud/framing/noise). See gary_lidar.h for the full diagnosis note.
+    Serial.printf(">>> LIDAR | ready=%d bytes=%lu pkts=%lu bad=%lu | F=%umm R=%umm B=%umm L=%umm\n",
+                  gary_lidar_is_ready() ? 1 : 0,
+                  (unsigned long)gary_lidar_bytes_received(),
+                  (unsigned long)gary_lidar_packets_received(),
+                  (unsigned long)gary_lidar_bad_packets(),
+                  gary_lidar_distance_at_angle(0),
+                  gary_lidar_distance_at_angle(90),
+                  gary_lidar_distance_at_angle(180),
+                  gary_lidar_distance_at_angle(270));
+  }
+
+  // ---- Full-scan + pose dump for the live map viewer (gary_lidar_map.py) --
+  // "SCAN:<x_cm>,<y_cm>,<theta_deg>;<d0>,<d1>,...,<d359>\n" -- pose from the
+  // dead-reckoning odometry above, then one distance per degree (0..359).
+  // Rate-limited to 400ms: at 115200 baud a 360-point line is ~1.6-1.8KB,
+  // which takes ~140-160ms to transmit -- 400ms leaves headroom for all the
+  // other Serial traffic (HB, SENSORS, CTRL lines) sharing the same link.
+  // Only active when ready==1 (i.e. after the first full rotation), so the
+  // Python side never has to special-case an all-zero warm-up frame.
+  static uint32_t last_scan_dump = 0;
+  if (gary_lidar_is_ready() && millis() - last_scan_dump > 400) {
+    last_scan_dump = millis();
+    // Built into one buffer (rather than piecemeal Serial.print calls) so
+    // the exact same bytes can go to both Serial and the WiFi client without
+    // duplicating the assembly logic. ~1.8KB max (360 pts * ~5 chars + pose
+    // prefix) comfortably fits the 2200-byte buffer.
+    static char scan_buf[2200];
+    int pos = 0;
+    pos += snprintf(scan_buf + pos, sizeof(scan_buf) - pos, "SCAN:%.1f,%.1f,%.1f;", odom_x, odom_y, odom_theta_deg);
+    for (int i = 0; i < 360 && pos < (int)sizeof(scan_buf) - 8; i++) {
+      pos += snprintf(scan_buf + pos, sizeof(scan_buf) - pos, "%u", gary_lidar_distance_at_angle(i));
+      if (i < 359) pos += snprintf(scan_buf + pos, sizeof(scan_buf) - pos, ",");
+    }
+    pos += snprintf(scan_buf + pos, sizeof(scan_buf) - pos, "\n");
+    Serial.print(scan_buf);
+    wifi_scan_broadcast(scan_buf);  // no-op if WiFi/client isn't connected
+  }
+#endif
+
+  if (run_background_checks()) {
+    delay(LOOP_DELAY_MS);
+    return;
+  }
+
+  switch (current_state) {
+    case STATE_BOOT:      transition_to(STATE_ROAMING); break;
+    case STATE_IDLE:      loop_idle();      break;
+    case STATE_LISTENING: loop_listening(); break;
+    case STATE_EXECUTING: loop_executing(); break;
+    case STATE_ROAMING:   loop_roaming();   break;
+    case STATE_COMING:    loop_coming();    break;
+    case STATE_STARTLED:  loop_startled();  break;
+    case STATE_ALARMED:   loop_alarmed();   break;
+    case STATE_CONTROLLER:loop_controller();break;
+    case STATE_SENSING:   loop_sensing();   break;
+  }
+
+  delay(LOOP_DELAY_MS);
+}

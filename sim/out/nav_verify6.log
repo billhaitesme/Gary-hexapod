@@ -1,0 +1,15 @@
+  t=  40.2  STUCK at (+0.08,+1.34) front=2.00 -> bump-marked ahead, back off
+  t=  47.7  STUCK at (+0.06,+1.31) front=2.00 -> bump-marked ahead, back off
+  t=  49.6  goal (6, 10) unresolved / no progress -> banned
+  t=  52.5  map exhausted [109 cells] -> GIMBAL SCAN at (+0.04,+1.32)
+  t=  55.5  peek matches the map -> full gimbal
+  t=  72.5  GIMBAL: nothing low at this wall -> next suspect
+  t= 154.6  STUCK at (+0.99,+1.31) front=2.00 -> bump-marked ahead, back off
+  t= 161.4  goal (12, 11) unresolved / no progress -> banned
+  t= 162.1  STUCK at (+0.97,+1.29) front=2.00 -> bump-marked ahead, back off
+  t= 169.6  STUCK at (+0.96,+1.32) front=2.00 -> bump-marked ahead, back off
+  t= 177.6  STUCK at (+0.97,+1.34) front=2.00 -> bump-marked ahead, back off
+  t= 184.7  goal (13, 10) unresolved / no progress -> banned
+  t= 209.6  map exhausted [292 cells] -> GIMBAL SCAN at (+1.67,+1.05)
+  t= 212.6  CROUCH PEEK: seeing 1.75 m PAST the wall I believed at bearing 30 deg -> carved
+{"done": true, "scouts": 2, "bans": 3, "reason": "finished", "time_s": 296.6, "coverage_cells": 364, "pos": [2.42, 0.57]}
